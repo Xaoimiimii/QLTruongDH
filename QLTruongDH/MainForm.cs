@@ -67,7 +67,6 @@ namespace QLTruongDH
                 isInBangDiem = true;
                 //grade_pictureBox.Image = Properties.Resources.cert_green;
             }
-
         }
 
         private void menuTransition_Tick(object sender, EventArgs e)
@@ -84,7 +83,7 @@ namespace QLTruongDH
             else
             {
                 nav_drawer_flowLayoutPanel.Width += 10;
-                if (nav_drawer_flowLayoutPanel.Width >= 388)
+                if (nav_drawer_flowLayoutPanel.Width >= 380)
                 {
                     menuTransition.Stop();
                     menuExpand = true;

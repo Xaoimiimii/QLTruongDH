@@ -81,6 +81,7 @@
             // menuTransition
             // 
             menuTransition.Interval = 10;
+            menuTransition.Tick += menuTransition_Tick;
             // 
             // out_menu_pictureBox
             // 
@@ -169,6 +170,7 @@
             user_label.Size = new Size(170, 37);
             user_label.TabIndex = 1;
             user_label.Text = "Quản lý user";
+            user_label.Click += user_label_Click;
             // 
             // nav_drawer_flowLayoutPanel
             // 
@@ -196,12 +198,13 @@
             // close_menu_pictureBox
             // 
             close_menu_pictureBox.Image = Properties.Resources.close1;
-            close_menu_pictureBox.Location = new Point(336, 19);
+            close_menu_pictureBox.Location = new Point(330, 19);
             close_menu_pictureBox.Name = "close_menu_pictureBox";
             close_menu_pictureBox.Size = new Size(32, 32);
             close_menu_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             close_menu_pictureBox.TabIndex = 1;
             close_menu_pictureBox.TabStop = false;
+            close_menu_pictureBox.Click += close_menu_pictureBox_Click;
             // 
             // show_menu_pictureBox
             // 
@@ -210,10 +213,11 @@
             show_menu_pictureBox.Location = new Point(32, 19);
             show_menu_pictureBox.Margin = new Padding(0);
             show_menu_pictureBox.Name = "show_menu_pictureBox";
-            show_menu_pictureBox.Size = new Size(220, 32);
+            show_menu_pictureBox.Size = new Size(32, 32);
             show_menu_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             show_menu_pictureBox.TabIndex = 1;
             show_menu_pictureBox.TabStop = false;
+            show_menu_pictureBox.Click += show_menu_pictureBox_Click;
             // 
             // dashboard_menu_group_flowLayoutPanel
             // 
@@ -237,6 +241,7 @@
             dashboard_menu_flowLayoutPanel.Size = new Size(377, 80);
             dashboard_menu_flowLayoutPanel.TabIndex = 1;
             dashboard_menu_flowLayoutPanel.WrapContents = false;
+            dashboard_menu_flowLayoutPanel.Click += dashboard_menu_flowLayoutPanel_Click;
             // 
             // dashboard_menu_pictureBox
             // 
@@ -248,6 +253,7 @@
             dashboard_menu_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             dashboard_menu_pictureBox.TabIndex = 0;
             dashboard_menu_pictureBox.TabStop = false;
+            dashboard_menu_pictureBox.Click += dashboard_menu_pictureBox_Click;
             // 
             // dashboard_menu_label
             // 
@@ -260,6 +266,7 @@
             dashboard_menu_label.Size = new Size(138, 37);
             dashboard_menu_label.TabIndex = 1;
             dashboard_menu_label.Text = "Trang chủ";
+            dashboard_menu_label.Click += dashboard_menu_label_Click;
             // 
             // user_flowLayoutPanel
             // 
@@ -272,6 +279,7 @@
             user_flowLayoutPanel.Size = new Size(379, 80);
             user_flowLayoutPanel.TabIndex = 5;
             user_flowLayoutPanel.WrapContents = false;
+            user_flowLayoutPanel.Click += user_flowLayoutPanel_Click;
             // 
             // user_pictureBox
             // 
@@ -283,6 +291,7 @@
             user_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             user_pictureBox.TabIndex = 0;
             user_pictureBox.TabStop = false;
+            user_pictureBox.Click += user_pictureBox_Click;
             // 
             // role_flowLayoutPanel
             // 
@@ -295,6 +304,7 @@
             role_flowLayoutPanel.Size = new Size(377, 80);
             role_flowLayoutPanel.TabIndex = 7;
             role_flowLayoutPanel.WrapContents = false;
+            role_flowLayoutPanel.Click += role_flowLayoutPanel_Click;
             // 
             // role_pictureBox
             // 
@@ -306,6 +316,7 @@
             role_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             role_pictureBox.TabIndex = 0;
             role_pictureBox.TabStop = false;
+            role_pictureBox.Click += role_pictureBox_Click;
             // 
             // role_label
             // 
@@ -318,8 +329,9 @@
             role_label.Size = new Size(165, 37);
             role_label.TabIndex = 1;
             role_label.Text = "Quản lý role";
+            role_label.Click += role_label_Click;
             // 
-            // Sys_MainForm
+            // Admin_MainForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -328,7 +340,8 @@
             Controls.Add(nav_drawer_flowLayoutPanel);
             Controls.Add(main_panel);
             Controls.Add(status_bar_panel);
-            Name = "Sys_MainForm";
+            Name = "Admin_MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Trang chủ";
             ((System.ComponentModel.ISupportInitialize)out_menu_pictureBox).EndInit();
             out_menu_flowLayoutPanel.ResumeLayout(false);

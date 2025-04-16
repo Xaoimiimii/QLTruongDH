@@ -10,11 +10,14 @@ using System.Windows.Forms;
 
 namespace QLTruongDH
 {
-    public partial class LoginAs : Form
+    public partial class Admin_QLRoles : UserControl
     {
-        public LoginAs()
+        private Admin_MainForm mainForm;
+
+        public Admin_QLRoles(Admin_MainForm form)
         {
             InitializeComponent();
+            this.mainForm = form;
         }
     }
 }

@@ -118,10 +118,5 @@ namespace QLTruongDH
             mainForm.LoadControl(new BangDiem(mainForm));
         }
 
-
-
-
-
-
     }
 }
