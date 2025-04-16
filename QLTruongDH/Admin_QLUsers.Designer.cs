@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             label1 = new Label();
             dataGridView = new DataGridView();
@@ -38,10 +38,10 @@
             DBA_ROLE_PRIVS_dataGridView = new DataGridView();
             delete_button = new Button();
             edit_button = new Button();
-            search_employee_button = new Button();
+            search_username_button = new Button();
             add_button = new Button();
-            search_employee_guna2TextBox = new Guna.UI2.WinForms.Guna2TextBox();
-            search_employee_label = new Label();
+            search_username_guna2TextBox = new Guna.UI2.WinForms.Guna2TextBox();
+            search_username_label = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DBA_SYS_PRIVS_dataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DBA_TAB_PRIVS_dataGridView).BeginInit();
@@ -139,6 +139,7 @@
             delete_button.TabIndex = 40;
             delete_button.Text = "Xóa user";
             delete_button.UseVisualStyleBackColor = false;
+            delete_button.Click += delete_button_Click;
             // 
             // edit_button
             // 
@@ -151,18 +152,20 @@
             edit_button.TabIndex = 39;
             edit_button.Text = "Sửa thông tin";
             edit_button.UseVisualStyleBackColor = false;
+            edit_button.Click += edit_button_Click;
             // 
-            // search_employee_button
+            // search_username_button
             // 
-            search_employee_button.BackColor = Color.BurlyWood;
-            search_employee_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            search_employee_button.ForeColor = Color.Transparent;
-            search_employee_button.Location = new Point(592, 130);
-            search_employee_button.Name = "search_employee_button";
-            search_employee_button.Size = new Size(149, 63);
-            search_employee_button.TabIndex = 45;
-            search_employee_button.Text = "Tra cứu";
-            search_employee_button.UseVisualStyleBackColor = false;
+            search_username_button.BackColor = Color.BurlyWood;
+            search_username_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            search_username_button.ForeColor = Color.Transparent;
+            search_username_button.Location = new Point(592, 130);
+            search_username_button.Name = "search_username_button";
+            search_username_button.Size = new Size(149, 63);
+            search_username_button.TabIndex = 45;
+            search_username_button.Text = "Tra cứu";
+            search_username_button.UseVisualStyleBackColor = false;
+            search_username_button.Click += search_employee_button_Click;
             // 
             // add_button
             // 
@@ -175,52 +178,53 @@
             add_button.TabIndex = 44;
             add_button.Text = "Thêm user";
             add_button.UseVisualStyleBackColor = false;
+            add_button.Click += add_button_Click;
             // 
-            // search_employee_guna2TextBox
+            // search_username_guna2TextBox
             // 
-            search_employee_guna2TextBox.BorderRadius = 20;
-            search_employee_guna2TextBox.CustomizableEdges = customizableEdges1;
-            search_employee_guna2TextBox.DefaultText = "";
-            search_employee_guna2TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            search_employee_guna2TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            search_employee_guna2TextBox.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            search_employee_guna2TextBox.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            search_employee_guna2TextBox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            search_employee_guna2TextBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            search_employee_guna2TextBox.HoverState.BorderColor = Color.Gray;
-            search_employee_guna2TextBox.IconLeft = Properties.Resources.search;
-            search_employee_guna2TextBox.IconLeftOffset = new Point(10, 0);
-            search_employee_guna2TextBox.IconRight = Properties.Resources.close__1_;
-            search_employee_guna2TextBox.IconRightOffset = new Point(10, 0);
-            search_employee_guna2TextBox.Location = new Point(222, 138);
-            search_employee_guna2TextBox.Margin = new Padding(7);
-            search_employee_guna2TextBox.Name = "search_employee_guna2TextBox";
-            search_employee_guna2TextBox.PlaceholderText = "";
-            search_employee_guna2TextBox.SelectedText = "";
-            search_employee_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            search_employee_guna2TextBox.Size = new Size(360, 51);
-            search_employee_guna2TextBox.TabIndex = 43;
+            search_username_guna2TextBox.BorderRadius = 20;
+            search_username_guna2TextBox.CustomizableEdges = customizableEdges3;
+            search_username_guna2TextBox.DefaultText = "";
+            search_username_guna2TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            search_username_guna2TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            search_username_guna2TextBox.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            search_username_guna2TextBox.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            search_username_guna2TextBox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            search_username_guna2TextBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            search_username_guna2TextBox.HoverState.BorderColor = Color.Gray;
+            search_username_guna2TextBox.IconLeft = Properties.Resources.search;
+            search_username_guna2TextBox.IconLeftOffset = new Point(10, 0);
+            search_username_guna2TextBox.IconRight = Properties.Resources.close__1_;
+            search_username_guna2TextBox.IconRightOffset = new Point(10, 0);
+            search_username_guna2TextBox.Location = new Point(179, 138);
+            search_username_guna2TextBox.Margin = new Padding(7);
+            search_username_guna2TextBox.Name = "search_username_guna2TextBox";
+            search_username_guna2TextBox.PlaceholderText = "";
+            search_username_guna2TextBox.SelectedText = "";
+            search_username_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            search_username_guna2TextBox.Size = new Size(403, 51);
+            search_username_guna2TextBox.TabIndex = 43;
             // 
-            // search_employee_label
+            // search_username_label
             // 
-            search_employee_label.AutoSize = true;
-            search_employee_label.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            search_employee_label.Location = new Point(25, 142);
-            search_employee_label.Margin = new Padding(0);
-            search_employee_label.Name = "search_employee_label";
-            search_employee_label.Size = new Size(190, 37);
-            search_employee_label.TabIndex = 42;
-            search_employee_label.Text = "Mã nhân viên:";
+            search_username_label.AutoSize = true;
+            search_username_label.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            search_username_label.Location = new Point(25, 142);
+            search_username_label.Margin = new Padding(0);
+            search_username_label.Name = "search_username_label";
+            search_username_label.Size = new Size(147, 37);
+            search_username_label.TabIndex = 42;
+            search_username_label.Text = "Username:";
             // 
             // Admin_QLUsers
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            Controls.Add(search_employee_button);
+            Controls.Add(search_username_button);
             Controls.Add(add_button);
-            Controls.Add(search_employee_guna2TextBox);
-            Controls.Add(search_employee_label);
+            Controls.Add(search_username_guna2TextBox);
+            Controls.Add(search_username_label);
             Controls.Add(delete_button);
             Controls.Add(edit_button);
             Controls.Add(DBA_ROLE_PRIVS_dataGridView);
@@ -250,9 +254,9 @@
         private DataGridView DBA_ROLE_PRIVS_dataGridView;
         private Button delete_button;
         private Button edit_button;
-        private Button search_employee_button;
+        private Button search_username_button;
         private Button add_button;
-        private Guna.UI2.WinForms.Guna2TextBox search_employee_guna2TextBox;
-        private Label search_employee_label;
+        private Guna.UI2.WinForms.Guna2TextBox search_username_guna2TextBox;
+        private Label search_username_label;
     }
 }

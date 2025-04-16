@@ -1,6 +1,6 @@
 ﻿namespace QLTruongDH
 {
-    partial class Admin_ThemUser
+    partial class Admin_ThemSuaUser
     {
         /// <summary> 
         /// Required designer variable.
@@ -45,9 +45,9 @@
             tab_priv_label = new Label();
             add_user_select_table_comboBox = new ComboBox();
             add_user_tab_checkedListBox = new CheckedListBox();
-            add_user_with_grant_option_checkBox = new CheckBox();
+            select_with_grant_option_checkBox = new CheckBox();
             add_user_column_checkedListBox = new CheckedListBox();
-            checkBox1 = new CheckBox();
+            update_user_with_grant_option_checkBox = new CheckBox();
             username_panel.SuspendLayout();
             password_panel.SuspendLayout();
             SuspendLayout();
@@ -225,17 +225,17 @@
             add_user_tab_checkedListBox.Size = new Size(178, 160);
             add_user_tab_checkedListBox.TabIndex = 55;
             // 
-            // add_user_with_grant_option_checkBox
+            // select_with_grant_option_checkBox
             // 
-            add_user_with_grant_option_checkBox.AutoSize = true;
-            add_user_with_grant_option_checkBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            add_user_with_grant_option_checkBox.ForeColor = Color.Goldenrod;
-            add_user_with_grant_option_checkBox.Location = new Point(209, 746);
-            add_user_with_grant_option_checkBox.Name = "add_user_with_grant_option_checkBox";
-            add_user_with_grant_option_checkBox.Size = new Size(310, 41);
-            add_user_with_grant_option_checkBox.TabIndex = 56;
-            add_user_with_grant_option_checkBox.Text = "WITH GRANT OPTION";
-            add_user_with_grant_option_checkBox.UseVisualStyleBackColor = true;
+            select_with_grant_option_checkBox.AutoSize = true;
+            select_with_grant_option_checkBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            select_with_grant_option_checkBox.ForeColor = Color.Goldenrod;
+            select_with_grant_option_checkBox.Location = new Point(209, 746);
+            select_with_grant_option_checkBox.Name = "select_with_grant_option_checkBox";
+            select_with_grant_option_checkBox.Size = new Size(310, 41);
+            select_with_grant_option_checkBox.TabIndex = 56;
+            select_with_grant_option_checkBox.Text = "WITH GRANT OPTION";
+            select_with_grant_option_checkBox.UseVisualStyleBackColor = true;
             // 
             // add_user_column_checkedListBox
             // 
@@ -247,26 +247,26 @@
             add_user_column_checkedListBox.Size = new Size(493, 360);
             add_user_column_checkedListBox.TabIndex = 57;
             // 
-            // checkBox1
+            // update_user_with_grant_option_checkBox
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkBox1.ForeColor = Color.Goldenrod;
-            checkBox1.Location = new Point(209, 793);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(310, 41);
-            checkBox1.TabIndex = 58;
-            checkBox1.Text = "WITH GRANT OPTION";
-            checkBox1.UseVisualStyleBackColor = true;
+            update_user_with_grant_option_checkBox.AutoSize = true;
+            update_user_with_grant_option_checkBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            update_user_with_grant_option_checkBox.ForeColor = Color.Goldenrod;
+            update_user_with_grant_option_checkBox.Location = new Point(209, 865);
+            update_user_with_grant_option_checkBox.Name = "update_user_with_grant_option_checkBox";
+            update_user_with_grant_option_checkBox.Size = new Size(310, 41);
+            update_user_with_grant_option_checkBox.TabIndex = 58;
+            update_user_with_grant_option_checkBox.Text = "WITH GRANT OPTION";
+            update_user_with_grant_option_checkBox.UseVisualStyleBackColor = true;
             // 
             // Admin_ThemUser
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            Controls.Add(checkBox1);
+            Controls.Add(update_user_with_grant_option_checkBox);
             Controls.Add(add_user_column_checkedListBox);
-            Controls.Add(add_user_with_grant_option_checkBox);
+            Controls.Add(select_with_grant_option_checkBox);
             Controls.Add(add_user_tab_checkedListBox);
             Controls.Add(add_user_select_table_comboBox);
             Controls.Add(tab_priv_label);
@@ -310,8 +310,8 @@
         private Label tab_priv_label;
         private ComboBox add_user_select_table_comboBox;
         private CheckedListBox add_user_tab_checkedListBox;
-        private CheckBox add_user_with_grant_option_checkBox;
+        private CheckBox select_with_grant_option_checkBox;
         private CheckedListBox add_user_column_checkedListBox;
-        private CheckBox checkBox1;
+        private CheckBox update_user_with_grant_option_checkBox;
     }
 }

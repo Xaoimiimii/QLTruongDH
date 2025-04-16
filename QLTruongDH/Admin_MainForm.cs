@@ -73,7 +73,7 @@ namespace QLTruongDH
             else
             {
                 nav_drawer_flowLayoutPanel.Width += 10;
-                if (nav_drawer_flowLayoutPanel.Width >= 380)
+                if (nav_drawer_flowLayoutPanel.Width >= 360)
                 {
                     menuTransition.Stop();
                     menuExpand = true;

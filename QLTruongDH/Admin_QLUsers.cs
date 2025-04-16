@@ -19,5 +19,25 @@ namespace QLTruongDH
             InitializeComponent();
             this.mainForm = form;
         }
+
+        private void add_button_Click(object sender, EventArgs e)
+        {
+            mainForm.LoadControl(new Admin_ThemSuaUser(mainForm, "Add"));
+        }
+
+        private void edit_button_Click(object sender, EventArgs e)
+        {
+            mainForm.LoadControl(new Admin_ThemSuaUser(mainForm, "Edit"));
+        }
+
+        private void delete_button_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void search_employee_button_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
