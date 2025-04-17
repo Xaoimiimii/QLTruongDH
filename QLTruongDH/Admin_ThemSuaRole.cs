@@ -18,20 +18,28 @@ namespace QLTruongDH
         private Admin_MainForm mainForm;
         private string mode;
         private string roleName;
-        private bool isAddMode = false;
-        private bool isEditMode = false;
+
+        private List<string> sysPrivsList = new List<string>();
+        private List<string> rolePrivsList = new List<string>();
+        private List<TablePrivilege> before_selectedTablePrivileges = new List<TablePrivilege>();
         private List<TablePrivilege> selectedTablePrivileges = new List<TablePrivilege>();
 
-        public Admin_ThemSuaRole(Admin_MainForm form, string mode, string roleName)
+        public Admin_ThemSuaRole(Admin_MainForm form, string mode, string roleName,
+            List<string> sysPrivsList, List<string> rolePrivsList, List<TablePrivilege> selectedTablePrivileges)
         {
             InitializeComponent();
             this.mainForm = form;
             this.mode = mode;
             this.roleName = roleName;
+            this.sysPrivsList = sysPrivsList;
+            this.rolePrivsList = rolePrivsList;
+            this.before_selectedTablePrivileges = selectedTablePrivileges;
+
+            HienThiDataNhanDuoc();
+            LoadTabComboBox();
 
             if (mode == "Add")
             {
-                isAddMode = true;
                 control_title_label.Text = "Thêm role";
                 add_button.Text = "Thêm role";
 
@@ -39,45 +47,77 @@ namespace QLTruongDH
             }
             else if (mode == "Edit")
             {
-                isEditMode = true;
                 control_title_label.Text = "Sửa thông tin role";
                 add_button.Text = "Sửa thông tin";
 
                 LoadRoleCheckedListBox("lay_ds_ten_roles_khong_phai_role_hien_tai", roleName);
+                LoadSysPrivsFromSysPrivsList();
+                LoadRolePrivsFromRolePrivsList();
             }
 
-            LoadTabComboBox();
+
             add_role_tab_checkedListBox.Visible = false;
         }
 
 
-        // === CLASS ===
-        public class PrivilegeInfo
-        {
-            public string PrivilegeName { get; set; } // Tên quyền
-            public List<string> Columns { get; set; } // Danh sách cột
-
-            public PrivilegeInfo(string privilegeName, List<string> columns)
-            {
-                PrivilegeName = privilegeName;
-                Columns = columns;
-            }
-        }
-
-        class TablePrivilege
-        {
-            public string TableName { get; set; }
-            public List<PrivilegeInfo> Privileges { get; set; }
-
-            public TablePrivilege(string tableName)
-            {
-                TableName = tableName;
-                Privileges = new List<PrivilegeInfo>();
-            }
-        }
-
-
         // === LOAD DATA ===
+        private void HienThiDataNhanDuoc()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("Các quyền hệ thống đã nhận: ");
+            foreach (var item in sysPrivsList)
+            {
+                sb.AppendLine(item.ToString());
+            }
+            sb.AppendLine();
+
+            sb.AppendLine("Các quyền role đã nhận: ");
+            foreach (var item in rolePrivsList)
+            {
+                sb.AppendLine(item.ToString());
+            }
+            sb.AppendLine();
+
+            sb.AppendLine("Các quyền bảng đã chọn: ");
+            foreach (var tablePrivilege in before_selectedTablePrivileges)
+            {
+                foreach (var privilege in tablePrivilege.Privileges)
+                {
+                    string columns = privilege.Columns.Count > 0 ? string.Join(", ", privilege.Columns) : "ALL";
+                    sb.AppendLine($"Bảng: {tablePrivilege.TableName} - Quyền: {privilege.PrivilegeName} - Grantable: {privilege.WithGrantOption} - Cột: {columns}");
+                }
+            }
+
+            // Hiển thị thông tin lên messageBox
+            MessageBox.Show(sb.ToString(), "Thông tin đã nhận", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void LoadSysPrivsFromSysPrivsList()
+        {
+            foreach (string item in sysPrivsList)
+            {
+                int index = add_role_sys_checkedListBox.Items.IndexOf(item);
+                if (index != -1)
+                {
+                    add_role_sys_checkedListBox.SetItemChecked(index, true);
+                }
+            }
+        }
+
+        private void LoadRolePrivsFromRolePrivsList()
+        {
+            foreach (string item in rolePrivsList)
+            {
+                int index = add_role_role_checkedListBox.Items.IndexOf(item);
+                if (index != -1)
+                {
+                    add_role_role_checkedListBox.SetItemChecked(index, true);
+                }
+            }
+        }
+
+
         private void LoadRoleCheckedListBox(string procedureName, string? inputParamValue = null)
         {
             using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
@@ -111,9 +151,9 @@ namespace QLTruongDH
                         }
                     }
                 }
-                catch (OracleException ex)
+                catch (OracleException)
                 {
-                    MessageBox.Show("Lỗi khi load danh sách role trong checkedListBox: " + ex.Message);
+                    MessageBox.Show("Lỗi khi load danh sách role trong checkedListBox","Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -143,9 +183,9 @@ namespace QLTruongDH
                         }
                     }
                 }
-                catch (OracleException ex)
+                catch (OracleException)
                 {
-                    MessageBox.Show("Lỗi khi load danh sách table trong comboBox");
+                    MessageBox.Show("Lỗi khi load danh sách table trong comboBox", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -176,7 +216,7 @@ namespace QLTruongDH
                 }
                 catch (OracleException)
                 {
-                    MessageBox.Show($"Lỗi khi load danh sách column trong table '{tableName}'");
+                    MessageBox.Show($"Lỗi khi load danh sách column trong table '{tableName}'", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -603,7 +643,7 @@ namespace QLTruongDH
                 // Thêm quyền nếu chưa tồn tại
                 if (!tablePrivilege.Privileges.Any(p => p.PrivilegeName == selectedPrivilege))
                 {
-                    tablePrivilege.Privileges.Add(new PrivilegeInfo(selectedPrivilege, new List<string>()));
+                    tablePrivilege.Privileges.Add(new PrivilegeInfo(selectedPrivilege, false, new List<string>()));
                 }
             }
             else

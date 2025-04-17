@@ -8,14 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Oracle.ManagedDataAccess.Client;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace QLTruongDH
 {
     public partial class Admin_QLRoles : UserControl
     {
         private Admin_MainForm mainForm;
-        private List<TablePrivilege> selectedTablePrivileges = new List<TablePrivilege>();
         private string selectedRole = string.Empty;
+        private List<string> sysPrivsList = new List<string>();
+        private List<string> rolePrivsList = new List<string>();
+        private List<TablePrivilege> selectedTablePrivileges = new List<TablePrivilege>();
 
         public Admin_QLRoles(Admin_MainForm form)
         {
@@ -26,32 +29,8 @@ namespace QLTruongDH
             LoadRole();
         }
 
-        public class PrivilegeInfo
-        {
-            public string PrivilegeName { get; set; } // Tên quyền
-            public bool WithGrantOption { get; set; } // Có WITH GRANT OPTION hay không
-            public List<string> Columns { get; set; } // Danh sách cột
 
-            public PrivilegeInfo(string privilegeName, bool withGrantOption, List<string> columns)
-            {
-                PrivilegeName = privilegeName;
-                WithGrantOption = withGrantOption;
-                Columns = columns;
-            }
-        }
-
-        class TablePrivilege
-        {
-            public string TableName { get; set; }
-            public List<PrivilegeInfo> Privileges { get; set; }
-
-            public TablePrivilege(string tableName)
-            {
-                TableName = tableName;
-                Privileges = new List<PrivilegeInfo>();
-            }
-        }
-
+        // === LOAD DATA ===
         private void LoadRole()
         {
             using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
@@ -71,9 +50,9 @@ namespace QLTruongDH
 
                     dataGridView.DataSource = dt;
                 }
-                catch (OracleException ex)
+                catch (OracleException)
                 {
-                    MessageBox.Show("Lỗi khi load danh sách role");
+                    MessageBox.Show("Lỗi khi load danh sách role", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -86,7 +65,7 @@ namespace QLTruongDH
                 {
                     conn.Open();
 
-                    // Load system privileges
+                    // --- Load System Privileges ---
                     OracleCommand sys = new OracleCommand("lay_user_sys_privs", conn);
                     sys.CommandType = CommandType.StoredProcedure;
                     sys.Parameters.Add("p_username", OracleDbType.Varchar2).Value = rolename;
@@ -97,7 +76,30 @@ namespace QLTruongDH
                     sys_adapter.Fill(sys_dt);
                     DBA_SYS_PRIVS_dataGridView.DataSource = sys_dt;
 
-                    // Load table privileges
+                    foreach (DataRow row in sys_dt.Rows)
+                    {
+                        sysPrivsList.Add(row["SYS_PRIVS"].ToString());
+                    }
+
+
+                    // --- Load Role Privileges ---
+                    OracleCommand role = new OracleCommand("lay_user_role_privs", conn);
+                    role.CommandType = CommandType.StoredProcedure;
+                    role.Parameters.Add("p_username", OracleDbType.Varchar2).Value = rolename;
+                    role.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                    OracleDataAdapter role_adapter = new OracleDataAdapter(role);
+                    DataTable role_dt = new DataTable();
+                    role_adapter.Fill(role_dt);
+                    DBA_ROLE_PRIVS_dataGridView.DataSource = role_dt;
+
+                    foreach (DataRow row in role_dt.Rows)
+                    {
+                        rolePrivsList.Add(row["GRANTED_ROLE"].ToString());
+                    }
+
+
+                    // --- Load Table Privileges ---
                     OracleCommand tab = new OracleCommand("lay_user_tab_privs", conn);
                     tab.CommandType = CommandType.StoredProcedure;
                     tab.Parameters.Add("p_username", OracleDbType.Varchar2).Value = rolename;
@@ -108,44 +110,64 @@ namespace QLTruongDH
                     tab_adapter.Fill(tab_dt);
                     DBA_TAB_PRIVS_dataGridView.DataSource = tab_dt;
 
-                    // Load role privileges
-                    OracleCommand role = new OracleCommand("lay_user_role_privs", conn);
-                    role.CommandType = CommandType.StoredProcedure;
-                    role.Parameters.Add("p_username", OracleDbType.Varchar2).Value = rolename;
-                    role.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+                    foreach (DataRow row in tab_dt.Rows)
+                    {
+                        string tableName = row["TABLE_NAME"].ToString();
+                        string privilege = row["TAB_PRIVS"].ToString();
+                        string grantable = row["GRANTABLE"].ToString();
 
-                    OracleDataAdapter role_adapter = new OracleDataAdapter(role);
-                    DataTable role_dt = new DataTable();
-                    role_adapter.Fill(role_dt);
-                    DBA_ROLE_PRIVS_dataGridView.DataSource = role_dt;
+                        TablePrivilege tablePrivilege = selectedTablePrivileges.FirstOrDefault(t => t.TableName == tableName);
+
+                        if (tablePrivilege == null)
+                        {
+                            tablePrivilege = new TablePrivilege(tableName);
+                            selectedTablePrivileges.Add(tablePrivilege);
+                        }
+
+                        bool withGrantOption;
+                        if (grantable == "YES") withGrantOption = true;
+                        else if (grantable == "NO") withGrantOption = false;
+                        else withGrantOption = false;
+
+                        PrivilegeInfo privInfo = new PrivilegeInfo(privilege, withGrantOption, new List<string>());
+                        tablePrivilege.Privileges.Add(privInfo);
+                    }
                 }
-                catch (OracleException ex)
+                catch (OracleException)
                 {
-                    MessageBox.Show("Lỗi khi load sys privileges");
+                    MessageBox.Show("Lỗi khi load sys privileges", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
+        private void Reset()
+        {
+            delete_button.Visible = false;
+            edit_button.Visible = false;
+            selectedRole = string.Empty;
+            sysPrivsList.Clear();
+            rolePrivsList.Clear();
+            selectedTablePrivileges.Clear();
+        }
+
         private void add_button_Click(object sender, EventArgs e)
         {
-            mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Add", selectedRole));
+            mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Add", selectedRole, sysPrivsList, rolePrivsList, selectedTablePrivileges));
         }
 
         private void edit_button_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(selectedRole))
             {
-                MessageBox.Show("Vui lòng chọn một role để sửa.");
+                MessageBox.Show("Vui lòng chọn một role để sửa");
                 return;
             }
-            mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Edit", selectedRole));
+            mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Edit", selectedRole, sysPrivsList, rolePrivsList, selectedTablePrivileges));
         }
 
         private void Admin_QLRoles_Click(object sender, EventArgs e)
         {
-            delete_button.Visible = false;
-            edit_button.Visible = false;
-            selectedRole = string.Empty;
+            Reset();
         }
 
         private void search_role_button_Click(object sender, EventArgs e)
@@ -169,9 +191,9 @@ namespace QLTruongDH
                         adapter.Fill(dt);
                         dataGridView.DataSource = dt;
                     }
-                    catch (OracleException ex)
+                    catch (OracleException)
                     {
-                        MessageBox.Show("Lỗi khi tìm kiếm role");
+                        MessageBox.Show("Lỗi khi tìm kiếm role", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -200,9 +222,9 @@ namespace QLTruongDH
                             adapter.Fill(dt);
                             dataGridView.DataSource = dt;
                         }
-                        catch (OracleException ex)
+                        catch (OracleException)
                         {
-                            MessageBox.Show("Lỗi khi tìm kiếm role");
+                            MessageBox.Show("Lỗi khi tìm kiếm role", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
@@ -222,6 +244,7 @@ namespace QLTruongDH
                 var cellValue = dataGridView.Rows[e.RowIndex].Cells[1].Value;
                 if (cellValue != null)
                 {
+                    Reset();
                     selectedRole = cellValue.ToString();
                     LoadPrivs(selectedRole);
                     delete_button.Visible = true;
@@ -247,13 +270,11 @@ namespace QLTruongDH
                             cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = selectedRole;
                             cmd.ExecuteNonQuery();
                             LoadRole();
-                            delete_button.Visible = false;
-                            edit_button.Visible = false;
-                            selectedRole = string.Empty;
+                            Reset();
                         }
-                        catch (OracleException ex)
+                        catch (OracleException)
                         {
-                            MessageBox.Show($"Lỗi khi xóa role {selectedRole}!");
+                            MessageBox.Show($"Lỗi khi xóa role {selectedRole}!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }

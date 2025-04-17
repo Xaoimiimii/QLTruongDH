@@ -106,9 +106,9 @@
             // username_textBox
             // 
             username_textBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            username_textBox.Location = new Point(248, 19);
+            username_textBox.Location = new Point(219, 19);
             username_textBox.Name = "username_textBox";
-            username_textBox.Size = new Size(297, 43);
+            username_textBox.Size = new Size(326, 43);
             username_textBox.TabIndex = 46;
             // 
             // username_label
@@ -155,9 +155,9 @@
             // password_textBox
             // 
             password_textBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            password_textBox.Location = new Point(171, 19);
+            password_textBox.Location = new Point(155, 19);
             password_textBox.Name = "password_textBox";
-            password_textBox.Size = new Size(374, 43);
+            password_textBox.Size = new Size(386, 43);
             password_textBox.TabIndex = 46;
             // 
             // sys_priv_label
@@ -175,7 +175,7 @@
             add_user_sys_checkedListBox.BorderStyle = BorderStyle.None;
             add_user_sys_checkedListBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
             add_user_sys_checkedListBox.FormattingEnabled = true;
-            add_user_sys_checkedListBox.Items.AddRange(new object[] { "Create session", "Create user", "Drop user", "Alter user", "Create procedure", "Create table", "Create view", "Drop any procedure", "Alter any procedure", "Drop any table", "Alter any table" });
+            add_user_sys_checkedListBox.Items.AddRange(new object[] { "CREATE SESSION", "CREATE USER", "DROP USER", "ALTER USER", "CREATE PROCEDURE", "CREATE TABLE", "CREATE VIEW", "DROP ANY PROCEDURE", "ALTER ANY PROCEDURE", "DROP ANY TABLE", "ALTER ANY TABLE" });
             add_user_sys_checkedListBox.Location = new Point(25, 287);
             add_user_sys_checkedListBox.Name = "add_user_sys_checkedListBox";
             add_user_sys_checkedListBox.Size = new Size(394, 280);
@@ -276,7 +276,7 @@
             // 
             back_flowLayoutPanel.Controls.Add(back_pictureBox);
             back_flowLayoutPanel.Controls.Add(back_label);
-            back_flowLayoutPanel.Location = new Point(25, 1064);
+            back_flowLayoutPanel.Location = new Point(25, 1058);
             back_flowLayoutPanel.Margin = new Padding(0);
             back_flowLayoutPanel.Name = "back_flowLayoutPanel";
             back_flowLayoutPanel.Size = new Size(180, 38);

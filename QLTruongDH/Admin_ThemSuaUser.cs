@@ -18,67 +18,109 @@ namespace QLTruongDH
         private Admin_MainForm mainForm;
         private string mode;
         private string username;
-        private bool isAddMode = false;
-        private bool isEditMode = false;
+
+        private List<string> sysPrivsList = new List<string>();
+        private List<string> rolePrivsList = new List<string>();
+        private List<TablePrivilege> before_selectedTablePrivileges = new List<TablePrivilege>();
         private List<TablePrivilege> selectedTablePrivileges = new List<TablePrivilege>();
 
-        public Admin_ThemSuaUser(Admin_MainForm form, string mode, string username)
+        public Admin_ThemSuaUser(Admin_MainForm form, string mode, string username,
+            List<string> sysPrivsList, List<string> rolePrivsList, List<TablePrivilege> selectedTablePrivileges)
         {
             InitializeComponent();
             this.mainForm = form;
             this.mode = mode;
             this.username = username;
+            this.sysPrivsList = sysPrivsList;
+            this.rolePrivsList = rolePrivsList;
+            this.before_selectedTablePrivileges = selectedTablePrivileges;
+
+            HienThiDataNhanDuoc();
+            LoadRoleCheckedListBox();
+            LoadTabComboBox();
 
             if (mode == "Add")
             {
-                isAddMode = true;
                 control_title_label.Text = "Thêm user";
                 add_button.Text = "Thêm user";
             }
             else if (mode == "Edit")
             {
-                isEditMode = true;
                 control_title_label.Text = "Sửa thông tin user";
                 add_button.Text = "Sửa thông tin";
+                password_panel.Visible = false;
+                password_panel.Enabled = false;
+                username_textBox.Enabled = false;
+                username_textBox.Text = username;
+                LoadSysPrivsFromSysPrivsList();
+                LoadRolePrivsFromRolePrivsList();
             }
-
-            LoadRoleCheckedListBox();
-            LoadTabComboBox();
 
             add_user_tab_checkedListBox.Visible = false;
             select_with_grant_option_checkBox.Visible = false;
             update_with_grant_option_checkBox.Visible = false;
         }
 
-        // === CLASS ===
-        public class PrivilegeInfo
-        {
-            public string PrivilegeName { get; set; } // Tên quyền
-            public bool WithGrantOption { get; set; } // Có WITH GRANT OPTION hay không
-            public List<string> Columns { get; set; } // Danh sách cột
-
-            public PrivilegeInfo(string privilegeName, bool withGrantOption, List<string> columns)
-            {
-                PrivilegeName = privilegeName;
-                WithGrantOption = withGrantOption;
-                Columns = columns;
-            }
-        }
-
-        class TablePrivilege
-        {
-            public string TableName { get; set; }
-            public List<PrivilegeInfo> Privileges { get; set; }
-
-            public TablePrivilege(string tableName)
-            {
-                TableName = tableName;
-                Privileges = new List<PrivilegeInfo>();
-            }
-        }
-
 
         // === LOAD DATA ===
+        private void HienThiDataNhanDuoc()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("Các quyền hệ thống đã nhận: ");
+            foreach (var item in sysPrivsList)
+            {
+                sb.AppendLine(item.ToString());
+            }
+            sb.AppendLine();
+
+            sb.AppendLine("Các quyền role đã nhận: ");
+            foreach (var item in rolePrivsList)
+            {
+                sb.AppendLine(item.ToString());
+            }
+            sb.AppendLine();
+
+            sb.AppendLine("Các quyền bảng đã chọn: ");
+            foreach (var tablePrivilege in before_selectedTablePrivileges)
+            {
+                foreach (var privilege in tablePrivilege.Privileges)
+                {
+                    string columns = privilege.Columns.Count > 0 ? string.Join(", ", privilege.Columns) : "ALL";
+                    sb.AppendLine($"Bảng: {tablePrivilege.TableName} - Quyền: {privilege.PrivilegeName} - Grantable: {privilege.WithGrantOption} - Cột: {columns}");
+                }
+            }
+
+            // Hiển thị thông tin lên messageBox
+            MessageBox.Show(sb.ToString(), "Thông tin đã nhận", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        
+        private void LoadSysPrivsFromSysPrivsList()
+        {
+            foreach (string item in sysPrivsList)
+            {
+                int index = add_user_sys_checkedListBox.Items.IndexOf(item);
+                if (index != -1)
+                {
+                    add_user_sys_checkedListBox.SetItemChecked(index, true);
+                }
+            }
+        }
+
+        private void LoadRolePrivsFromRolePrivsList()
+        {
+            foreach (string item in rolePrivsList)
+            {
+                int index = add_user_role_checkedListBox.Items.IndexOf(item);
+                if (index != -1)
+                {
+                    add_user_role_checkedListBox.SetItemChecked(index, true);
+                }
+            }
+        }
+
+
         private void LoadRoleCheckedListBox()
         {
             using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
@@ -106,7 +148,7 @@ namespace QLTruongDH
                 }
                 catch (OracleException)
                 {
-                    MessageBox.Show("Lỗi khi load danh sách user trong checkedListBox");
+                    MessageBox.Show("Lỗi khi load danh sách user trong checkedListBox", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -138,7 +180,7 @@ namespace QLTruongDH
                 }
                 catch (OracleException)
                 {
-                    MessageBox.Show("Lỗi khi load danh sách table trong comboBox");
+                    MessageBox.Show("Lỗi khi load danh sách table trong comboBox", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -169,7 +211,7 @@ namespace QLTruongDH
                 }
                 catch (OracleException)
                 {
-                    MessageBox.Show($"Lỗi khi load danh sách column trong table '{tableName}'");
+                    MessageBox.Show($"Lỗi khi load danh sách column trong table '{tableName}'", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -777,10 +819,13 @@ namespace QLTruongDH
         private void back_label_Click(object sender, EventArgs e)
         {
             bool shouldWarn = false;
-            if (username_textBox.Text != "" || password_textBox.Text != "") shouldWarn = true;
-            if (add_user_sys_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
-            if (add_user_role_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
-            if (selectedTablePrivileges.Count > 0) shouldWarn = true;
+            if (mode == "Add")
+            {
+                if (username_textBox.Text != "" || password_textBox.Text != "") shouldWarn = true;
+                if (add_user_sys_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
+                if (add_user_role_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
+                if (selectedTablePrivileges.Count > 0) shouldWarn = true;
+            }
 
             if (shouldWarn)
             {
@@ -799,10 +844,13 @@ namespace QLTruongDH
         private void back_pictureBox_Click(object sender, EventArgs e)
         {
             bool shouldWarn = false;
-            if (username_textBox.Text != "" || password_textBox.Text != "") shouldWarn = true;
-            if (add_user_sys_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
-            if (add_user_role_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
-            if (selectedTablePrivileges.Count > 0) shouldWarn = true;
+            if (mode == "Add")
+            {
+                if (username_textBox.Text != "" || password_textBox.Text != "") shouldWarn = true;
+                if (add_user_sys_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
+                if (add_user_role_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
+                if (selectedTablePrivileges.Count > 0) shouldWarn = true;
+            }
 
             if (shouldWarn)
             {
@@ -821,10 +869,13 @@ namespace QLTruongDH
         private void back_flowLayoutPanel_Click(object sender, EventArgs e)
         {
             bool shouldWarn = false;
-            if (username_textBox.Text != "" || password_textBox.Text != "") shouldWarn = true;
-            if (add_user_sys_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
-            if (add_user_role_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
-            if (selectedTablePrivileges.Count > 0) shouldWarn = true;
+            if (mode == "Add")
+            {
+                if (username_textBox.Text != "" || password_textBox.Text != "") shouldWarn = true;
+                if (add_user_sys_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
+                if (add_user_role_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
+                if (selectedTablePrivileges.Count > 0) shouldWarn = true;
+            }
 
             if (shouldWarn)
             {
