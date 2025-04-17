@@ -106,7 +106,7 @@ namespace QLTruongDH
                     OracleDataAdapter tab_adapter = new OracleDataAdapter(tab);
                     DataTable tab_dt = new DataTable();
                     tab_adapter.Fill(tab_dt);
-                    DBA_ROLE_PRIVS_dataGridView.DataSource = tab_dt;
+                    DBA_TAB_PRIVS_dataGridView.DataSource = tab_dt;
 
                     // Load role privileges
                     OracleCommand role = new OracleCommand("lay_user_role_privs", conn);

@@ -47,7 +47,7 @@
             add_user_tab_checkedListBox = new CheckedListBox();
             select_with_grant_option_checkBox = new CheckBox();
             add_user_column_checkedListBox = new CheckedListBox();
-            update_user_with_grant_option_checkBox = new CheckBox();
+            update_with_grant_option_checkBox = new CheckBox();
             back_flowLayoutPanel = new FlowLayoutPanel();
             back_pictureBox = new PictureBox();
             back_label = new Label();
@@ -68,6 +68,7 @@
             reset_button.TabIndex = 44;
             reset_button.Text = "Nhập lại";
             reset_button.UseVisualStyleBackColor = false;
+            reset_button.Click += reset_button_Click;
             // 
             // add_button
             // 
@@ -80,6 +81,7 @@
             add_button.TabIndex = 43;
             add_button.Text = "Thêm user";
             add_button.UseVisualStyleBackColor = false;
+            add_button.Click += add_button_Click;
             // 
             // guna2Separator1
             // 
@@ -173,7 +175,7 @@
             add_user_sys_checkedListBox.BorderStyle = BorderStyle.None;
             add_user_sys_checkedListBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
             add_user_sys_checkedListBox.FormattingEnabled = true;
-            add_user_sys_checkedListBox.Items.AddRange(new object[] { "Connect", "Create session", "Create/drop/alter user", "Create/drop/alter function", "Create/drop/alter procedure", "Create/drop/alter table", "Create/drop/alter view" });
+            add_user_sys_checkedListBox.Items.AddRange(new object[] { "Connect", "Create session", "Create user", "Drop user", "Alter user", "Create procedure", "Create table", "Create view", "Drop any procedure", "Alter any procedure", "Drop any table", "Alter any table" });
             add_user_sys_checkedListBox.Location = new Point(25, 287);
             add_user_sys_checkedListBox.Name = "add_user_sys_checkedListBox";
             add_user_sys_checkedListBox.Size = new Size(394, 280);
@@ -218,6 +220,7 @@
             add_user_select_table_comboBox.Size = new Size(339, 45);
             add_user_select_table_comboBox.TabIndex = 54;
             add_user_select_table_comboBox.Text = "Chọn bảng";
+            add_user_select_table_comboBox.SelectedIndexChanged += add_user_select_table_comboBox_SelectedIndexChanged;
             // 
             // add_user_tab_checkedListBox
             // 
@@ -229,6 +232,8 @@
             add_user_tab_checkedListBox.Name = "add_user_tab_checkedListBox";
             add_user_tab_checkedListBox.Size = new Size(178, 160);
             add_user_tab_checkedListBox.TabIndex = 55;
+            add_user_tab_checkedListBox.ItemCheck += add_user_tab_checkedListBox_ItemCheck;
+            add_user_tab_checkedListBox.Click += add_user_tab_checkedListBox_Click;
             // 
             // select_with_grant_option_checkBox
             // 
@@ -241,6 +246,7 @@
             select_with_grant_option_checkBox.TabIndex = 56;
             select_with_grant_option_checkBox.Text = "WITH GRANT OPTION";
             select_with_grant_option_checkBox.UseVisualStyleBackColor = true;
+            select_with_grant_option_checkBox.CheckedChanged += select_with_grant_option_checkBox_CheckedChanged;
             // 
             // add_user_column_checkedListBox
             // 
@@ -251,18 +257,20 @@
             add_user_column_checkedListBox.Name = "add_user_column_checkedListBox";
             add_user_column_checkedListBox.Size = new Size(493, 360);
             add_user_column_checkedListBox.TabIndex = 57;
+            add_user_column_checkedListBox.ItemCheck += add_user_column_checkedListBox_ItemCheck;
             // 
-            // update_user_with_grant_option_checkBox
+            // update_with_grant_option_checkBox
             // 
-            update_user_with_grant_option_checkBox.AutoSize = true;
-            update_user_with_grant_option_checkBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            update_user_with_grant_option_checkBox.ForeColor = Color.Goldenrod;
-            update_user_with_grant_option_checkBox.Location = new Point(209, 865);
-            update_user_with_grant_option_checkBox.Name = "update_user_with_grant_option_checkBox";
-            update_user_with_grant_option_checkBox.Size = new Size(310, 41);
-            update_user_with_grant_option_checkBox.TabIndex = 58;
-            update_user_with_grant_option_checkBox.Text = "WITH GRANT OPTION";
-            update_user_with_grant_option_checkBox.UseVisualStyleBackColor = true;
+            update_with_grant_option_checkBox.AutoSize = true;
+            update_with_grant_option_checkBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            update_with_grant_option_checkBox.ForeColor = Color.Goldenrod;
+            update_with_grant_option_checkBox.Location = new Point(209, 865);
+            update_with_grant_option_checkBox.Name = "update_with_grant_option_checkBox";
+            update_with_grant_option_checkBox.Size = new Size(310, 41);
+            update_with_grant_option_checkBox.TabIndex = 58;
+            update_with_grant_option_checkBox.Text = "WITH GRANT OPTION";
+            update_with_grant_option_checkBox.UseVisualStyleBackColor = true;
+            update_with_grant_option_checkBox.CheckedChanged += update_with_grant_option_checkBox_CheckedChanged;
             // 
             // back_flowLayoutPanel
             // 
@@ -310,7 +318,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             Controls.Add(back_flowLayoutPanel);
-            Controls.Add(update_user_with_grant_option_checkBox);
+            Controls.Add(update_with_grant_option_checkBox);
             Controls.Add(add_user_column_checkedListBox);
             Controls.Add(select_with_grant_option_checkBox);
             Controls.Add(add_user_tab_checkedListBox);
@@ -361,7 +369,7 @@
         private CheckedListBox add_user_tab_checkedListBox;
         private CheckBox select_with_grant_option_checkBox;
         private CheckedListBox add_user_column_checkedListBox;
-        private CheckBox update_user_with_grant_option_checkBox;
+        private CheckBox update_with_grant_option_checkBox;
         private FlowLayoutPanel back_flowLayoutPanel;
         private PictureBox back_pictureBox;
         private Label back_label;

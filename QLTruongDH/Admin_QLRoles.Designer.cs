@@ -142,7 +142,7 @@
             DBA_ROLE_PRIVS_dataGridView.BorderStyle = BorderStyle.Fixed3D;
             DBA_ROLE_PRIVS_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DBA_ROLE_PRIVS_dataGridView.GridColor = Color.BurlyWood;
-            DBA_ROLE_PRIVS_dataGridView.Location = new Point(1000, 774);
+            DBA_ROLE_PRIVS_dataGridView.Location = new Point(1000, 524);
             DBA_ROLE_PRIVS_dataGridView.Name = "DBA_ROLE_PRIVS_dataGridView";
             DBA_ROLE_PRIVS_dataGridView.ReadOnly = true;
             DBA_ROLE_PRIVS_dataGridView.RowHeadersVisible = false;
@@ -159,7 +159,7 @@
             DBA_TAB_PRIVS_dataGridView.BorderStyle = BorderStyle.Fixed3D;
             DBA_TAB_PRIVS_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DBA_TAB_PRIVS_dataGridView.GridColor = Color.BurlyWood;
-            DBA_TAB_PRIVS_dataGridView.Location = new Point(1000, 524);
+            DBA_TAB_PRIVS_dataGridView.Location = new Point(1000, 774);
             DBA_TAB_PRIVS_dataGridView.Name = "DBA_TAB_PRIVS_dataGridView";
             DBA_TAB_PRIVS_dataGridView.ReadOnly = true;
             DBA_TAB_PRIVS_dataGridView.RowHeadersVisible = false;
