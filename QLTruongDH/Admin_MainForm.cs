@@ -12,17 +12,24 @@ namespace QLTruongDH
 {
     public partial class Admin_MainForm : Form
     {
+        string username;
+        string password;
         bool menuExpand = false;
         public bool isInDashboard = false;
         public bool isInQLUser = false;
         public bool isInQLRole = false;
+        public string connectionString;
 
-        public Admin_MainForm()
+        public Admin_MainForm(string username, string password)
         {
             InitializeComponent();
+            this.username = username;
+            this.password = password;
+            connectionString = $"User Id={username};Password={password};Data Source=localhost:1521/PDB4;";
             LoadControl(new Admin_Dashboard(this));
             UpdateStatus("Dashboard");
         }
+
 
         public void LoadControl(UserControl control)
         {

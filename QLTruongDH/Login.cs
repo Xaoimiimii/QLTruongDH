@@ -72,7 +72,7 @@ namespace QLTruongDH
                     if (roles.Contains("DBA"))
                     {
                         this.Hide();
-                        Admin_MainForm adminForm = new Admin_MainForm();
+                        Admin_MainForm adminForm = new Admin_MainForm(username, password);
                         adminForm.ShowDialog();
                         this.Close();
                     }

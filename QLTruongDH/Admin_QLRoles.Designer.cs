@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             label1 = new Label();
             search_role_button = new Button();
@@ -97,7 +97,7 @@
             // search_role_guna2TextBox
             // 
             search_role_guna2TextBox.BorderRadius = 20;
-            search_role_guna2TextBox.CustomizableEdges = customizableEdges7;
+            search_role_guna2TextBox.CustomizableEdges = customizableEdges1;
             search_role_guna2TextBox.DefaultText = "";
             search_role_guna2TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             search_role_guna2TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -115,7 +115,7 @@
             search_role_guna2TextBox.Name = "search_role_guna2TextBox";
             search_role_guna2TextBox.PlaceholderText = "";
             search_role_guna2TextBox.SelectedText = "";
-            search_role_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            search_role_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
             search_role_guna2TextBox.Size = new Size(377, 51);
             search_role_guna2TextBox.TabIndex = 51;
             // 
@@ -141,6 +141,7 @@
             DBA_ROLE_PRIVS_dataGridView.Location = new Point(1000, 774);
             DBA_ROLE_PRIVS_dataGridView.Name = "DBA_ROLE_PRIVS_dataGridView";
             DBA_ROLE_PRIVS_dataGridView.ReadOnly = true;
+            DBA_ROLE_PRIVS_dataGridView.RowHeadersVisible = false;
             DBA_ROLE_PRIVS_dataGridView.RowHeadersWidth = 82;
             DBA_ROLE_PRIVS_dataGridView.Size = new Size(608, 262);
             DBA_ROLE_PRIVS_dataGridView.TabIndex = 49;
@@ -156,6 +157,7 @@
             DBA_TAB_PRIVS_dataGridView.Location = new Point(1000, 524);
             DBA_TAB_PRIVS_dataGridView.Name = "DBA_TAB_PRIVS_dataGridView";
             DBA_TAB_PRIVS_dataGridView.ReadOnly = true;
+            DBA_TAB_PRIVS_dataGridView.RowHeadersVisible = false;
             DBA_TAB_PRIVS_dataGridView.RowHeadersWidth = 82;
             DBA_TAB_PRIVS_dataGridView.Size = new Size(608, 244);
             DBA_TAB_PRIVS_dataGridView.TabIndex = 48;
@@ -171,6 +173,7 @@
             DBA_SYS_PRIVS_dataGridView.Location = new Point(1000, 212);
             DBA_SYS_PRIVS_dataGridView.Name = "DBA_SYS_PRIVS_dataGridView";
             DBA_SYS_PRIVS_dataGridView.ReadOnly = true;
+            DBA_SYS_PRIVS_dataGridView.RowHeadersVisible = false;
             DBA_SYS_PRIVS_dataGridView.RowHeadersWidth = 82;
             DBA_SYS_PRIVS_dataGridView.Size = new Size(608, 306);
             DBA_SYS_PRIVS_dataGridView.TabIndex = 47;
@@ -186,6 +189,7 @@
             dataGridView.Location = new Point(15, 212);
             dataGridView.Name = "dataGridView";
             dataGridView.ReadOnly = true;
+            dataGridView.RowHeadersVisible = false;
             dataGridView.RowHeadersWidth = 82;
             dataGridView.Size = new Size(979, 824);
             dataGridView.TabIndex = 46;
