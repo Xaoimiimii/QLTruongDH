@@ -19,6 +19,7 @@ namespace QLTruongDH
         public bool isInQLUser = false;
         public bool isInQLRole = false;
         public string connectionString;
+        public Stack<UserControl> controlHistory = new Stack<UserControl>();
 
         public Admin_MainForm(string username, string password)
         {
@@ -33,9 +34,22 @@ namespace QLTruongDH
 
         public void LoadControl(UserControl control)
         {
-            main_panel.Controls.Clear();
+            if (main_panel.Controls.Count > 0)
+            {
+                var currentControl = main_panel.Controls[0] as UserControl;
+                if (currentControl != null)
+                {
+                    controlHistory.Push(currentControl); // lưu control hiện tại vào stack
+                }
+                main_panel.Controls.Clear();
+            }
+
             control.Dock = DockStyle.Fill;
             main_panel.Controls.Add(control);
+
+            //main_panel.Controls.Clear();
+            //control.Dock = DockStyle.Fill;
+            //main_panel.Controls.Add(control);
         }
 
         public void UpdateStatus(string currentActivity)

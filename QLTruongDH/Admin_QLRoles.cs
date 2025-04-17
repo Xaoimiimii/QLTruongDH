@@ -128,12 +128,24 @@ namespace QLTruongDH
 
         private void add_button_Click(object sender, EventArgs e)
         {
-            mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Add"));
+            mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Add", selectedRole));
         }
 
         private void edit_button_Click(object sender, EventArgs e)
         {
-            mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Edit"));
+            if (string.IsNullOrEmpty(selectedRole))
+            {
+                MessageBox.Show("Vui lòng chọn một role để sửa.");
+                return;
+            }
+            mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Edit", selectedRole));
+        }
+
+        private void Admin_QLRoles_Click(object sender, EventArgs e)
+        {
+            delete_button.Visible = false;
+            edit_button.Visible = false;
+            selectedRole = string.Empty;
         }
 
         private void search_role_button_Click(object sender, EventArgs e)
@@ -244,5 +256,7 @@ namespace QLTruongDH
                 }
             }
         }
+
+
     }
 }

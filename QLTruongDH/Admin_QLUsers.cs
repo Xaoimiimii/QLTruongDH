@@ -54,10 +54,6 @@ namespace QLTruongDH
             }
         }
 
-        private void updateStatus(string currentActivity)
-        {
-        }
-
         private void LoadUser()
         {
             using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
@@ -134,12 +130,24 @@ namespace QLTruongDH
 
         private void add_button_Click(object sender, EventArgs e)
         {
-            mainForm.LoadControl(new Admin_ThemSuaUser(mainForm, "Add"));
+            mainForm.LoadControl(new Admin_ThemSuaUser(mainForm, "Add", selectedUsername));
         }
 
         private void edit_button_Click(object sender, EventArgs e)
         {
-            mainForm.LoadControl(new Admin_ThemSuaUser(mainForm, "Edit"));
+            if (string.IsNullOrEmpty(selectedUsername))
+            {
+                MessageBox.Show("Vui lòng chọn một user để sửa.");
+                return;
+            }
+            mainForm.LoadControl(new Admin_ThemSuaUser(mainForm, "Edit", selectedUsername));
+        }
+
+        private void Admin_QLUsers_Click(object sender, EventArgs e)
+        {
+            delete_button.Visible = false;
+            edit_button.Visible = false;
+            selectedUsername = string.Empty;
         }
 
         private void search_employee_button_Click(object sender, EventArgs e)
@@ -250,5 +258,7 @@ namespace QLTruongDH
                 }
             }
         }
+
+
     }
 }

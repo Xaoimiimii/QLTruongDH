@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             label1 = new Label();
             dataGridView = new DataGridView();
@@ -194,7 +194,7 @@
             // search_username_guna2TextBox
             // 
             search_username_guna2TextBox.BorderRadius = 20;
-            search_username_guna2TextBox.CustomizableEdges = customizableEdges3;
+            search_username_guna2TextBox.CustomizableEdges = customizableEdges1;
             search_username_guna2TextBox.DefaultText = "";
             search_username_guna2TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             search_username_guna2TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -212,7 +212,7 @@
             search_username_guna2TextBox.Name = "search_username_guna2TextBox";
             search_username_guna2TextBox.PlaceholderText = "";
             search_username_guna2TextBox.SelectedText = "";
-            search_username_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            search_username_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
             search_username_guna2TextBox.Size = new Size(403, 51);
             search_username_guna2TextBox.TabIndex = 43;
             search_username_guna2TextBox.TextOffset = new Point(20, 0);
@@ -250,6 +250,7 @@
             Margin = new Padding(0);
             Name = "Admin_QLUsers";
             Size = new Size(1625, 1169);
+            Click += Admin_QLUsers_Click;
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)DBA_SYS_PRIVS_dataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)DBA_TAB_PRIVS_dataGridView).EndInit();

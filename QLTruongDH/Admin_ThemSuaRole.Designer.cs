@@ -42,8 +42,13 @@
             add_role_sys_checkedListBox = new CheckedListBox();
             add_button = new Button();
             guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
-            label1 = new Label();
+            control_title_label = new Label();
+            back_flowLayoutPanel = new FlowLayoutPanel();
+            back_pictureBox = new PictureBox();
+            back_label = new Label();
             username_panel.SuspendLayout();
+            back_flowLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)back_pictureBox).BeginInit();
             SuspendLayout();
             // 
             // add_role_tab_checkedListBox
@@ -190,22 +195,63 @@
             guna2Separator1.Size = new Size(1620, 21);
             guna2Separator1.TabIndex = 60;
             // 
-            // label1
+            // control_title_label
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 16.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(25, 25);
-            label1.Margin = new Padding(0);
-            label1.Name = "label1";
-            label1.Size = new Size(228, 59);
-            label1.TabIndex = 59;
-            label1.Text = "Thêm role";
+            control_title_label.AutoSize = true;
+            control_title_label.Font = new Font("Segoe UI", 16.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            control_title_label.Location = new Point(25, 25);
+            control_title_label.Margin = new Padding(0);
+            control_title_label.Name = "control_title_label";
+            control_title_label.Size = new Size(228, 59);
+            control_title_label.TabIndex = 59;
+            control_title_label.Text = "Thêm role";
             // 
-            // Admin_ThemRole
+            // back_flowLayoutPanel
+            // 
+            back_flowLayoutPanel.Controls.Add(back_pictureBox);
+            back_flowLayoutPanel.Controls.Add(back_label);
+            back_flowLayoutPanel.Location = new Point(25, 1073);
+            back_flowLayoutPanel.Margin = new Padding(0);
+            back_flowLayoutPanel.Name = "back_flowLayoutPanel";
+            back_flowLayoutPanel.Size = new Size(180, 38);
+            back_flowLayoutPanel.TabIndex = 74;
+            back_flowLayoutPanel.Click += back_flowLayoutPanel_Click;
+            back_flowLayoutPanel.MouseEnter += back_flowLayoutPanel_MouseEnter;
+            back_flowLayoutPanel.MouseLeave += back_flowLayoutPanel_MouseLeave;
+            // 
+            // back_pictureBox
+            // 
+            back_pictureBox.Dock = DockStyle.Fill;
+            back_pictureBox.Image = Properties.Resources.back__1_;
+            back_pictureBox.Location = new Point(3, 3);
+            back_pictureBox.Name = "back_pictureBox";
+            back_pictureBox.Size = new Size(32, 32);
+            back_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            back_pictureBox.TabIndex = 0;
+            back_pictureBox.TabStop = false;
+            back_pictureBox.Click += back_pictureBox_Click;
+            back_pictureBox.MouseEnter += back_pictureBox_MouseEnter;
+            back_pictureBox.MouseLeave += back_pictureBox_MouseLeave;
+            // 
+            // back_label
+            // 
+            back_label.AutoSize = true;
+            back_label.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            back_label.Location = new Point(41, 0);
+            back_label.Name = "back_label";
+            back_label.Size = new Size(116, 37);
+            back_label.TabIndex = 1;
+            back_label.Text = "Quay về";
+            back_label.Click += back_label_Click;
+            back_label.MouseEnter += back_label_MouseEnter;
+            back_label.MouseLeave += back_label_MouseLeave;
+            // 
+            // Admin_ThemSuaRole
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
+            Controls.Add(back_flowLayoutPanel);
             Controls.Add(add_role_tab_checkedListBox);
             Controls.Add(add_role_select_table_comboBox);
             Controls.Add(tab_priv_label);
@@ -218,13 +264,16 @@
             Controls.Add(add_role_sys_checkedListBox);
             Controls.Add(add_button);
             Controls.Add(guna2Separator1);
-            Controls.Add(label1);
+            Controls.Add(control_title_label);
             Location = new Point(25, 121);
             Margin = new Padding(0);
-            Name = "Admin_ThemRole";
+            Name = "Admin_ThemSuaRole";
             Size = new Size(1625, 1169);
             username_panel.ResumeLayout(false);
             username_panel.PerformLayout();
+            back_flowLayoutPanel.ResumeLayout(false);
+            back_flowLayoutPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)back_pictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -244,6 +293,9 @@
         private CheckedListBox add_role_sys_checkedListBox;
         private Button add_button;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
-        private Label label1;
+        private Label control_title_label;
+        private FlowLayoutPanel back_flowLayoutPanel;
+        private PictureBox back_pictureBox;
+        private Label back_label;
     }
 }

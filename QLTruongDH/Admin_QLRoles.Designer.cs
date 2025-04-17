@@ -248,6 +248,7 @@
             Margin = new Padding(0);
             Name = "Admin_QLRoles";
             Size = new Size(1625, 1169);
+            Click += Admin_QLRoles_Click;
             ((System.ComponentModel.ISupportInitialize)DBA_ROLE_PRIVS_dataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)DBA_TAB_PRIVS_dataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)DBA_SYS_PRIVS_dataGridView).EndInit();
