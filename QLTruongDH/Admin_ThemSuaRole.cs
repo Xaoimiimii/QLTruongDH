@@ -43,6 +43,8 @@ namespace QLTruongDH
 
                 LoadRoleCheckedListBox("lay_ds_ten_roles_khong_phai_role_hien_tai", roleName);
             }
+
+            LoadTabComboBox();
         }
 
         private void LoadRoleCheckedListBox(string procedureName, string? inputParamValue = null)
@@ -81,6 +83,38 @@ namespace QLTruongDH
                 catch (OracleException ex)
                 {
                     MessageBox.Show("Lỗi khi load danh sách role trong checkedListBox: " + ex.Message);
+                }
+            }
+        }
+
+        private void LoadTabComboBox()
+        {
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    using (OracleCommand cmd = new OracleCommand("lay_ds_tables", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            add_role_select_table_comboBox.Items.Clear();
+
+                            while (reader.Read())
+                            {
+                                string tableName = reader.GetString(0);
+                                add_role_select_table_comboBox.Items.Add(tableName);
+                            }
+                        }
+                    }
+                }
+                catch (OracleException ex)
+                {
+                    MessageBox.Show("Lỗi khi load danh sách table trong comboBox");
                 }
             }
         }

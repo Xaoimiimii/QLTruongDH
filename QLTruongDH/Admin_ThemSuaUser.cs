@@ -40,7 +40,7 @@ namespace QLTruongDH
             }
 
             LoadRoleCheckedListBox();
-            this.username = username;
+            LoadTabComboBox();
         }
 
         private void LoadRoleCheckedListBox()
@@ -71,6 +71,38 @@ namespace QLTruongDH
                 catch (OracleException ex)
                 {
                     MessageBox.Show("Lỗi khi load danh sách user trong checkedListBox");
+                }
+            }
+        }
+
+        private void LoadTabComboBox()
+        {
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    using (OracleCommand cmd = new OracleCommand("lay_ds_tables", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            add_user_select_table_comboBox.Items.Clear();
+
+                            while (reader.Read())
+                            {
+                                string tableName = reader.GetString(0);
+                                add_user_select_table_comboBox.Items.Add(tableName);
+                            }
+                        }
+                    }
+                }
+                catch (OracleException ex)
+                {
+                    MessageBox.Show("Lỗi khi load danh sách table trong comboBox");
                 }
             }
         }
