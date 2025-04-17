@@ -41,7 +41,7 @@ namespace QLTruongDH
             if (currentActivity == "Dashboard")
             {
                 isInDashboard = true;
-                //dashboard_menu_pictureBox.Image = Properties.Resources.dashboard_green;
+                dashboard_menu_pictureBox.Image = Properties.Resources.dashboard__2_;
             }
             else if (currentActivity == "QLNhanVien")
             {

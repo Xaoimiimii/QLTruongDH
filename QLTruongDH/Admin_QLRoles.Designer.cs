@@ -118,6 +118,9 @@
             search_role_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
             search_role_guna2TextBox.Size = new Size(377, 51);
             search_role_guna2TextBox.TabIndex = 51;
+            search_role_guna2TextBox.TextOffset = new Point(20, 0);
+            search_role_guna2TextBox.IconRightClick += search_role_guna2TextBox_IconRightClick;
+            search_role_guna2TextBox.KeyDown += search_role_guna2TextBox_KeyDown;
             // 
             // search_role_label
             // 
@@ -134,6 +137,7 @@
             // 
             DBA_ROLE_PRIVS_dataGridView.AllowUserToAddRows = false;
             DBA_ROLE_PRIVS_dataGridView.AllowUserToDeleteRows = false;
+            DBA_ROLE_PRIVS_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DBA_ROLE_PRIVS_dataGridView.BackgroundColor = Color.White;
             DBA_ROLE_PRIVS_dataGridView.BorderStyle = BorderStyle.Fixed3D;
             DBA_ROLE_PRIVS_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -150,6 +154,7 @@
             // 
             DBA_TAB_PRIVS_dataGridView.AllowUserToAddRows = false;
             DBA_TAB_PRIVS_dataGridView.AllowUserToDeleteRows = false;
+            DBA_TAB_PRIVS_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DBA_TAB_PRIVS_dataGridView.BackgroundColor = Color.White;
             DBA_TAB_PRIVS_dataGridView.BorderStyle = BorderStyle.Fixed3D;
             DBA_TAB_PRIVS_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -166,6 +171,7 @@
             // 
             DBA_SYS_PRIVS_dataGridView.AllowUserToAddRows = false;
             DBA_SYS_PRIVS_dataGridView.AllowUserToDeleteRows = false;
+            DBA_SYS_PRIVS_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DBA_SYS_PRIVS_dataGridView.BackgroundColor = Color.White;
             DBA_SYS_PRIVS_dataGridView.BorderStyle = BorderStyle.Fixed3D;
             DBA_SYS_PRIVS_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -182,6 +188,7 @@
             // 
             dataGridView.AllowUserToAddRows = false;
             dataGridView.AllowUserToDeleteRows = false;
+            dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView.BackgroundColor = Color.White;
             dataGridView.BorderStyle = BorderStyle.Fixed3D;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -193,6 +200,7 @@
             dataGridView.RowHeadersWidth = 82;
             dataGridView.Size = new Size(979, 824);
             dataGridView.TabIndex = 46;
+            dataGridView.CellClick += dataGridView_CellClick;
             // 
             // delete_button
             // 

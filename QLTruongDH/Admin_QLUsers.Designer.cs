@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             label1 = new Label();
             dataGridView = new DataGridView();
@@ -72,64 +72,71 @@
             // 
             dataGridView.AllowUserToAddRows = false;
             dataGridView.AllowUserToDeleteRows = false;
+            dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView.BackgroundColor = Color.White;
             dataGridView.BorderStyle = BorderStyle.Fixed3D;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView.GridColor = Color.BurlyWood;
             dataGridView.Location = new Point(15, 212);
+            dataGridView.MultiSelect = false;
             dataGridView.Name = "dataGridView";
             dataGridView.ReadOnly = true;
             dataGridView.RowHeadersVisible = false;
             dataGridView.RowHeadersWidth = 82;
-            dataGridView.Size = new Size(979, 824);
+            dataGridView.Size = new Size(1025, 824);
             dataGridView.TabIndex = 15;
+            dataGridView.CellClick += dataGridView_CellClick;
             // 
             // DBA_SYS_PRIVS_dataGridView
             // 
             DBA_SYS_PRIVS_dataGridView.AllowUserToAddRows = false;
             DBA_SYS_PRIVS_dataGridView.AllowUserToDeleteRows = false;
+            DBA_SYS_PRIVS_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DBA_SYS_PRIVS_dataGridView.BackgroundColor = Color.White;
             DBA_SYS_PRIVS_dataGridView.BorderStyle = BorderStyle.Fixed3D;
             DBA_SYS_PRIVS_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DBA_SYS_PRIVS_dataGridView.GridColor = Color.BurlyWood;
-            DBA_SYS_PRIVS_dataGridView.Location = new Point(1000, 212);
+            DBA_SYS_PRIVS_dataGridView.Location = new Point(1046, 212);
             DBA_SYS_PRIVS_dataGridView.Name = "DBA_SYS_PRIVS_dataGridView";
             DBA_SYS_PRIVS_dataGridView.ReadOnly = true;
             DBA_SYS_PRIVS_dataGridView.RowHeadersVisible = false;
             DBA_SYS_PRIVS_dataGridView.RowHeadersWidth = 82;
-            DBA_SYS_PRIVS_dataGridView.Size = new Size(608, 306);
+            DBA_SYS_PRIVS_dataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            DBA_SYS_PRIVS_dataGridView.Size = new Size(562, 306);
             DBA_SYS_PRIVS_dataGridView.TabIndex = 16;
             // 
             // DBA_TAB_PRIVS_dataGridView
             // 
             DBA_TAB_PRIVS_dataGridView.AllowUserToAddRows = false;
             DBA_TAB_PRIVS_dataGridView.AllowUserToDeleteRows = false;
+            DBA_TAB_PRIVS_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DBA_TAB_PRIVS_dataGridView.BackgroundColor = Color.White;
             DBA_TAB_PRIVS_dataGridView.BorderStyle = BorderStyle.Fixed3D;
             DBA_TAB_PRIVS_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DBA_TAB_PRIVS_dataGridView.GridColor = Color.BurlyWood;
-            DBA_TAB_PRIVS_dataGridView.Location = new Point(1000, 524);
+            DBA_TAB_PRIVS_dataGridView.Location = new Point(1046, 524);
             DBA_TAB_PRIVS_dataGridView.Name = "DBA_TAB_PRIVS_dataGridView";
             DBA_TAB_PRIVS_dataGridView.ReadOnly = true;
             DBA_TAB_PRIVS_dataGridView.RowHeadersVisible = false;
             DBA_TAB_PRIVS_dataGridView.RowHeadersWidth = 82;
-            DBA_TAB_PRIVS_dataGridView.Size = new Size(608, 244);
+            DBA_TAB_PRIVS_dataGridView.Size = new Size(562, 244);
             DBA_TAB_PRIVS_dataGridView.TabIndex = 17;
             // 
             // DBA_ROLE_PRIVS_dataGridView
             // 
             DBA_ROLE_PRIVS_dataGridView.AllowUserToAddRows = false;
             DBA_ROLE_PRIVS_dataGridView.AllowUserToDeleteRows = false;
+            DBA_ROLE_PRIVS_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DBA_ROLE_PRIVS_dataGridView.BackgroundColor = Color.White;
             DBA_ROLE_PRIVS_dataGridView.BorderStyle = BorderStyle.Fixed3D;
             DBA_ROLE_PRIVS_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DBA_ROLE_PRIVS_dataGridView.GridColor = Color.BurlyWood;
-            DBA_ROLE_PRIVS_dataGridView.Location = new Point(1000, 774);
+            DBA_ROLE_PRIVS_dataGridView.Location = new Point(1046, 774);
             DBA_ROLE_PRIVS_dataGridView.Name = "DBA_ROLE_PRIVS_dataGridView";
             DBA_ROLE_PRIVS_dataGridView.ReadOnly = true;
             DBA_ROLE_PRIVS_dataGridView.RowHeadersVisible = false;
             DBA_ROLE_PRIVS_dataGridView.RowHeadersWidth = 82;
-            DBA_ROLE_PRIVS_dataGridView.Size = new Size(608, 262);
+            DBA_ROLE_PRIVS_dataGridView.Size = new Size(562, 262);
             DBA_ROLE_PRIVS_dataGridView.TabIndex = 18;
             // 
             // delete_button
@@ -187,7 +194,7 @@
             // search_username_guna2TextBox
             // 
             search_username_guna2TextBox.BorderRadius = 20;
-            search_username_guna2TextBox.CustomizableEdges = customizableEdges1;
+            search_username_guna2TextBox.CustomizableEdges = customizableEdges3;
             search_username_guna2TextBox.DefaultText = "";
             search_username_guna2TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             search_username_guna2TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -205,7 +212,7 @@
             search_username_guna2TextBox.Name = "search_username_guna2TextBox";
             search_username_guna2TextBox.PlaceholderText = "";
             search_username_guna2TextBox.SelectedText = "";
-            search_username_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            search_username_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges4;
             search_username_guna2TextBox.Size = new Size(403, 51);
             search_username_guna2TextBox.TabIndex = 43;
             search_username_guna2TextBox.TextOffset = new Point(20, 0);

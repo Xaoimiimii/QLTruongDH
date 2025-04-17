@@ -75,6 +75,54 @@ namespace QLTruongDH
             }
         }
 
+        private void LoadPrivs(string rolename)
+        {
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    // Load system privileges
+                    OracleCommand sys = new OracleCommand("lay_user_sys_privs", conn);
+                    sys.CommandType = CommandType.StoredProcedure;
+                    sys.Parameters.Add("p_username", OracleDbType.Varchar2).Value = rolename;
+                    sys.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                    OracleDataAdapter sys_adapter = new OracleDataAdapter(sys);
+                    DataTable sys_dt = new DataTable();
+                    sys_adapter.Fill(sys_dt);
+                    DBA_SYS_PRIVS_dataGridView.DataSource = sys_dt;
+
+                    // Load table privileges
+                    OracleCommand tab = new OracleCommand("lay_user_tab_privs", conn);
+                    tab.CommandType = CommandType.StoredProcedure;
+                    tab.Parameters.Add("p_username", OracleDbType.Varchar2).Value = rolename;
+                    tab.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                    OracleDataAdapter tab_adapter = new OracleDataAdapter(tab);
+                    DataTable tab_dt = new DataTable();
+                    tab_adapter.Fill(tab_dt);
+                    DBA_ROLE_PRIVS_dataGridView.DataSource = tab_dt;
+
+                    // Load role privileges
+                    OracleCommand role = new OracleCommand("lay_user_role_privs", conn);
+                    role.CommandType = CommandType.StoredProcedure;
+                    role.Parameters.Add("p_username", OracleDbType.Varchar2).Value = rolename;
+                    role.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                    OracleDataAdapter role_adapter = new OracleDataAdapter(role);
+                    DataTable role_dt = new DataTable();
+                    role_adapter.Fill(role_dt);
+                    DBA_ROLE_PRIVS_dataGridView.DataSource = role_dt;
+                }
+                catch (OracleException ex)
+                {
+                    MessageBox.Show("Lỗi khi load sys privileges");
+                }
+            }
+        }
+
         private void add_button_Click(object sender, EventArgs e)
         {
             mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Add"));
@@ -92,7 +140,82 @@ namespace QLTruongDH
 
         private void search_role_button_Click(object sender, EventArgs e)
         {
+            string searchText = search_role_guna2TextBox.Text.Trim();
 
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+                {
+                    try
+                    {
+                        conn.Open();
+                        OracleCommand cmd = new OracleCommand("tim_role_theo_rolename", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("p_rolename", OracleDbType.Varchar2).Value = searchText;
+                        cmd.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                        OracleDataAdapter adapter = new OracleDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
+                        dataGridView.DataSource = dt;
+                    }
+                    catch (OracleException ex)
+                    {
+                        MessageBox.Show("Lỗi khi tìm kiếm role");
+                    }
+                }
+            }
+        }
+
+        private void search_role_guna2TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string searchText = search_role_guna2TextBox.Text.Trim();
+
+                if (!string.IsNullOrEmpty(searchText))
+                {
+                    using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+                    {
+                        try
+                        {
+                            conn.Open();
+                            OracleCommand cmd = new OracleCommand("tim_role_theo_rolename", conn);
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Add("p_rolename", OracleDbType.Varchar2).Value = searchText;
+                            cmd.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                            OracleDataAdapter adapter = new OracleDataAdapter(cmd);
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            dataGridView.DataSource = dt;
+                        }
+                        catch (OracleException ex)
+                        {
+                            MessageBox.Show("Lỗi khi tìm kiếm role");
+                        }
+                    }
+                }
+            }
+        }
+
+        private void search_role_guna2TextBox_IconRightClick(object sender, EventArgs e)
+        {
+            search_role_guna2TextBox.Clear();
+            LoadRole();
+        }
+
+        private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                var cellValue = dataGridView.Rows[e.RowIndex].Cells[1].Value;
+                if (cellValue != null)
+                {
+                    string rolename = cellValue.ToString();
+                    LoadPrivs(rolename);
+                }
+            }
         }
     }
 }

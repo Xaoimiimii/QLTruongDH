@@ -127,6 +127,9 @@
   <data name="hcmus_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\hcmus_1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="task-list" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\task-list.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="calen_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\calen_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -142,6 +145,9 @@
   <data name="cert_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cert_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="setting_greenn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\setting_greenn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="college class-bro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\college class-bro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -150,9 +156,6 @@
   </data>
   <data name="user (4)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\user (4).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="grade_black_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\grade_black_128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pay_extend" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pay_extend.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -178,14 +181,8 @@
   <data name="dashboard_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dashboard_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="employee" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\employee.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="extend_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\extend_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="grade_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\grade_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="setting_whitee" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\setting_whitee.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="receipt_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\receipt_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -196,11 +193,14 @@
   <data name="2148178670" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\2148178670.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="hcmus_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\hcmus_3.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="setting (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\setting (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pay_extend_black_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pay_extend_black_128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="register_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\register_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="register_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\register_128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -214,14 +214,14 @@
   <data name="student" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\student.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="setting (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\setting (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="register_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\register_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="user (7)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\user (7).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="certificate (3)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\certificate (3).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="search" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="user (11)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\user (11).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -235,11 +235,17 @@
   <data name="man" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\man.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="user (10)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\user (10).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="46565226" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\46565226.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pay_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pay_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="receipt_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\receipt_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="user (9)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\user (9).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -247,14 +253,14 @@
   <data name="cert_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cert_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="student_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\student_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="user (7)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\user (7).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="setting_whitee" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\setting_whitee.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="grade_black_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\grade_black_128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="certificate (3)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\certificate (3).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="extend_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\extend_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pay_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pay_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -262,20 +268,20 @@
   <data name="menu_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\menu_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pay_regis_black_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pay_regis_black_128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="student_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\student_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="task-list" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\task-list.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="close (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="employee" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\employee.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="hcmus" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\hcmus.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="hcmus_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\hcmus_2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="search" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="hcmus_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hcmus_3.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="out_whitee" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\out_whitee.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -289,25 +295,22 @@
   <data name="moodle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\moodle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="receipt_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\receipt_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="setting (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\setting (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="setting_greenn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\setting_greenn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="grade_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\grade_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="register_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\register_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="hcmus_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hcmus_2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="close (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\close (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pay_regis_black_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pay_regis_black_128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="delegation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\delegation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="user (10)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\user (10).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="setting (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\setting (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="dashboard (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dashboard (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

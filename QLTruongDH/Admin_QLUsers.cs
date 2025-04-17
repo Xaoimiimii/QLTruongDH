@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Oracle.ManagedDataAccess.Client;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 using static QLTruongDH.Admin_MainForm;
 
 namespace QLTruongDH
@@ -76,6 +77,54 @@ namespace QLTruongDH
                 catch (OracleException ex)
                 {
                     MessageBox.Show("Lỗi khi load danh sách user");
+                }
+            }
+        }
+
+        private void LoadPrivs(string username)
+        {
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    // Load system privileges
+                    OracleCommand sys = new OracleCommand("lay_user_sys_privs", conn);
+                    sys.CommandType = CommandType.StoredProcedure;
+                    sys.Parameters.Add("p_username", OracleDbType.Varchar2).Value = username;
+                    sys.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                    OracleDataAdapter sys_adapter = new OracleDataAdapter(sys);
+                    DataTable sys_dt = new DataTable();
+                    sys_adapter.Fill(sys_dt);
+                    DBA_SYS_PRIVS_dataGridView.DataSource = sys_dt;
+
+                    // Load table privileges
+                    OracleCommand tab = new OracleCommand("lay_user_tab_privs", conn);
+                    tab.CommandType = CommandType.StoredProcedure;
+                    tab.Parameters.Add("p_username", OracleDbType.Varchar2).Value = username;
+                    tab.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                    OracleDataAdapter tab_adapter = new OracleDataAdapter(tab);
+                    DataTable tab_dt = new DataTable();
+                    tab_adapter.Fill(tab_dt);
+                    DBA_ROLE_PRIVS_dataGridView.DataSource = tab_dt;
+
+                    // Load role privileges
+                    OracleCommand role = new OracleCommand("lay_user_role_privs", conn);
+                    role.CommandType = CommandType.StoredProcedure;
+                    role.Parameters.Add("p_username", OracleDbType.Varchar2).Value = username;
+                    role.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                    OracleDataAdapter role_adapter = new OracleDataAdapter(role);
+                    DataTable role_dt = new DataTable();
+                    role_adapter.Fill(role_dt);
+                    DBA_ROLE_PRIVS_dataGridView.DataSource = role_dt;
+                }
+                catch (OracleException ex)
+                {
+                    MessageBox.Show("Lỗi khi load sys privileges");
                 }
             }
         }
@@ -160,6 +209,19 @@ namespace QLTruongDH
         {
             search_username_guna2TextBox.Clear();
             LoadUser();
+        }
+
+        private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                var cellValue = dataGridView.Rows[e.RowIndex].Cells[1].Value;
+                if (cellValue != null)
+                {
+                    string username = cellValue.ToString();
+                    LoadPrivs(username);
+                }
+            }
         }
     }
 }
