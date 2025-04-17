@@ -137,6 +137,7 @@
             // 
             DBA_ROLE_PRIVS_dataGridView.AllowUserToAddRows = false;
             DBA_ROLE_PRIVS_dataGridView.AllowUserToDeleteRows = false;
+            DBA_ROLE_PRIVS_dataGridView.AllowUserToResizeRows = false;
             DBA_ROLE_PRIVS_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DBA_ROLE_PRIVS_dataGridView.BackgroundColor = Color.White;
             DBA_ROLE_PRIVS_dataGridView.BorderStyle = BorderStyle.Fixed3D;
@@ -154,6 +155,7 @@
             // 
             DBA_TAB_PRIVS_dataGridView.AllowUserToAddRows = false;
             DBA_TAB_PRIVS_dataGridView.AllowUserToDeleteRows = false;
+            DBA_TAB_PRIVS_dataGridView.AllowUserToResizeRows = false;
             DBA_TAB_PRIVS_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DBA_TAB_PRIVS_dataGridView.BackgroundColor = Color.White;
             DBA_TAB_PRIVS_dataGridView.BorderStyle = BorderStyle.Fixed3D;
@@ -171,6 +173,7 @@
             // 
             DBA_SYS_PRIVS_dataGridView.AllowUserToAddRows = false;
             DBA_SYS_PRIVS_dataGridView.AllowUserToDeleteRows = false;
+            DBA_SYS_PRIVS_dataGridView.AllowUserToResizeRows = false;
             DBA_SYS_PRIVS_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DBA_SYS_PRIVS_dataGridView.BackgroundColor = Color.White;
             DBA_SYS_PRIVS_dataGridView.BorderStyle = BorderStyle.Fixed3D;
@@ -188,6 +191,7 @@
             // 
             dataGridView.AllowUserToAddRows = false;
             dataGridView.AllowUserToDeleteRows = false;
+            dataGridView.AllowUserToResizeRows = false;
             dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView.BackgroundColor = Color.White;
             dataGridView.BorderStyle = BorderStyle.Fixed3D;

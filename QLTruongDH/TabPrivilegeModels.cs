@@ -30,5 +30,19 @@ namespace QLTruongDH
             TableName = tableName;
             Privileges = new List<PrivilegeInfo>();
         }
+
+        public bool equals(TablePrivilege other)
+        {
+            if (other == null || TableName != other.TableName)
+                return false;
+            if (Privileges.Count != other.Privileges.Count)
+                return false;
+            for (int i = 0; i < Privileges.Count; i++)
+            {
+                if (!Privileges[i].Equals(other.Privileges[i]))
+                    return false;
+            }
+            return true;
+        }
     }
 }

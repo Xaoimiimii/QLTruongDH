@@ -21,7 +21,7 @@ namespace QLTruongDH
 
         private List<string> sysPrivsList = new List<string>();
         private List<string> rolePrivsList = new List<string>();
-        private List<TablePrivilege> before_selectedTablePrivileges = new List<TablePrivilege>();
+        private List<TablePrivilege> pre_selectedTablePrivileges = new List<TablePrivilege>();
         private List<TablePrivilege> selectedTablePrivileges = new List<TablePrivilege>();
 
         public Admin_ThemSuaUser(Admin_MainForm form, string mode, string username,
@@ -33,7 +33,8 @@ namespace QLTruongDH
             this.username = username;
             this.sysPrivsList = sysPrivsList;
             this.rolePrivsList = rolePrivsList;
-            this.before_selectedTablePrivileges = selectedTablePrivileges;
+            this.pre_selectedTablePrivileges = ExtractRealTablePrivilegesFromViews(selectedTablePrivileges);
+            this.selectedTablePrivileges = ExtractRealTablePrivilegesFromViews(selectedTablePrivileges);
 
             HienThiDataNhanDuoc();
             LoadRoleCheckedListBox();
@@ -54,6 +55,7 @@ namespace QLTruongDH
                 username_textBox.Text = username;
                 LoadSysPrivsFromSysPrivsList();
                 LoadRolePrivsFromRolePrivsList();
+                LoadTableColsFromBeforeSelectedTablePrivileges();
             }
 
             add_user_tab_checkedListBox.Visible = false;
@@ -62,7 +64,54 @@ namespace QLTruongDH
         }
 
 
-        // === LOAD DATA ===
+        // === LOAD PREVIOUS DATA ===
+        public List<TablePrivilege> ExtractRealTablePrivilegesFromViews(List<TablePrivilege> inputList)
+        {
+            List<TablePrivilege> resultList = new List<TablePrivilege>();
+
+            foreach (var viewPrivilege in inputList)
+            {
+                string viewName = viewPrivilege.TableName;
+
+                // Kiểm tra xem có phải là VIEW không
+                if (viewName.EndsWith("_VIEW"))
+                {
+                    string nameWithoutView = viewName.Substring(0, viewName.Length - "_VIEW".Length); // Bỏ _VIEW
+
+                    string[] parts = nameWithoutView.Split('_');
+                    if (parts.Length < 2) continue; // Không hợp lệ, bỏ qua
+
+                    string realTableName = parts[0];
+                    List<string> columns = parts.Skip(1).ToList(); // Các phần sau là tên cột
+
+                    // Tạo một TablePrivilege mới
+                    TablePrivilege newTablePriv = new TablePrivilege(realTableName);
+
+                    foreach (var priv in viewPrivilege.Privileges)
+                    {
+                        // Gán lại thông tin cũ (quyền và with grant)
+                        PrivilegeInfo newPriv = new PrivilegeInfo(
+                            priv.PrivilegeName,
+                            priv.WithGrantOption,
+                            columns // Gán các cột đã tách
+                        );
+
+                        newTablePriv.Privileges.Add(newPriv);
+                    }
+
+                    resultList.Add(newTablePriv);
+                }
+                else
+                {
+                    // Không phải VIEW, thêm trực tiếp vào
+                    resultList.Add(viewPrivilege);
+                }
+            }
+
+            return resultList;
+        }
+
+
         private void HienThiDataNhanDuoc()
         {
             StringBuilder sb = new StringBuilder();
@@ -82,7 +131,7 @@ namespace QLTruongDH
             sb.AppendLine();
 
             sb.AppendLine("Các quyền bảng đã chọn: ");
-            foreach (var tablePrivilege in before_selectedTablePrivileges)
+            foreach (var tablePrivilege in pre_selectedTablePrivileges)
             {
                 foreach (var privilege in tablePrivilege.Privileges)
                 {
@@ -121,6 +170,21 @@ namespace QLTruongDH
         }
 
 
+        private void LoadTableColsFromBeforeSelectedTablePrivileges()
+        {
+            //foreach (var tablePrivilege in selectedTablePrivileges)
+            //{
+            //    foreach (var privilege in tablePrivilege.Privileges)
+            //    {
+            //        string columns = privilege.Columns.Count > 0 ? string.Join(", ", privilege.Columns) : "ALL";
+            //        MessageBox.Show($"Bảng: {tablePrivilege.TableName} - Quyền: {privilege.PrivilegeName} - Grantable: {privilege.WithGrantOption} - Cột: {columns}");
+            //    }
+            //}
+
+
+        }
+
+        // === LOAD DATA ===
         private void LoadRoleCheckedListBox()
         {
             using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
@@ -346,7 +410,7 @@ namespace QLTruongDH
                 }
 
                 // Gán các quyền bảng (Table Privileges)
-                GrantTablePrivilege(username);
+                GrantTablePrivilege(selectedTablePrivileges, username);
 
                 MessageBox.Show("User đã được tạo và cấp quyền thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -406,9 +470,9 @@ namespace QLTruongDH
             }
         }
 
-        private void GrantTablePrivilege(string username)
+        private void GrantTablePrivilege(List<TablePrivilege> current_selectedTablePrivileges, string username)
         {
-            foreach (var tablePrivilege in selectedTablePrivileges)
+            foreach (var tablePrivilege in current_selectedTablePrivileges)
             {
                 foreach (var privilege in tablePrivilege.Privileges)
                 {
@@ -519,6 +583,143 @@ namespace QLTruongDH
         }
 
 
+        private void AlterUser()
+        {
+            string username = username_textBox.Text.Trim();
+
+            // Lấy danh sách quyền hệ thống
+            List<string> sysPrivileges = add_user_sys_checkedListBox.CheckedItems.Cast<string>().ToList();
+
+            // Lấy danh sách quyền role
+            List<string> rolePrivileges = add_user_role_checkedListBox.CheckedItems.Cast<string>().ToList();
+
+            // Kiểm tra sysPrivileges có thay đổi không
+            List<string> sysPrivilegesToRemove = sysPrivsList.Except(sysPrivileges).ToList();
+            List<string> sysPrivilegesToAdd = sysPrivileges.Except(sysPrivsList).ToList();
+
+            // Kiểm tra rolePrivileges có thay đổi không
+            List<string> rolePrivilegesToRemove = rolePrivsList.Except(rolePrivileges).ToList();
+            List<string> rolePrivilegesToAdd = rolePrivileges.Except(rolePrivsList).ToList();
+
+            //List<TablePrivilege> removed = 
+
+            //// Test kết quả
+            //string removedStr = "Removed:\n" + string.Join("\n", removed.Select(tp =>
+            //    $"Table: {tp.TableName}, Privs: {string.Join(", ", tp.Privileges.Select(p => p.PrivilegeName))}"));
+
+            //MessageBox.Show(removedStr);
+
+
+            // Gán các quyền hệ thống thêm vào
+            if (sysPrivilegesToAdd.Count > 0)
+            {
+                foreach (var priv in sysPrivilegesToAdd)
+                {
+                    GrantPrivilege(username, priv);
+                }
+            }
+
+            // Gỡ bỏ các quyền hệ thống không còn được chọn
+            if (sysPrivilegesToRemove.Count > 0)
+            {
+                foreach (var priv in sysPrivilegesToRemove)
+                {
+                    RevokeSysRolePrivilege(username, priv);
+                }
+            }
+
+            // Gán các quyền role thêm vào
+            if (rolePrivilegesToAdd.Count > 0)
+            {
+                foreach (var role in rolePrivilegesToAdd)
+                {
+                    GrantPrivilege(username, role);
+                }
+            }
+
+            // Gỡ bỏ các quyền role không còn được chọn
+            if (rolePrivilegesToRemove.Count > 0)
+            {
+                foreach (var role in rolePrivilegesToRemove)
+                {
+                    RevokeSysRolePrivilege(username, role);
+                }
+            }
+
+            //// Gỡ bỏ các quyền tab cũ
+            //if (pre_selectedTablePrivileges.Count > 0)
+            //{
+            //    foreach (var tablePrivilege in pre_selectedTablePrivileges)
+            //    {
+            //        foreach (var privilege in tablePrivilege.Privileges)
+            //        {
+            //            // RevokeTabPrivilege(string username, string privilege, string tablename)
+            //            RevokeTabPrivilege(username, privilege.PrivilegeName, tablePrivilege.TableName);
+            //        }
+            //    }
+            //}
+
+            // Gán các quyền bảng mới
+            if (selectedTablePrivileges.Count > 0)
+            {
+                GrantTablePrivilege(selectedTablePrivileges, username);
+            }
+
+            MessageBox.Show("Đã sửa thông tin user thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+
+        private void RevokeSysRolePrivilege(string username, string privilege)
+        {
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    using (OracleCommand cmd = new OracleCommand("revoke_sys_role_priv", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = username;
+                        cmd.Parameters.Add("p_priv", OracleDbType.Varchar2).Value = privilege;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (OracleException)
+                {
+                    MessageBox.Show("Lỗi khi gỡ quyền hệ thống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void RevokeTabPrivilege(string username, string privilege, string tablename)
+        {
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    using (OracleCommand cmd = new OracleCommand("revoke_tab_priv", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("p_tablename", OracleDbType.Varchar2).Value = tablename;
+                        cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = username;
+                        cmd.Parameters.Add("p_priv", OracleDbType.Varchar2).Value = privilege;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (OracleException ex)
+                {
+                    MessageBox.Show($"Lỗi khi gỡ quyền trên bảng: {ex.Message}\nSQLSTATE: {ex.Source}\nSTACK: {ex.StackTrace}",
+                                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+        }
+
+
+
         // === UI (BUTTON, CHECKBOX, COMBOBOX) INTERACT ===
         private void reset_button_Click(object sender, EventArgs e)
         {
@@ -536,12 +737,14 @@ namespace QLTruongDH
 
                 if (result == DialogResult.Yes)
                 {
-                    CreateUser();
+                    if (mode == "Add") CreateUser();
+                    else if (mode == "Edit") AlterUser();
                 }
             }
             else
             {
-                CreateUser();
+                if (mode == "Add") CreateUser();
+                else if (mode == "Edit") AlterUser();
             }
         }
 
@@ -561,8 +764,8 @@ namespace QLTruongDH
             select_with_grant_option_checkBox.Visible = false;
             update_with_grant_option_checkBox.Visible = false;
 
-            select_with_grant_option_checkBox.CheckedChanged -= select_with_grant_option_checkBox_CheckedChanged;
-            update_with_grant_option_checkBox.CheckedChanged -= update_with_grant_option_checkBox_CheckedChanged;
+            select_with_grant_option_checkBox.CheckedChanged += select_with_grant_option_checkBox_CheckedChanged;
+            update_with_grant_option_checkBox.CheckedChanged += update_with_grant_option_checkBox_CheckedChanged;
 
             // Reset các lựa chọn trong checkedListBox chọn quyền trên bảng
             for (int i = 0; i < add_user_tab_checkedListBox.Items.Count; i++)
