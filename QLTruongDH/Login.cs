@@ -62,11 +62,11 @@ namespace QLTruongDH
                     }
 
                     // Nếu không có role nào thì thông báo lỗi
-                    if (roles.Count == 0)
-                    {
-                        MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng!");
-                        return;
-                    }
+                    //if (roles.Count == 0)
+                    //{
+                    //    MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng!", "Đăng nhập thất bại",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //    return;
+                    //}
 
                     // Kiểm tra có DBA không
                     if (roles.Contains("DBA"))
@@ -88,7 +88,7 @@ namespace QLTruongDH
             }
             catch (OracleException ex)
             {
-                MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng!");
+                MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng!", "Đăng nhập thất bại", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }

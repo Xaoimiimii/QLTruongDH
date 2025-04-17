@@ -87,6 +87,7 @@
             password_textBox.Name = "password_textBox";
             password_textBox.Size = new Size(536, 50);
             password_textBox.TabIndex = 1;
+            password_textBox.UseSystemPasswordChar = true;
             // 
             // label1
             // 

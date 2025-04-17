@@ -104,7 +104,7 @@ namespace QLTruongDH
                         }
                     }
                 }
-                catch (OracleException ex)
+                catch (OracleException)
                 {
                     MessageBox.Show("Lỗi khi load danh sách user trong checkedListBox");
                 }
@@ -136,7 +136,7 @@ namespace QLTruongDH
                         }
                     }
                 }
-                catch (OracleException ex)
+                catch (OracleException)
                 {
                     MessageBox.Show("Lỗi khi load danh sách table trong comboBox");
                 }
@@ -169,7 +169,7 @@ namespace QLTruongDH
                         }
                     }
                 }
-                catch (OracleException ex)
+                catch (OracleException)
                 {
                     MessageBox.Show($"Lỗi khi load danh sách column trong table '{tableName}'");
                 }
@@ -311,9 +311,9 @@ namespace QLTruongDH
                         cmd.ExecuteNonQuery();
                     }
                 }
-                catch (OracleException ex)
+                catch (OracleException)
                 {
-                    MessageBox.Show($"Lỗi khi tạo user: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Lỗi khi tạo user", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
             }
@@ -336,9 +336,9 @@ namespace QLTruongDH
                         cmd.ExecuteNonQuery();
                     }
                 }
-                catch (OracleException ex)
+                catch (OracleException)
                 {
-                    MessageBox.Show($"Lỗi khi cấp quyền hệ thống: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Lỗi khi cấp quyền hệ thống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -365,9 +365,9 @@ namespace QLTruongDH
                                 columnCount = ((OracleDecimal)cmd.Parameters["p_count"].Value).ToInt32();
                             }
                         }
-                        catch (OracleException ex)
+                        catch (OracleException)
                         {
-                            MessageBox.Show($"Lỗi khi đếm số cột của bảng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Lỗi khi đếm số cột của bảng", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
 
@@ -397,9 +397,9 @@ namespace QLTruongDH
                                     cmd.ExecuteNonQuery();
                                 }
                             }
-                            catch (OracleException ex)
+                            catch (OracleException)
                             {
-                                MessageBox.Show($"Lỗi khi tạo view: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Lỗi khi tạo view", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return;
                             }
                         }
@@ -420,9 +420,9 @@ namespace QLTruongDH
                                     cmd.ExecuteNonQuery();
                                 }
                             }
-                            catch (OracleException ex)
+                            catch (OracleException)
                             {
-                                MessageBox.Show($"Lỗi khi cap quyen tren view: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Lỗi khi cấp quyền trên view", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return;
                             }
                         }
@@ -444,9 +444,9 @@ namespace QLTruongDH
                                     cmd.ExecuteNonQuery();
                                 }
                             }
-                            catch (OracleException ex)
+                            catch (OracleException)
                             {
-                                MessageBox.Show($"Lỗi khi cap quyen tren table: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Lỗi khi cấp quyền trên table", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return;
                             }
                         }
