@@ -37,7 +37,7 @@
             sys_priv_label = new Label();
             username_panel = new Panel();
             add_role_label = new Label();
-            add_role_textBox = new TextBox();
+            rolename_textBox = new TextBox();
             add_role_column_checkedListBox = new CheckedListBox();
             add_role_sys_checkedListBox = new CheckedListBox();
             add_button = new Button();
@@ -61,6 +61,8 @@
             add_role_tab_checkedListBox.Name = "add_role_tab_checkedListBox";
             add_role_tab_checkedListBox.Size = new Size(178, 160);
             add_role_tab_checkedListBox.TabIndex = 71;
+            add_role_tab_checkedListBox.ItemCheck += add_role_tab_checkedListBox_ItemCheck;
+            add_role_tab_checkedListBox.Click += add_role_tab_checkedListBox_Click;
             // 
             // add_role_select_table_comboBox
             // 
@@ -71,6 +73,7 @@
             add_role_select_table_comboBox.Size = new Size(339, 45);
             add_role_select_table_comboBox.TabIndex = 70;
             add_role_select_table_comboBox.Text = "Chọn bảng";
+            add_role_select_table_comboBox.SelectedIndexChanged += add_role_select_table_comboBox_SelectedIndexChanged;
             // 
             // tab_priv_label
             // 
@@ -113,6 +116,7 @@
             reset_button.TabIndex = 62;
             reset_button.Text = "Nhập lại";
             reset_button.UseVisualStyleBackColor = false;
+            reset_button.Click += reset_button_Click;
             // 
             // sys_priv_label
             // 
@@ -127,7 +131,7 @@
             // username_panel
             // 
             username_panel.Controls.Add(add_role_label);
-            username_panel.Controls.Add(add_role_textBox);
+            username_panel.Controls.Add(rolename_textBox);
             username_panel.Location = new Point(25, 121);
             username_panel.Margin = new Padding(0);
             username_panel.Name = "username_panel";
@@ -145,13 +149,13 @@
             add_role_label.TabIndex = 45;
             add_role_label.Text = "Tên role:";
             // 
-            // add_role_textBox
+            // rolename_textBox
             // 
-            add_role_textBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            add_role_textBox.Location = new Point(123, 19);
-            add_role_textBox.Name = "add_role_textBox";
-            add_role_textBox.Size = new Size(422, 43);
-            add_role_textBox.TabIndex = 46;
+            rolename_textBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            rolename_textBox.Location = new Point(123, 19);
+            rolename_textBox.Name = "rolename_textBox";
+            rolename_textBox.Size = new Size(422, 43);
+            rolename_textBox.TabIndex = 46;
             // 
             // add_role_column_checkedListBox
             // 
@@ -162,13 +166,14 @@
             add_role_column_checkedListBox.Name = "add_role_column_checkedListBox";
             add_role_column_checkedListBox.Size = new Size(493, 360);
             add_role_column_checkedListBox.TabIndex = 73;
+            add_role_column_checkedListBox.ItemCheck += add_role_column_checkedListBox_ItemCheck;
             // 
             // add_role_sys_checkedListBox
             // 
             add_role_sys_checkedListBox.BorderStyle = BorderStyle.None;
             add_role_sys_checkedListBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
             add_role_sys_checkedListBox.FormattingEnabled = true;
-            add_role_sys_checkedListBox.Items.AddRange(new object[] { "Connect", "Create session", "Create/drop/alter user", "Create/drop/alter function", "Create/drop/alter procedure", "Create/drop/alter table", "Create/drop/alter view" });
+            add_role_sys_checkedListBox.Items.AddRange(new object[] { "Create session", "Create user", "Drop user", "Alter user", "Create procedure", "Create table", "Create view", "Drop any procedure", "Alter any procedure", "Drop any table", "Alter any table" });
             add_role_sys_checkedListBox.Location = new Point(25, 287);
             add_role_sys_checkedListBox.Name = "add_role_sys_checkedListBox";
             add_role_sys_checkedListBox.Size = new Size(394, 280);
@@ -185,6 +190,7 @@
             add_button.TabIndex = 61;
             add_button.Text = "Thêm role";
             add_button.UseVisualStyleBackColor = false;
+            add_button.Click += add_button_Click;
             // 
             // guna2Separator1
             // 
@@ -210,7 +216,7 @@
             // 
             back_flowLayoutPanel.Controls.Add(back_pictureBox);
             back_flowLayoutPanel.Controls.Add(back_label);
-            back_flowLayoutPanel.Location = new Point(25, 1073);
+            back_flowLayoutPanel.Location = new Point(25, 1064);
             back_flowLayoutPanel.Margin = new Padding(0);
             back_flowLayoutPanel.Name = "back_flowLayoutPanel";
             back_flowLayoutPanel.Size = new Size(180, 38);
@@ -288,7 +294,7 @@
         private Label sys_priv_label;
         private Panel username_panel;
         private Label add_role_label;
-        private TextBox add_role_textBox;
+        private TextBox rolename_textBox;
         private CheckedListBox add_role_column_checkedListBox;
         private CheckedListBox add_role_sys_checkedListBox;
         private Button add_button;

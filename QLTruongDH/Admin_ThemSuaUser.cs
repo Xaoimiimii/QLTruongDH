@@ -143,8 +143,6 @@ namespace QLTruongDH
             }
         }
 
-        /// //////////////////////////////////////
-
         private void LoadTableCols(string procedureName, string tableName)
         {
             using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
@@ -182,12 +180,36 @@ namespace QLTruongDH
         {
             StringBuilder sb = new StringBuilder();
 
-            foreach (var tablePrivilege in selectedTablePrivileges)
+            if (add_user_sys_checkedListBox.CheckedItems.Count > 0)
             {
-                foreach (var privilege in tablePrivilege.Privileges)
+                sb.AppendLine("Các quyền hệ thống đã chọn: ");
+                foreach (var item in add_user_sys_checkedListBox.CheckedItems)
                 {
-                    string columns = privilege.Columns.Count > 0 ? string.Join(", ", privilege.Columns) : "ALL";
-                    sb.AppendLine($"{tablePrivilege.TableName} - {privilege.PrivilegeName} - {privilege.WithGrantOption} - {columns}");
+                    sb.AppendLine(item.ToString());
+                }
+                sb.AppendLine();
+            }
+
+            if (add_user_role_checkedListBox.CheckedItems.Count > 0)
+            {
+                sb.AppendLine("Các quyền role đã chọn: ");
+                foreach (var item in add_user_role_checkedListBox.CheckedItems)
+                {
+                    sb.AppendLine(item.ToString());
+                }
+                sb.AppendLine();
+            }
+
+            if (selectedTablePrivileges.Count > 0)
+            {
+                sb.AppendLine("Các quyền bảng đã chọn: ");
+                foreach (var tablePrivilege in selectedTablePrivileges)
+                {
+                    foreach (var privilege in tablePrivilege.Privileges)
+                    {
+                        string columns = privilege.Columns.Count > 0 ? string.Join(", ", privilege.Columns) : "ALL";
+                        sb.AppendLine($"Bảng: {tablePrivilege.TableName} - Quyền: {privilege.PrivilegeName} - Grantable: {privilege.WithGrantOption} - Cột: {columns}");
+                    }
                 }
             }
 
@@ -201,7 +223,6 @@ namespace QLTruongDH
             password_textBox.Text = string.Empty;
 
             // Reset các checkedListBox
-
             for (int i = 0; i < add_user_sys_checkedListBox.Items.Count; i++)
             {
                 add_user_sys_checkedListBox.SetItemChecked(i, false);
@@ -537,127 +558,55 @@ namespace QLTruongDH
 
         private void add_user_tab_checkedListBox_Click(object sender, EventArgs e)
         {
-            // Lấy bảng được chọn
             string selectedTable = add_user_select_table_comboBox.SelectedItem?.ToString();
-
-            // Lấy quyền được click
             string selectedPrivilege = add_user_tab_checkedListBox.SelectedItem?.ToString();
 
-            // Load with grant option checkbox nếu có
+            select_with_grant_option_checkBox.Visible = selectedPrivilege == "SELECT";
+            update_with_grant_option_checkBox.Visible = selectedPrivilege == "UPDATE";
+
             if (selectedPrivilege == "SELECT")
-            {
-                select_with_grant_option_checkBox.Visible = true;
-                update_with_grant_option_checkBox.Visible = false;
                 select_with_grant_option_checkBox.CheckedChanged -= select_with_grant_option_checkBox_CheckedChanged;
-            }
             else if (selectedPrivilege == "UPDATE")
-            {
-                select_with_grant_option_checkBox.Visible = false;
-                update_with_grant_option_checkBox.Visible = true;
                 update_with_grant_option_checkBox.CheckedChanged -= update_with_grant_option_checkBox_CheckedChanged;
-            }
-            else
-            {
-                select_with_grant_option_checkBox.Visible = false;
-                update_with_grant_option_checkBox.Visible = false;
-            }
 
-
+            // Tìm entry theo table
             TablePrivilege entry = selectedTablePrivileges.Find(t => t.TableName == selectedTable);
+            var priv = entry?.Privileges.FirstOrDefault(p => p.PrivilegeName == selectedPrivilege);
 
-            if (entry != null)
-            {
-                var priv = entry.Privileges.FirstOrDefault(p => p.PrivilegeName == selectedPrivilege);
-                
-                if (priv != null && priv.WithGrantOption)
-                {
-                    if (selectedPrivilege == "SELECT")
-                    {
-                        select_with_grant_option_checkBox.Checked = true;
-                    }
-                    else if (selectedPrivilege == "UPDATE")
-                    {
-                        update_with_grant_option_checkBox.Checked = true;
-                    }
-                }
-                else
-                {
-                    if (selectedPrivilege == "SELECT")
-                    {
-                        select_with_grant_option_checkBox.Checked = false;
-                    }
-                    else if (selectedPrivilege == "UPDATE")
-                    {
-                        update_with_grant_option_checkBox.Checked = false;
-                    }
-                }
-            }
+            // Cập nhật trạng thái checkbox Grant Option
+            if (selectedPrivilege == "SELECT")
+                select_with_grant_option_checkBox.Checked = priv?.WithGrantOption ?? false;
+            else if (selectedPrivilege == "UPDATE")
+                update_with_grant_option_checkBox.Checked = priv?.WithGrantOption ?? false;
 
             if (selectedPrivilege == "SELECT")
-            {
                 select_with_grant_option_checkBox.CheckedChanged += select_with_grant_option_checkBox_CheckedChanged;
-            }
             else if (selectedPrivilege == "UPDATE")
-            {
                 update_with_grant_option_checkBox.CheckedChanged += update_with_grant_option_checkBox_CheckedChanged;
-            }
 
             add_user_column_checkedListBox.ItemCheck -= add_user_column_checkedListBox_ItemCheck;
 
-            // Nếu quyền được chọn là SELECT hoặc UPDATE, hiển thị danh sách cột được gán quyền
-            if (selectedPrivilege == "SELECT")
+            // Xử lý hiển thị danh sách cột SELECT/UPDATE
+            if (selectedPrivilege == "SELECT" || selectedPrivilege == "UPDATE")
             {
                 add_user_column_checkedListBox.Visible = true;
-                LoadTableCols("lay_ds_cols", selectedTable);
 
-                // Reset add_user_column_checkedListBox
+                // Gọi stored procedure tương ứng
+                string procName = selectedPrivilege == "SELECT" ? "lay_ds_cols" : "lay_ds_cols_khong_la_khoa_chinh";
+                LoadTableCols(procName, selectedTable);
+
+                // Reset trạng thái checkbox
                 for (int i = 0; i < add_user_column_checkedListBox.Items.Count; i++)
-                {
                     add_user_column_checkedListBox.SetItemChecked(i, false);
-                }
 
-                // Load lựa chọn cột từ entry nếu có
-                if (entry != null)
+                // Set lại các cột được chọn từ dữ liệu đã lưu
+                if (priv != null)
                 {
-                    var priv = entry.Privileges.FirstOrDefault(p => p.PrivilegeName == selectedPrivilege);
-                    if (priv != null)
+                    foreach (var col in priv.Columns)
                     {
-                        foreach (var col in priv.Columns)
-                        {
-                            int index = add_user_column_checkedListBox.Items.IndexOf(col);
-                            if (index >= 0)
-                            {
-                                add_user_column_checkedListBox.SetItemChecked(index, true);
-                            }
-                        }
-                    }
-                }
-            }
-            else if (selectedPrivilege == "UPDATE")
-            {
-                add_user_column_checkedListBox.Visible = true;
-                LoadTableCols("lay_ds_cols_khong_la_khoa_chinh", selectedTable);
-
-                // Reset add_user_column_checkedListBox
-                for (int i = 0; i < add_user_column_checkedListBox.Items.Count; i++)
-                {
-                    add_user_column_checkedListBox.SetItemChecked(i, false);
-                }
-
-                // Load lựa chọn cột từ entry nếu có
-                if (entry != null)
-                {
-                    var priv = entry.Privileges.FirstOrDefault(p => p.PrivilegeName == selectedPrivilege);
-                    if (priv != null)
-                    {
-                        foreach (var col in priv.Columns)
-                        {
-                            int index = add_user_column_checkedListBox.Items.IndexOf(col);
-                            if (index >= 0)
-                            {
-                                add_user_column_checkedListBox.SetItemChecked(index, true);
-                            }
-                        }
+                        int index = add_user_column_checkedListBox.Items.IndexOf(col);
+                        if (index >= 0)
+                            add_user_column_checkedListBox.SetItemChecked(index, true);
                     }
                 }
             }
@@ -665,95 +614,91 @@ namespace QLTruongDH
             {
                 add_user_column_checkedListBox.Visible = false;
             }
+
             add_user_column_checkedListBox.ItemCheck += add_user_column_checkedListBox_ItemCheck;
         }
 
+
         private void add_user_tab_checkedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (add_user_select_table_comboBox.SelectedItem != null)
+            string selectedTable = add_user_select_table_comboBox.SelectedItem?.ToString();
+            if (string.IsNullOrEmpty(selectedTable)) return;
+
+            string selectedPrivilege = add_user_tab_checkedListBox.Items[e.Index].ToString();
+
+            // Hiển thị checkbox "WITH GRANT OPTION" nếu quyền là SELECT, UPDATE
+            if (selectedPrivilege == "SELECT")
             {
-                // Lấy bảng được chọn
-                string selectedTable = add_user_select_table_comboBox.SelectedItem.ToString();
+                select_with_grant_option_checkBox.Visible = true;
+                update_with_grant_option_checkBox.Visible = false;
+            }
+            else if (selectedPrivilege == "UPDATE")
+            {
+                select_with_grant_option_checkBox.Visible = false;
+                update_with_grant_option_checkBox.Visible = true;
+            }
+            else
+            {
+                select_with_grant_option_checkBox.Visible = false;
+                update_with_grant_option_checkBox.Visible = false;
+            }
 
-                // Lấy lựa chọn vừa chọn
-                string selectedPrivilege = add_user_tab_checkedListBox.Items[e.Index].ToString();
+            // Lấy hoặc tạo TablePrivilege tương ứng với bảng được chọn
+            var tablePrivilege = selectedTablePrivileges.FirstOrDefault(t => t.TableName == selectedTable);
+            
+            if (tablePrivilege == null)
+            {
+                tablePrivilege = new TablePrivilege(selectedTable);
+                selectedTablePrivileges.Add(tablePrivilege);
+            }
 
-                // Hiển thị checkbox "WITH GRANT OPTION" nếu quyền là SELECT, UPDATE
-                if (selectedPrivilege == "SELECT")
+            if (e.NewValue == CheckState.Checked)
+            {
+                // Thêm quyền nếu chưa tồn tại
+                if (!tablePrivilege.Privileges.Any(p => p.PrivilegeName == selectedPrivilege))
                 {
-                    select_with_grant_option_checkBox.Visible = true;
-                    update_with_grant_option_checkBox.Visible = false;
-                }
-                else if (selectedPrivilege == "UPDATE")
-                {
-                    select_with_grant_option_checkBox.Visible = false;
-                    update_with_grant_option_checkBox.Visible = true;
-                }
-                else
-                {
-                    select_with_grant_option_checkBox.Visible = false;
-                    update_with_grant_option_checkBox.Visible = false;
-                }
+                    bool withGrantOption;
 
-                // Lưu quyền hoặc bỏ lưu quyền được chọn vào danh sách quyền
-                if (selectedTable != null)
-                {
-                    TablePrivilege tablePrivilege = selectedTablePrivileges.Find(t => t.TableName == selectedTable);
-
-                    if (tablePrivilege == null)
+                    if (selectedPrivilege == "SELECT")
                     {
-                        tablePrivilege = new TablePrivilege(selectedTable);
-                        selectedTablePrivileges.Add(tablePrivilege);
+                        withGrantOption = select_with_grant_option_checkBox.Checked;
                     }
-
-                    if (e.NewValue == CheckState.Checked)
+                    else if (selectedPrivilege == "UPDATE")
                     {
-                        if (!tablePrivilege.Privileges.Any(p => p.PrivilegeName == selectedPrivilege))
-                        {
-                            if (selectedPrivilege == "SELECT")
-                            {
-                                tablePrivilege.Privileges.Add(new PrivilegeInfo(selectedPrivilege, select_with_grant_option_checkBox.Checked, new List<string>()));
-                            }
-                            else if (selectedPrivilege == "UPDATE")
-                            {
-                                tablePrivilege.Privileges.Add(new PrivilegeInfo(selectedPrivilege, update_with_grant_option_checkBox.Checked, new List<string>()));
-                            }
-                            else
-                            {
-                                tablePrivilege.Privileges.Add(new PrivilegeInfo(selectedPrivilege, false, new List<string>()));
-                            }
-                        }
+                        withGrantOption = update_with_grant_option_checkBox.Checked;
                     }
                     else
                     {
-                        var priv = tablePrivilege.Privileges.FirstOrDefault(p => p.PrivilegeName == selectedPrivilege);
+                        withGrantOption = false;
+                    }
 
-                        if (priv != null)
-                        {
-                            tablePrivilege.Privileges.Remove(priv);
+                    tablePrivilege.Privileges.Add(new PrivilegeInfo(selectedPrivilege, withGrantOption, new List<string>()));
+                }
+            }
+            else
+            {
+                // Xoá quyền nếu bỏ chọn
+                var priv = tablePrivilege.Privileges.FirstOrDefault(p => p.PrivilegeName == selectedPrivilege);
+                
+                if (priv != null)
+                {
+                    tablePrivilege.Privileges.Remove(priv);
 
-                            if (selectedPrivilege == "SELECT")
-                            {
-                                select_with_grant_option_checkBox.Checked = false;
-                            }
-                            else if (selectedPrivilege == "UPDATE")
-                            {
-                                update_with_grant_option_checkBox.Visible = false;
-                            }
+                    if (selectedPrivilege == "SELECT")
+                        select_with_grant_option_checkBox.Checked = false;
+                    else if (selectedPrivilege == "UPDATE")
+                        update_with_grant_option_checkBox.Visible = false;
 
-                            // Bỏ check add_user_column_checkedListBox
-                            for (int i = 0; i < add_user_column_checkedListBox.Items.Count; i++)
-                            {
-                                if (add_user_column_checkedListBox.GetItemChecked(i))
-                                {
-                                    add_user_column_checkedListBox.SetItemChecked(i, false);
-                                }
-                            }
-                        }
+                    // Bỏ check tất cả các cột trong danh sách cột
+                    for (int i = 0; i < add_user_column_checkedListBox.Items.Count; i++)
+                    {
+                        if (add_user_column_checkedListBox.GetItemChecked(i))
+                            add_user_column_checkedListBox.SetItemChecked(i, false);
                     }
                 }
             }
         }
+
 
         private void add_user_column_checkedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
@@ -829,8 +774,6 @@ namespace QLTruongDH
         }
 
         
-
-        /// //////////////////////////////////////
         private void back_label_Click(object sender, EventArgs e)
         {
             bool shouldWarn = false;

@@ -249,6 +249,9 @@ namespace QLTruongDH
                             cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = selectedUsername;
                             cmd.ExecuteNonQuery();
                             LoadUser();
+                            delete_button.Visible = false;
+                            edit_button.Visible = false;
+                            selectedUsername = string.Empty;
                         }
                         catch (OracleException ex)
                         {

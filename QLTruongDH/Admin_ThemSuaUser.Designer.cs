@@ -175,7 +175,7 @@
             add_user_sys_checkedListBox.BorderStyle = BorderStyle.None;
             add_user_sys_checkedListBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
             add_user_sys_checkedListBox.FormattingEnabled = true;
-            add_user_sys_checkedListBox.Items.AddRange(new object[] { "Connect", "Create session", "Create user", "Drop user", "Alter user", "Create procedure", "Create table", "Create view", "Drop any procedure", "Alter any procedure", "Drop any table", "Alter any table" });
+            add_user_sys_checkedListBox.Items.AddRange(new object[] { "Create session", "Create user", "Drop user", "Alter user", "Create procedure", "Create table", "Create view", "Drop any procedure", "Alter any procedure", "Drop any table", "Alter any table" });
             add_user_sys_checkedListBox.Location = new Point(25, 287);
             add_user_sys_checkedListBox.Name = "add_user_sys_checkedListBox";
             add_user_sys_checkedListBox.Size = new Size(394, 280);
@@ -276,7 +276,7 @@
             // 
             back_flowLayoutPanel.Controls.Add(back_pictureBox);
             back_flowLayoutPanel.Controls.Add(back_label);
-            back_flowLayoutPanel.Location = new Point(25, 1073);
+            back_flowLayoutPanel.Location = new Point(25, 1064);
             back_flowLayoutPanel.Margin = new Padding(0);
             back_flowLayoutPanel.Name = "back_flowLayoutPanel";
             back_flowLayoutPanel.Size = new Size(180, 38);

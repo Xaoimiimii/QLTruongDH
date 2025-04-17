@@ -247,6 +247,9 @@ namespace QLTruongDH
                             cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = selectedRole;
                             cmd.ExecuteNonQuery();
                             LoadRole();
+                            delete_button.Visible = false;
+                            edit_button.Visible = false;
+                            selectedRole = string.Empty;
                         }
                         catch (OracleException ex)
                         {
