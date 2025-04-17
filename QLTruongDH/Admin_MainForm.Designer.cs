@@ -198,7 +198,7 @@
             // close_menu_pictureBox
             // 
             close_menu_pictureBox.Image = Properties.Resources.close1;
-            close_menu_pictureBox.Location = new Point(330, 19);
+            close_menu_pictureBox.Location = new Point(310, 19);
             close_menu_pictureBox.Name = "close_menu_pictureBox";
             close_menu_pictureBox.Size = new Size(32, 32);
             close_menu_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;

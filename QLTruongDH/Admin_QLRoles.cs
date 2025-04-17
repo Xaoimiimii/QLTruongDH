@@ -15,11 +15,14 @@ namespace QLTruongDH
     {
         private Admin_MainForm mainForm;
         private List<TablePrivilege> selectedTablePrivileges = new List<TablePrivilege>();
+        private string selectedRole = string.Empty;
 
         public Admin_QLRoles(Admin_MainForm form)
         {
             InitializeComponent();
             this.mainForm = form;
+            delete_button.Visible = false;
+            edit_button.Visible = false;
             LoadRole();
         }
 
@@ -133,11 +136,6 @@ namespace QLTruongDH
             mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Edit"));
         }
 
-        private void delete_button_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void search_role_button_Click(object sender, EventArgs e)
         {
             string searchText = search_role_guna2TextBox.Text.Trim();
@@ -212,8 +210,37 @@ namespace QLTruongDH
                 var cellValue = dataGridView.Rows[e.RowIndex].Cells[1].Value;
                 if (cellValue != null)
                 {
-                    string rolename = cellValue.ToString();
-                    LoadPrivs(rolename);
+                    selectedRole = cellValue.ToString();
+                    LoadPrivs(selectedRole);
+                    delete_button.Visible = true;
+                    edit_button.Visible = true;
+                }
+            }
+        }
+
+        private void delete_button_Click(object sender, EventArgs e)
+        {
+            if (selectedRole != null)
+            {
+                DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa role này không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+                    {
+                        try
+                        {
+                            conn.Open();
+                            OracleCommand cmd = new OracleCommand("xoa_role", conn);
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = selectedRole;
+                            cmd.ExecuteNonQuery();
+                            LoadRole();
+                        }
+                        catch (OracleException ex)
+                        {
+                            MessageBox.Show($"Lỗi khi xóa role {selectedRole}!");
+                        }
+                    }
                 }
             }
         }
