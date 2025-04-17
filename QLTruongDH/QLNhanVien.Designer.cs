@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             label1 = new Label();
             search_employee_guna2TextBox = new Guna.UI2.WinForms.Guna2TextBox();
@@ -37,17 +37,17 @@
             edit_button = new Button();
             search_employee_label = new Label();
             employee_dataGridView = new DataGridView();
+            MaNhanVien = new DataGridViewTextBoxColumn();
+            HoTen = new DataGridViewTextBoxColumn();
+            Phai = new DataGridViewTextBoxColumn();
+            NgSinh = new DataGridViewTextBoxColumn();
+            Luong = new DataGridViewTextBoxColumn();
+            PhuCap = new DataGridViewTextBoxColumn();
+            Dt = new DataGridViewTextBoxColumn();
+            VaiTro = new DataGridViewTextBoxColumn();
+            MaDonVi = new DataGridViewTextBoxColumn();
             add_button = new Button();
             search_employee_button = new Button();
-            MaDonVi = new DataGridViewTextBoxColumn();
-            VaiTro = new DataGridViewTextBoxColumn();
-            Dt = new DataGridViewTextBoxColumn();
-            PhuCap = new DataGridViewTextBoxColumn();
-            Luong = new DataGridViewTextBoxColumn();
-            NgSinh = new DataGridViewTextBoxColumn();
-            Phai = new DataGridViewTextBoxColumn();
-            HoTen = new DataGridViewTextBoxColumn();
-            MaNhanVien = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)employee_dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -74,7 +74,7 @@
             // search_employee_guna2TextBox
             // 
             search_employee_guna2TextBox.BorderRadius = 20;
-            search_employee_guna2TextBox.CustomizableEdges = customizableEdges3;
+            search_employee_guna2TextBox.CustomizableEdges = customizableEdges1;
             search_employee_guna2TextBox.DefaultText = "";
             search_employee_guna2TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             search_employee_guna2TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -92,7 +92,7 @@
             search_employee_guna2TextBox.Name = "search_employee_guna2TextBox";
             search_employee_guna2TextBox.PlaceholderText = "";
             search_employee_guna2TextBox.SelectedText = "";
-            search_employee_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            search_employee_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
             search_employee_guna2TextBox.Size = new Size(360, 51);
             search_employee_guna2TextBox.TabIndex = 39;
             // 
@@ -152,6 +152,72 @@
             employee_dataGridView.Size = new Size(1571, 779);
             employee_dataGridView.TabIndex = 34;
             // 
+            // MaNhanVien
+            // 
+            MaNhanVien.FillWeight = 120F;
+            MaNhanVien.HeaderText = "Mã nhân viên";
+            MaNhanVien.MinimumWidth = 10;
+            MaNhanVien.Name = "MaNhanVien";
+            MaNhanVien.ReadOnly = true;
+            // 
+            // HoTen
+            // 
+            HoTen.HeaderText = "Họ tên";
+            HoTen.MinimumWidth = 10;
+            HoTen.Name = "HoTen";
+            HoTen.ReadOnly = true;
+            // 
+            // Phai
+            // 
+            Phai.FillWeight = 70F;
+            Phai.HeaderText = "Phái";
+            Phai.MinimumWidth = 10;
+            Phai.Name = "Phai";
+            Phai.ReadOnly = true;
+            // 
+            // NgSinh
+            // 
+            NgSinh.HeaderText = "Ngày sinh";
+            NgSinh.MinimumWidth = 10;
+            NgSinh.Name = "NgSinh";
+            NgSinh.ReadOnly = true;
+            // 
+            // Luong
+            // 
+            Luong.HeaderText = "Lương";
+            Luong.MinimumWidth = 10;
+            Luong.Name = "Luong";
+            Luong.ReadOnly = true;
+            // 
+            // PhuCap
+            // 
+            PhuCap.FillWeight = 120F;
+            PhuCap.HeaderText = "Phụ cấp";
+            PhuCap.MinimumWidth = 10;
+            PhuCap.Name = "PhuCap";
+            PhuCap.ReadOnly = true;
+            // 
+            // Dt
+            // 
+            Dt.HeaderText = "Sđt";
+            Dt.MinimumWidth = 10;
+            Dt.Name = "Dt";
+            Dt.ReadOnly = true;
+            // 
+            // VaiTro
+            // 
+            VaiTro.HeaderText = "Vai trò";
+            VaiTro.MinimumWidth = 10;
+            VaiTro.Name = "VaiTro";
+            VaiTro.ReadOnly = true;
+            // 
+            // MaDonVi
+            // 
+            MaDonVi.HeaderText = "Mã đơn vị";
+            MaDonVi.MinimumWidth = 10;
+            MaDonVi.Name = "MaDonVi";
+            MaDonVi.ReadOnly = true;
+            // 
             // add_button
             // 
             add_button.BackColor = Color.BurlyWood;
@@ -177,72 +243,6 @@
             search_employee_button.Text = "Tra cứu";
             search_employee_button.UseVisualStyleBackColor = false;
             // 
-            // MaDonVi
-            // 
-            MaDonVi.HeaderText = "Mã đơn vị";
-            MaDonVi.MinimumWidth = 10;
-            MaDonVi.Name = "MaDonVi";
-            MaDonVi.ReadOnly = true;
-            // 
-            // VaiTro
-            // 
-            VaiTro.HeaderText = "Vai trò";
-            VaiTro.MinimumWidth = 10;
-            VaiTro.Name = "VaiTro";
-            VaiTro.ReadOnly = true;
-            // 
-            // Dt
-            // 
-            Dt.HeaderText = "Sđt";
-            Dt.MinimumWidth = 10;
-            Dt.Name = "Dt";
-            Dt.ReadOnly = true;
-            // 
-            // PhuCap
-            // 
-            PhuCap.FillWeight = 120F;
-            PhuCap.HeaderText = "Phụ cấp";
-            PhuCap.MinimumWidth = 10;
-            PhuCap.Name = "PhuCap";
-            PhuCap.ReadOnly = true;
-            // 
-            // Luong
-            // 
-            Luong.HeaderText = "Lương";
-            Luong.MinimumWidth = 10;
-            Luong.Name = "Luong";
-            Luong.ReadOnly = true;
-            // 
-            // NgSinh
-            // 
-            NgSinh.HeaderText = "Ngày sinh";
-            NgSinh.MinimumWidth = 10;
-            NgSinh.Name = "NgSinh";
-            NgSinh.ReadOnly = true;
-            // 
-            // Phai
-            // 
-            Phai.FillWeight = 70F;
-            Phai.HeaderText = "Phái";
-            Phai.MinimumWidth = 10;
-            Phai.Name = "Phai";
-            Phai.ReadOnly = true;
-            // 
-            // HoTen
-            // 
-            HoTen.HeaderText = "Họ tên";
-            HoTen.MinimumWidth = 10;
-            HoTen.Name = "HoTen";
-            HoTen.ReadOnly = true;
-            // 
-            // MaNhanVien
-            // 
-            MaNhanVien.FillWeight = 120F;
-            MaNhanVien.HeaderText = "Mã nhân viên";
-            MaNhanVien.MinimumWidth = 10;
-            MaNhanVien.Name = "MaNhanVien";
-            MaNhanVien.ReadOnly = true;
-            // 
             // QLNhanVien
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
@@ -259,7 +259,7 @@
             Controls.Add(label1);
             Margin = new Padding(0);
             Name = "QLNhanVien";
-            Size = new Size(1620, 1169);
+            Size = new Size(1625, 1169);
             ((System.ComponentModel.ISupportInitialize)employee_dataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();

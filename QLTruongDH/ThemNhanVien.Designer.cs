@@ -300,7 +300,7 @@
             Controls.Add(label1);
             Margin = new Padding(0);
             Name = "ThemNhanVien";
-            Size = new Size(1620, 1169);
+            Size = new Size(1625, 1169);
             ResumeLayout(false);
             PerformLayout();
         }
