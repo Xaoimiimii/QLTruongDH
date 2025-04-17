@@ -50,6 +50,7 @@ namespace QLTruongDH
             update_with_grant_option_checkBox.Visible = false;
         }
 
+        // === CLASS ===
         public class PrivilegeInfo
         {
             public string PrivilegeName { get; set; } // Tên quyền
@@ -76,6 +77,8 @@ namespace QLTruongDH
             }
         }
 
+
+        // === LOAD DATA ===
         private void LoadRoleCheckedListBox()
         {
             using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
@@ -173,15 +176,330 @@ namespace QLTruongDH
             }
         }
 
+
+        // === HELPER FUNCTION ===
+        private string GetPrivilegesInfo()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var tablePrivilege in selectedTablePrivileges)
+            {
+                foreach (var privilege in tablePrivilege.Privileges)
+                {
+                    string columns = privilege.Columns.Count > 0 ? string.Join(", ", privilege.Columns) : "ALL";
+                    sb.AppendLine($"{tablePrivilege.TableName} - {privilege.PrivilegeName} - {privilege.WithGrantOption} - {columns}");
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        private void ResetPanel()
+        {
+            // Reset các trường nhập liệu
+            username_textBox.Text = string.Empty;
+            password_textBox.Text = string.Empty;
+
+            // Reset các checkedListBox
+
+            for (int i = 0; i < add_user_sys_checkedListBox.Items.Count; i++)
+            {
+                add_user_sys_checkedListBox.SetItemChecked(i, false);
+            }
+
+            for (int i = 0; i < add_user_role_checkedListBox.Items.Count; i++)
+            {
+                add_user_role_checkedListBox.SetItemChecked(i, false);
+            }
+
+            add_user_tab_checkedListBox.ItemCheck -= add_user_tab_checkedListBox_ItemCheck;
+            for (int i = 0; i < add_user_tab_checkedListBox.Items.Count; i++)
+            {
+                add_user_tab_checkedListBox.SetItemChecked(i, false);
+            }
+            add_user_tab_checkedListBox.ItemCheck += add_user_tab_checkedListBox_ItemCheck;
+
+            add_user_column_checkedListBox.ItemCheck -= add_user_column_checkedListBox_ItemCheck;
+            for (int i = 0; i < add_user_column_checkedListBox.Items.Count; i++)
+            {
+                add_user_column_checkedListBox.SetItemChecked(i, false);
+            }
+            add_user_column_checkedListBox.ItemCheck += add_user_column_checkedListBox_ItemCheck;
+
+            // Reset các checkbox
+            select_with_grant_option_checkBox.Checked = false;
+            update_with_grant_option_checkBox.Checked = false;
+            select_with_grant_option_checkBox.Visible = false;
+            update_with_grant_option_checkBox.Visible = false;
+
+            // Reset combobox
+            add_user_select_table_comboBox.SelectedIndex = -1;
+
+            // Ẩn danh sách cột
+            add_user_column_checkedListBox.Visible = false;
+
+            // Ẩn danh sách quyền
+            add_user_tab_checkedListBox.Visible = false;
+
+
+            // Xóa danh sách quyền của user
+            selectedTablePrivileges.Clear();
+
+            LoadRoleCheckedListBox();
+            LoadTabComboBox();
+        }
+
+        private void CreateUser()
+        {
+            string username = username_textBox.Text.Trim();
+            string password = password_textBox.Text.Trim();
+
+            // Kiểm tra username, password có nhập đủ không
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ Username và Password", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Lấy danh sách quyền hệ thống
+            List<string> sysPrivileges = add_user_sys_checkedListBox.CheckedItems.Cast<string>().ToList();
+
+            // Lấy danh sách quyền role
+            List<string> rolePrivileges = add_user_role_checkedListBox.CheckedItems.Cast<string>().ToList();
+
+            // Tạo user mới trong cơ sở dữ liệu
+            if (CreateUserSp(username, password))
+            {
+                // Gán các quyền hệ thống (Sys Privileges)
+                foreach (var priv in sysPrivileges)
+                {
+                    GrantPrivilege(username, priv);
+                }
+
+                // Gán các quyền role (Role Privileges)
+                foreach (var role in rolePrivileges)
+                {
+                    GrantPrivilege(username, role);
+                }
+
+                // Gán các quyền bảng (Table Privileges)
+                GrantTablePrivilege(username);
+
+                MessageBox.Show("User đã được tạo và cấp quyền thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Reset panel
+                ResetPanel();
+            }
+            else
+            {
+                MessageBox.Show("Lỗi khi tạo user!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private bool CreateUserSp(string username, string password)
+        {
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    using (OracleCommand cmd = new OracleCommand("tao_user", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = username;
+                        cmd.Parameters.Add("p_password", OracleDbType.Varchar2).Value = password;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (OracleException ex)
+                {
+                    MessageBox.Show($"Lỗi khi tạo user: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void GrantPrivilege(string username, string privilege)
+        {
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    using (OracleCommand cmd = new OracleCommand("grant_priv", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = username;
+                        cmd.Parameters.Add("p_priv", OracleDbType.Varchar2).Value = privilege;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (OracleException ex)
+                {
+                    MessageBox.Show($"Lỗi khi cấp quyền hệ thống: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void GrantTablePrivilege(string username)
+        {
+            foreach (var tablePrivilege in selectedTablePrivileges)
+            {
+                foreach (var privilege in tablePrivilege.Privileges)
+                {
+                    // Tính số cột của bảng
+                    int columnCount = 0;
+                    using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+                    {
+                        try
+                        {
+                            conn.Open();
+                            using (OracleCommand cmd = new OracleCommand("dem_so_cot_cua_bang", conn))
+                            {
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.Add("p_tablename", OracleDbType.Varchar2).Value = tablePrivilege.TableName;
+                                cmd.Parameters.Add("p_count", OracleDbType.Int32).Direction = ParameterDirection.Output;
+                                cmd.ExecuteNonQuery();
+                                columnCount = ((OracleDecimal)cmd.Parameters["p_count"].Value).ToInt32();
+                            }
+                        }
+                        catch (OracleException ex)
+                        {
+                            MessageBox.Show($"Lỗi khi đếm số cột của bảng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+
+
+                    // Nếu số column được chọn > 0 và < số cột của bảng
+
+                    if (privilege.Columns.Count > 0 && privilege.Columns.Count < columnCount)
+                    {
+                        // Tạo string gồm các column được chọn cách nhau bởi '_'
+                        string columns = string.Join("_", privilege.Columns);
+
+                        // Tạo chuỗi tên view
+                        string view_name = tablePrivilege.TableName + "_" + columns + "_VIEW";
+
+                        // Goi sp tao_view de tao view
+                        using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+                        {
+                            try
+                            {
+                                conn.Open();
+                                using (OracleCommand cmd = new OracleCommand("tao_view", conn))
+                                {
+                                    cmd.CommandType = CommandType.StoredProcedure;
+                                    cmd.Parameters.Add("p_view_name", OracleDbType.Varchar2).Value = view_name;
+                                    cmd.Parameters.Add("p_column_list", OracleDbType.Varchar2).Value = string.Join(",", privilege.Columns);
+                                    cmd.Parameters.Add("p_tablename", OracleDbType.Varchar2).Value = tablePrivilege.TableName;
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                            catch (OracleException ex)
+                            {
+                                MessageBox.Show($"Lỗi khi tạo view: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+
+                        // Gán quyền cho user trên view
+                        using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+                        {
+                            try
+                            {
+                                conn.Open();
+                                using (OracleCommand cmd = new OracleCommand("cap_quyen_view_table", conn))
+                                {
+                                    cmd.CommandType = CommandType.StoredProcedure;
+                                    cmd.Parameters.Add("p_privilege_name", OracleDbType.Varchar2).Value = privilege.PrivilegeName;
+                                    cmd.Parameters.Add("p_view_name", OracleDbType.Varchar2).Value = view_name;
+                                    cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = username;
+                                    cmd.Parameters.Add("p_with_grant_option", OracleDbType.Boolean).Value = privilege.WithGrantOption;
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                            catch (OracleException ex)
+                            {
+                                MessageBox.Show($"Lỗi khi cap quyen tren view: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+                        {
+                            try
+                            {
+                                conn.Open();
+                                using (OracleCommand cmd = new OracleCommand("cap_quyen_view_table", conn))
+                                {
+                                    cmd.CommandType = CommandType.StoredProcedure;
+                                    cmd.Parameters.Add("p_privilege_name", OracleDbType.Varchar2).Value = privilege.PrivilegeName;
+                                    cmd.Parameters.Add("p_view_name", OracleDbType.Varchar2).Value = tablePrivilege.TableName;
+                                    cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = username;
+                                    cmd.Parameters.Add("p_with_grant_option", OracleDbType.Boolean).Value = privilege.WithGrantOption;
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                            catch (OracleException ex)
+                            {
+                                MessageBox.Show($"Lỗi khi cap quyen tren table: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // === UI (BUTTON, CHECKBOX, COMBOBOX) INTERACT ===
+        private void reset_button_Click(object sender, EventArgs e)
+        {
+            ResetPanel();
+        }
+
+        private void add_button_Click(object sender, EventArgs e)
+        {
+            string privilegesInfo = GetPrivilegesInfo();
+
+            // Xác nhận các quyền đã chọn
+            if (!string.IsNullOrEmpty(privilegesInfo))
+            {
+                DialogResult result = MessageBox.Show(privilegesInfo, "Xác nhận các quyền đã chọn", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                if (result == DialogResult.Yes)
+                {
+                    CreateUser();
+                }
+            }
+            else
+            {
+                CreateUser();
+            }
+        }
+
+
         private void add_user_select_table_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             add_user_tab_checkedListBox.Visible = true;
 
             add_user_tab_checkedListBox.ItemCheck -= add_user_tab_checkedListBox_ItemCheck;
+            select_with_grant_option_checkBox.CheckedChanged -= select_with_grant_option_checkBox_CheckedChanged;
+            update_with_grant_option_checkBox.CheckedChanged -= update_with_grant_option_checkBox_CheckedChanged;
 
             // Reset và ẩn with grant option checkbox
+            select_with_grant_option_checkBox.Checked = false;
+            update_with_grant_option_checkBox.Checked = false;
+            update_with_grant_option_checkBox.Checked = false;
             select_with_grant_option_checkBox.Visible = false;
             update_with_grant_option_checkBox.Visible = false;
+
+            select_with_grant_option_checkBox.CheckedChanged -= select_with_grant_option_checkBox_CheckedChanged;
+            update_with_grant_option_checkBox.CheckedChanged -= update_with_grant_option_checkBox_CheckedChanged;
 
             // Reset các lựa chọn trong checkedListBox chọn quyền trên bảng
             for (int i = 0; i < add_user_tab_checkedListBox.Items.Count; i++)
@@ -510,313 +828,26 @@ namespace QLTruongDH
             }
         }
 
-        private string GetPrivilegesInfo()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var tablePrivilege in selectedTablePrivileges)
-            {
-                foreach (var privilege in tablePrivilege.Privileges)
-                {
-                    string columns = privilege.Columns.Count > 0 ? string.Join(", ", privilege.Columns) : "ALL";
-                    sb.AppendLine($"{tablePrivilege.TableName} - {privilege.PrivilegeName} - {privilege.WithGrantOption} - {columns}");
-                }
-            }
-
-            return sb.ToString();
-        }
-
-        private void ResetPanel()
-        {
-            // Reset các trường nhập liệu
-            username_textBox.Text = string.Empty;
-            password_textBox.Text = string.Empty;
-
-            // Reset các checkedListBox
-
-            for (int i = 0; i < add_user_sys_checkedListBox.Items.Count; i++)
-            {
-                add_user_sys_checkedListBox.SetItemChecked(i, false);
-            }
-
-            for (int i = 0; i < add_user_role_checkedListBox.Items.Count; i++)
-            {
-                add_user_role_checkedListBox.SetItemChecked(i, false);
-            }
-
-            add_user_tab_checkedListBox.ItemCheck -= add_user_tab_checkedListBox_ItemCheck;
-            for (int i = 0; i < add_user_tab_checkedListBox.Items.Count; i++)
-            {
-                add_user_tab_checkedListBox.SetItemChecked(i, false);
-            }
-            add_user_tab_checkedListBox.ItemCheck += add_user_tab_checkedListBox_ItemCheck;
-
-            add_user_column_checkedListBox.ItemCheck -= add_user_column_checkedListBox_ItemCheck;
-            for (int i = 0; i < add_user_column_checkedListBox.Items.Count; i++)
-            {
-                add_user_column_checkedListBox.SetItemChecked(i, false);
-            }
-            add_user_column_checkedListBox.ItemCheck += add_user_column_checkedListBox_ItemCheck;
-
-            // Reset các checkbox
-            select_with_grant_option_checkBox.Checked = false;
-            update_with_grant_option_checkBox.Checked = false;
-            select_with_grant_option_checkBox.Visible = false;
-            update_with_grant_option_checkBox.Visible = false;
-
-            // Reset combobox
-            add_user_select_table_comboBox.SelectedIndex = -1;
-
-            // Ẩn danh sách cột
-            add_user_column_checkedListBox.Visible = false;
-
-            // Ẩn danh sách quyền
-            add_user_tab_checkedListBox.Visible = false;
-
-
-            // Xóa danh sách quyền của user
-            selectedTablePrivileges.Clear();
-
-            LoadRoleCheckedListBox();
-            LoadTabComboBox();
-        }
-
-        private void reset_button_Click(object sender, EventArgs e)
-        {
-            ResetPanel();
-        }
-
-        private void add_button_Click(object sender, EventArgs e)
-        {
-            string privilegesInfo = GetPrivilegesInfo();
-
-            // Xác nhận các quyền đã chọn
-            if (!string.IsNullOrEmpty(privilegesInfo))
-            {
-                DialogResult result = MessageBox.Show(privilegesInfo, "Danh sách quyền", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                
-                if (result == DialogResult.Yes)
-                {
-                    CreateUser();
-                }
-            }
-            else
-            {
-                CreateUser();
-            }
-        }
-
-        private void CreateUser()
-        {
-            string username = username_textBox.Text.Trim();
-            string password = password_textBox.Text.Trim();
-
-            // Kiểm tra username, password có nhập đủ không
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            {
-                MessageBox.Show("Vui lòng nhập đầy đủ Username và Password", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // Lấy danh sách quyền hệ thống
-            List<string> sysPrivileges = add_user_sys_checkedListBox.CheckedItems.Cast<string>().ToList();
-
-            // Lấy danh sách quyền role
-            List<string> rolePrivileges = add_user_role_checkedListBox.CheckedItems.Cast<string>().ToList();
-
-            // Tạo user mới trong cơ sở dữ liệu
-            if (CreateUserSp(username, password))
-            {
-                // Gán các quyền hệ thống (Sys Privileges)
-                foreach (var priv in sysPrivileges)
-                {
-                    GrantPrivilege(username, priv);
-                }
-
-                // Gán các quyền role (Role Privileges)
-                foreach (var role in rolePrivileges)
-                {
-                    GrantPrivilege(username, role);
-                }
-
-                // Gán các quyền bảng (Table Privileges)
-                GrantTablePrivilege(username);
-
-                MessageBox.Show("User đã được tạo và cấp quyền thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
-                // Reset panel
-                ResetPanel();
-            }
-            else
-            {
-                MessageBox.Show("Lỗi khi tạo user!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private bool CreateUserSp(string username, string password)
-        {
-            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
-            {
-                try
-                {
-                    conn.Open();
-                    using (OracleCommand cmd = new OracleCommand("tao_user", conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = username;
-                        cmd.Parameters.Add("p_password", OracleDbType.Varchar2).Value = password;
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-                catch (OracleException ex)
-                {
-                    MessageBox.Show($"Lỗi khi tạo user: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        private void GrantPrivilege(string username, string privilege)
-        {
-            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
-            {
-                try
-                {
-                    conn.Open();
-
-                    using (OracleCommand cmd = new OracleCommand("grant_priv", conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = username;
-                        cmd.Parameters.Add("p_priv", OracleDbType.Varchar2).Value = privilege;
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-                catch (OracleException ex)
-                {
-                    MessageBox.Show($"Lỗi khi cấp quyền hệ thống: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void GrantTablePrivilege(string username)
-        {
-            foreach (var tablePrivilege in selectedTablePrivileges)
-            {
-                foreach (var privilege in tablePrivilege.Privileges)
-                {
-                    // Tính số cột của bảng
-                    int columnCount = 0;
-                    using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
-                    {
-                        try
-                        {
-                            conn.Open();
-                            using (OracleCommand cmd = new OracleCommand("dem_so_cot_cua_bang", conn))
-                            {
-                                cmd.CommandType = CommandType.StoredProcedure;
-                                cmd.Parameters.Add("p_tablename", OracleDbType.Varchar2).Value = tablePrivilege.TableName;
-                                cmd.Parameters.Add("p_count", OracleDbType.Int32).Direction = ParameterDirection.Output;
-                                cmd.ExecuteNonQuery();
-                                columnCount = ((OracleDecimal)cmd.Parameters["p_count"].Value).ToInt32();
-                            }
-                        }
-                        catch (OracleException ex)
-                        {
-                            MessageBox.Show($"Lỗi khi đếm số cột của bảng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-
-
-                    // Nếu số column được chọn > 0 và < số cột của bảng
-
-                    if (privilege.Columns.Count > 0 && privilege.Columns.Count < columnCount)
-                    {
-                        // Tạo string gồm các column được chọn cách nhau bởi '_'
-                        string columns = string.Join("_", privilege.Columns);
-
-                        // Tạo chuỗi tên view
-                        string view_name = tablePrivilege.TableName + "_" + columns + "_VIEW";
-
-                        // Goi sp tao_view de tao view
-                        using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
-                        {
-                            try
-                            {
-                                conn.Open();
-                                using (OracleCommand cmd = new OracleCommand("tao_view", conn))
-                                {
-                                    cmd.CommandType = CommandType.StoredProcedure;
-                                    cmd.Parameters.Add("p_view_name", OracleDbType.Varchar2).Value = view_name;
-                                    cmd.Parameters.Add("p_column_list", OracleDbType.Varchar2).Value = string.Join(",", privilege.Columns);
-                                    cmd.Parameters.Add("p_tablename", OracleDbType.Varchar2).Value = tablePrivilege.TableName;
-                                    cmd.ExecuteNonQuery();
-                                }
-                            }
-                            catch (OracleException ex)
-                            {
-                                MessageBox.Show($"Lỗi khi tạo view: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-                        }
-
-                        // Gán quyền cho user trên view
-                        using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
-                        {
-                            try
-                            {
-                                conn.Open();
-                                using (OracleCommand cmd = new OracleCommand("cap_quyen_view_table", conn))
-                                {
-                                    cmd.CommandType = CommandType.StoredProcedure;
-                                    cmd.Parameters.Add("p_privilege_name", OracleDbType.Varchar2).Value = privilege.PrivilegeName;
-                                    cmd.Parameters.Add("p_view_name", OracleDbType.Varchar2).Value = view_name;
-                                    cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = username;
-                                    cmd.Parameters.Add("p_with_grant_option", OracleDbType.Boolean).Value = privilege.WithGrantOption;
-                                    cmd.ExecuteNonQuery();
-                                }
-                            }
-                            catch (OracleException ex)
-                            {
-                                MessageBox.Show($"Lỗi khi cap quyen tren view: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
-                        {
-                            try
-                            {
-                                conn.Open();
-                                using (OracleCommand cmd = new OracleCommand("cap_quyen_view_table", conn))
-                                {
-                                    cmd.CommandType = CommandType.StoredProcedure;
-                                    cmd.Parameters.Add("p_privilege_name", OracleDbType.Varchar2).Value = privilege.PrivilegeName;
-                                    cmd.Parameters.Add("p_view_name", OracleDbType.Varchar2).Value = tablePrivilege.TableName;
-                                    cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = username;
-                                    cmd.Parameters.Add("p_with_grant_option", OracleDbType.Boolean).Value = privilege.WithGrantOption;
-                                    cmd.ExecuteNonQuery();
-                                }
-                            }
-                            catch (OracleException ex)
-                            {
-                                MessageBox.Show($"Lỗi khi cap quyen tren table: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        
 
         /// //////////////////////////////////////
         private void back_label_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn quay lại? Dữ liệu đã nhập sẽ không lưu", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
+            bool shouldWarn = false;
+            if (username_textBox.Text != "" || password_textBox.Text != "") shouldWarn = true;
+            if (add_user_sys_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
+            if (add_user_role_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
+            if (selectedTablePrivileges.Count > 0) shouldWarn = true;
+
+            if (shouldWarn)
+            {
+                DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn quay lại? Dữ liệu đã nhập sẽ không lưu", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    mainForm.LoadControl(new Admin_QLUsers(mainForm));
+                }
+            }
+            else
             {
                 mainForm.LoadControl(new Admin_QLUsers(mainForm));
             }
@@ -824,8 +855,21 @@ namespace QLTruongDH
 
         private void back_pictureBox_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn quay lại? Dữ liệu đã nhập sẽ không lưu", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
+            bool shouldWarn = false;
+            if (username_textBox.Text != "" || password_textBox.Text != "") shouldWarn = true;
+            if (add_user_sys_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
+            if (add_user_role_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
+            if (selectedTablePrivileges.Count > 0) shouldWarn = true;
+
+            if (shouldWarn)
+            {
+                DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn quay lại? Dữ liệu đã nhập sẽ không lưu", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    mainForm.LoadControl(new Admin_QLUsers(mainForm));
+                }
+            }
+            else
             {
                 mainForm.LoadControl(new Admin_QLUsers(mainForm));
             }
@@ -833,8 +877,21 @@ namespace QLTruongDH
 
         private void back_flowLayoutPanel_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn quay lại? Dữ liệu đã nhập sẽ không lưu", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
+            bool shouldWarn = false;
+            if (username_textBox.Text != "" || password_textBox.Text != "") shouldWarn = true;
+            if (add_user_sys_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
+            if (add_user_role_checkedListBox.CheckedItems.Count > 0) shouldWarn = true;
+            if (selectedTablePrivileges.Count > 0) shouldWarn = true;
+
+            if (shouldWarn)
+            {
+                DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn quay lại? Dữ liệu đã nhập sẽ không lưu", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    mainForm.LoadControl(new Admin_QLUsers(mainForm));
+                }
+            }
+            else
             {
                 mainForm.LoadControl(new Admin_QLUsers(mainForm));
             }
