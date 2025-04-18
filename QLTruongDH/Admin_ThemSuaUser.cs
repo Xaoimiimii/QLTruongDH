@@ -21,11 +21,18 @@ namespace QLTruongDH
 
         private List<string> sysPrivsList = new List<string>();
         private List<string> rolePrivsList = new List<string>();
+
         private List<TablePrivilege> pre_selectedTablePrivileges = new List<TablePrivilege>();
         private List<TablePrivilege> selectedTablePrivileges = new List<TablePrivilege>();
 
+        private List<string> tableNameList = new List<string>();
+        private List<string> tablePrivsList = new List<string>();
+        private List<string> typeList = new List<string>();
+        private List<string> grantableList = new List<string>();
+
         public Admin_ThemSuaUser(Admin_MainForm form, string mode, string username,
-            List<string> sysPrivsList, List<string> rolePrivsList, List<TablePrivilege> selectedTablePrivileges)
+            List<string> sysPrivsList, List<string> rolePrivsList, List<string> pre_tableNameList,
+            List<string> pre_tablePrivsList, List<string> pre_typeList, List<string> pre_grantableList)
         {
             InitializeComponent();
             this.mainForm = form;
@@ -33,10 +40,11 @@ namespace QLTruongDH
             this.username = username;
             this.sysPrivsList = sysPrivsList;
             this.rolePrivsList = rolePrivsList;
-            this.pre_selectedTablePrivileges = ExtractRealTablePrivilegesFromViews(selectedTablePrivileges);
-            this.selectedTablePrivileges = ExtractRealTablePrivilegesFromViews(selectedTablePrivileges);
+            this.tableNameList = pre_tableNameList;
+            this.tablePrivsList = pre_tablePrivsList;
+            this.typeList = pre_typeList;
+            this.grantableList = pre_grantableList;
 
-            HienThiDataNhanDuoc();
             LoadRoleCheckedListBox();
             LoadTabComboBox();
 
@@ -56,6 +64,9 @@ namespace QLTruongDH
                 LoadSysPrivsFromSysPrivsList();
                 LoadRolePrivsFromRolePrivsList();
                 LoadTableColsFromBeforeSelectedTablePrivileges();
+                pre_selectedTablePrivileges = PreTabPrivilegeData();
+                selectedTablePrivileges = pre_selectedTablePrivileges;
+                HienThiDataNhanDuoc();
             }
 
             add_user_tab_checkedListBox.Visible = false;
@@ -65,52 +76,74 @@ namespace QLTruongDH
 
 
         // === LOAD PREVIOUS DATA ===
-        public List<TablePrivilege> ExtractRealTablePrivilegesFromViews(List<TablePrivilege> inputList)
+        private List<TablePrivilege> PreTabPrivilegeData()
         {
-            List<TablePrivilege> resultList = new List<TablePrivilege>();
+            List<TablePrivilege> tablePrivileges = new List<TablePrivilege>();
 
-            foreach (var viewPrivilege in inputList)
+            // Lấy danh sách quyền bảng từ các biến đã truyền vào
+            for (int i = 0; i < tableNameList.Count; i++)
             {
-                string viewName = viewPrivilege.TableName;
+                string tableName = tableNameList[i];
+                string tablePriv = tablePrivsList[i];
+                string type = typeList[i];
+                List<string> columns = new List<string>();
 
-                // Kiểm tra xem có phải là VIEW không
-                if (viewName.EndsWith("_VIEW"))
+                bool grantable = false;
+                if (grantableList[i] == "YES")
                 {
-                    string nameWithoutView = viewName.Substring(0, viewName.Length - "_VIEW".Length); // Bỏ _VIEW
+                    grantable = true;
+                }
+                else if (grantableList[i] == "NO")
+                {
+                    grantable = false;
+                }
 
-                    string[] parts = nameWithoutView.Split('_');
-                    if (parts.Length < 2) continue; // Không hợp lệ, bỏ qua
-
-                    string realTableName = parts[0];
-                    List<string> columns = parts.Skip(1).ToList(); // Các phần sau là tên cột
-
-                    // Tạo một TablePrivilege mới
-                    TablePrivilege newTablePriv = new TablePrivilege(realTableName);
-
-                    foreach (var priv in viewPrivilege.Privileges)
+                if (type == "VIEW")
+                {
+                    using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
                     {
-                        // Gán lại thông tin cũ (quyền và with grant)
-                        PrivilegeInfo newPriv = new PrivilegeInfo(
-                            priv.PrivilegeName,
-                            priv.WithGrantOption,
-                            columns // Gán các cột đã tách
-                        );
+                        try
+                        {
+                            conn.Open();
+                            using (OracleCommand cmd = new OracleCommand("lay_ds_cols", conn))
+                            {
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.Add("p_tablename", OracleDbType.Varchar2).Value = tableName;
+                                cmd.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
 
-                        newTablePriv.Privileges.Add(newPriv);
+                                using (OracleDataReader reader = cmd.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        string colName = reader.GetString(0);
+                                        columns.Add(colName);
+                                    }
+                                }
+                            }
+                        }
+                        catch (OracleException)
+                        {
+                            MessageBox.Show($"Lỗi khi load danh sách column trong table '{tableName}'", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
 
-                    resultList.Add(newTablePriv);
+                    // Nếu là VIEW thì lấy tên bảng từ tên view
+                    // Tách tên bảng từ tên view từ đầu đến '_' đầu tiên
+                    int underscoreIndex = tableName.IndexOf('_');
+                    if (underscoreIndex != -1)
+                    {
+                        tableName = tableName.Substring(0, underscoreIndex);
+                    }
                 }
-                else
-                {
-                    // Không phải VIEW, thêm trực tiếp vào
-                    resultList.Add(viewPrivilege);
-                }
+
+                // Tạo một TablePrivilege mới
+                TablePrivilege newTablePriv = new TablePrivilege(tableName);
+                PrivilegeInfo newPriv = new PrivilegeInfo(tablePriv, grantable, columns);
+                newTablePriv.Privileges.Add(newPriv);
+                tablePrivileges.Add(newTablePriv);
             }
-
-            return resultList;
+            return tablePrivileges;
         }
-
 
         private void HienThiDataNhanDuoc()
         {
@@ -131,7 +164,7 @@ namespace QLTruongDH
             sb.AppendLine();
 
             sb.AppendLine("Các quyền bảng đã chọn: ");
-            foreach (var tablePrivilege in pre_selectedTablePrivileges)
+            foreach (var tablePrivilege in selectedTablePrivileges)
             {
                 foreach (var privilege in tablePrivilege.Privileges)
                 {

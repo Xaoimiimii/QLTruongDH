@@ -21,11 +21,18 @@ namespace QLTruongDH
 
         private List<string> sysPrivsList = new List<string>();
         private List<string> rolePrivsList = new List<string>();
+
         private List<TablePrivilege> pre_selectedTablePrivileges = new List<TablePrivilege>();
         private List<TablePrivilege> selectedTablePrivileges = new List<TablePrivilege>();
 
+        private List<string> tableNameList = new List<string>();
+        private List<string> tablePrivsList = new List<string>();
+        private List<string> typeList = new List<string>();
+        private List<string> grantableList = new List<string>();
+
         public Admin_ThemSuaRole(Admin_MainForm form, string mode, string roleName,
-            List<string> sysPrivsList, List<string> rolePrivsList, List<TablePrivilege> selectedTablePrivileges)
+            List<string> sysPrivsList, List<string> rolePrivsList, List<string> pre_tableNameList,
+            List<string> pre_tablePrivsList, List<string> pre_typeList, List<string> pre_grantableList)
         {
             InitializeComponent();
             this.mainForm = form;
@@ -33,10 +40,11 @@ namespace QLTruongDH
             this.roleName = roleName;
             this.sysPrivsList = sysPrivsList;
             this.rolePrivsList = rolePrivsList;
-            this.pre_selectedTablePrivileges = ExtractRealTablePrivilegesFromViews(selectedTablePrivileges);
-            this.selectedTablePrivileges = ExtractRealTablePrivilegesFromViews(selectedTablePrivileges);
+            this.tableNameList = pre_tableNameList;
+            this.tablePrivsList = pre_tablePrivsList;
+            this.typeList = pre_typeList;
+            this.grantableList = pre_grantableList;
 
-            HienThiDataNhanDuoc();
             LoadTabComboBox();
 
             if (mode == "Add")
@@ -56,11 +64,169 @@ namespace QLTruongDH
                 LoadRoleCheckedListBox("lay_ds_ten_roles_khong_phai_role_hien_tai", roleName);
                 LoadSysPrivsFromSysPrivsList();
                 LoadRolePrivsFromRolePrivsList();
+                pre_selectedTablePrivileges = PreTabPrivilegeData();
+                selectedTablePrivileges = pre_selectedTablePrivileges;
+                HienThiDataNhanDuoc();
             }
 
             add_role_tab_checkedListBox.Visible = false;
         }
 
+
+        // === LOAD PREVIOUS DATA ===
+        private List<TablePrivilege> PreTabPrivilegeData()
+        {
+            List<TablePrivilege> tablePrivileges = new List<TablePrivilege>();
+
+            // Lấy danh sách quyền bảng từ các biến đã truyền vào
+            for (int i = 0; i < tableNameList.Count; i++)
+            {
+                string tableName = tableNameList[i];
+                string tablePriv = tablePrivsList[i];
+                string type = typeList[i];
+                List<string> columns = new List<string>();
+
+                bool grantable = false;
+                if (grantableList[i] == "YES")
+                {
+                    grantable = true;
+                }
+                else if (grantableList[i] == "NO")
+                {
+                    grantable = false;
+                }
+
+                if (type == "VIEW")
+                {
+                    using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+                    {
+                        try
+                        {
+                            conn.Open();
+                            using (OracleCommand cmd = new OracleCommand("lay_ds_cols", conn))
+                            {
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.Add("p_tablename", OracleDbType.Varchar2).Value = tableName;
+                                cmd.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                                using (OracleDataReader reader = cmd.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        string colName = reader.GetString(0);
+                                        columns.Add(colName);
+                                    }
+                                }
+                            }
+                        }
+                        catch (OracleException)
+                        {
+                            MessageBox.Show($"Lỗi khi load danh sách column trong table '{tableName}'", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+
+                    // Nếu là VIEW thì lấy tên bảng từ tên view
+                    // Tách tên bảng từ tên view từ đầu đến '_' đầu tiên
+                    int underscoreIndex = tableName.IndexOf('_');
+                    if (underscoreIndex != -1)
+                    {
+                        tableName = tableName.Substring(0, underscoreIndex);
+                    }
+                }
+
+                // Tạo một TablePrivilege mới
+                TablePrivilege newTablePriv = new TablePrivilege(tableName);
+                PrivilegeInfo newPriv = new PrivilegeInfo(tablePriv, grantable, columns);
+                newTablePriv.Privileges.Add(newPriv);
+                tablePrivileges.Add(newTablePriv);
+            }
+            return tablePrivileges;
+        }
+
+        private void AlterRole()
+        {
+            string rolename = rolename_textBox.Text.Trim();
+
+            // Lấy danh sách quyền hệ thống
+            List<string> sysPrivileges = add_role_sys_checkedListBox.CheckedItems.Cast<string>().ToList();
+
+            // Lấy danh sách quyền role
+            List<string> rolePrivileges = add_role_role_checkedListBox.CheckedItems.Cast<string>().ToList();
+
+            // Kiểm tra sysPrivileges có thay đổi không
+            List<string> sysPrivilegesToRemove = sysPrivsList.Except(sysPrivileges).ToList();
+            List<string> sysPrivilegesToAdd = sysPrivileges.Except(sysPrivsList).ToList();
+
+            // Kiểm tra rolePrivileges có thay đổi không
+            List<string> rolePrivilegesToRemove = rolePrivsList.Except(rolePrivileges).ToList();
+            List<string> rolePrivilegesToAdd = rolePrivileges.Except(rolePrivsList).ToList();
+
+
+
+            // Gán các quyền hệ thống thêm vào
+            if (sysPrivilegesToAdd.Count > 0)
+            {
+                foreach (var priv in sysPrivilegesToAdd)
+                {
+                    GrantPrivilege(rolename, priv);
+                }
+            }
+
+            // Gỡ bỏ các quyền hệ thống không còn được chọn
+            if (sysPrivilegesToRemove.Count > 0)
+            {
+                foreach (var priv in sysPrivilegesToRemove)
+                {
+                    RevokeSysRolePrivilege(rolename, priv);
+                }
+            }
+
+            // Gán các quyền role thêm vào
+            if (rolePrivilegesToAdd.Count > 0)
+            {
+                foreach (var role in rolePrivilegesToAdd)
+                {
+                    GrantPrivilege(rolename, role);
+                }
+            }
+
+            // Gỡ bỏ các quyền role không còn được chọn
+            if (rolePrivilegesToRemove.Count > 0)
+            {
+                foreach (var role in rolePrivilegesToRemove)
+                {
+                    RevokeSysRolePrivilege(rolename, role);
+                }
+            }
+
+            // Gán các quyền bảng (Table Privileges)
+            GrantTablePrivilege(selectedTablePrivileges, rolename);
+
+            MessageBox.Show("Đã sửa thông tin role thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void RevokeSysRolePrivilege(string rolename, string privilege)
+        {
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    using (OracleCommand cmd = new OracleCommand("revoke_sys_role_priv", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = rolename;
+                        cmd.Parameters.Add("p_priv", OracleDbType.Varchar2).Value = privilege;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (OracleException)
+                {
+                    MessageBox.Show("Lỗi khi gỡ quyền hệ thống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
 
 
         // === LOAD PREVIOUS DATA ===
@@ -110,7 +276,6 @@ namespace QLTruongDH
             return resultList;
         }
 
-
         private void HienThiDataNhanDuoc()
         {
             StringBuilder sb = new StringBuilder();
@@ -130,12 +295,13 @@ namespace QLTruongDH
             sb.AppendLine();
 
             sb.AppendLine("Các quyền bảng đã chọn: ");
-            foreach (var tablePrivilege in pre_selectedTablePrivileges)
+            foreach (var tablePrivilege in selectedTablePrivileges)
             {
+                sb.AppendLine($"Bảng: {tablePrivilege.TableName}");
                 foreach (var privilege in tablePrivilege.Privileges)
                 {
                     string columns = privilege.Columns.Count > 0 ? string.Join(", ", privilege.Columns) : "ALL";
-                    sb.AppendLine($"Bảng: {tablePrivilege.TableName} - Quyền: {privilege.PrivilegeName} - Grantable: {privilege.WithGrantOption} - Cột: {columns}");
+                    sb.AppendLine($"- Quyền: {privilege.PrivilegeName} - Cột: {columns}");
                 }
             }
 
@@ -564,87 +730,7 @@ namespace QLTruongDH
         }
 
 
-        private void AlterRole()
-        {
-            string rolename = rolename_textBox.Text.Trim();
 
-            // Lấy danh sách quyền hệ thống
-            List<string> sysPrivileges = add_role_sys_checkedListBox.CheckedItems.Cast<string>().ToList();
-
-            // Lấy danh sách quyền role
-            List<string> rolePrivileges = add_role_role_checkedListBox.CheckedItems.Cast<string>().ToList();
-
-            // Kiểm tra sysPrivileges có thay đổi không
-            List<string> sysPrivilegesToRemove = sysPrivsList.Except(sysPrivileges).ToList();
-            List<string> sysPrivilegesToAdd = sysPrivileges.Except(sysPrivsList).ToList();
-
-            // Kiểm tra rolePrivileges có thay đổi không
-            List<string> rolePrivilegesToRemove = rolePrivsList.Except(rolePrivileges).ToList();
-            List<string> rolePrivilegesToAdd = rolePrivileges.Except(rolePrivsList).ToList();
-
-
-
-            // Gán các quyền hệ thống thêm vào
-            if (sysPrivilegesToAdd.Count > 0)
-            {
-                foreach (var priv in sysPrivilegesToAdd)
-                {
-                    GrantPrivilege(rolename, priv);
-                }
-            }
-
-            // Gỡ bỏ các quyền hệ thống không còn được chọn
-            if (sysPrivilegesToRemove.Count > 0)
-            {
-                foreach (var priv in sysPrivilegesToRemove)
-                {
-                    RevokeSysRolePrivilege(rolename, priv);
-                }
-            }
-
-            // Gán các quyền role thêm vào
-            if (rolePrivilegesToAdd.Count > 0)
-            {
-                foreach (var role in rolePrivilegesToAdd)
-                {
-                    GrantPrivilege(rolename, role);
-                }
-            }
-
-            // Gỡ bỏ các quyền role không còn được chọn
-            if (rolePrivilegesToRemove.Count > 0)
-            {
-                foreach (var role in rolePrivilegesToRemove)
-                {
-                    RevokeSysRolePrivilege(rolename, role);
-                }
-            }
-
-            MessageBox.Show("Đã sửa thông tin role thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void RevokeSysRolePrivilege(string rolename, string privilege)
-        {
-            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
-            {
-                try
-                {
-                    conn.Open();
-
-                    using (OracleCommand cmd = new OracleCommand("revoke_sys_role_priv", conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = rolename;
-                        cmd.Parameters.Add("p_priv", OracleDbType.Varchar2).Value = privilege;
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-                catch (OracleException)
-                {
-                    MessageBox.Show("Lỗi khi gỡ quyền hệ thống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
 
 
         // === UI (BUTTON, CHECKBOX, COMBOBOX) INTERACT ===

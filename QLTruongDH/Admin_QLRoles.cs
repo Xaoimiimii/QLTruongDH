@@ -19,6 +19,10 @@ namespace QLTruongDH
         private List<string> sysPrivsList = new List<string>();
         private List<string> rolePrivsList = new List<string>();
         private List<TablePrivilege> selectedTablePrivileges = new List<TablePrivilege>();
+        private List<string> tableNameList = new List<string>();
+        private List<string> tablePrivsList = new List<string>();
+        private List<string> typeList = new List<string>();
+        private List<string> grantableList = new List<string>();
 
         public Admin_QLRoles(Admin_MainForm form)
         {
@@ -114,23 +118,13 @@ namespace QLTruongDH
                     {
                         string tableName = row["TABLE_NAME"].ToString();
                         string privilege = row["TAB_PRIVS"].ToString();
+                        string type = row["TYPE"].ToString();
                         string grantable = row["GRANTABLE"].ToString();
 
-                        TablePrivilege tablePrivilege = selectedTablePrivileges.FirstOrDefault(t => t.TableName == tableName);
-
-                        if (tablePrivilege == null)
-                        {
-                            tablePrivilege = new TablePrivilege(tableName);
-                            selectedTablePrivileges.Add(tablePrivilege);
-                        }
-
-                        bool withGrantOption;
-                        if (grantable == "YES") withGrantOption = true;
-                        else if (grantable == "NO") withGrantOption = false;
-                        else withGrantOption = false;
-
-                        PrivilegeInfo privInfo = new PrivilegeInfo(privilege, withGrantOption, new List<string>());
-                        tablePrivilege.Privileges.Add(privInfo);
+                        tableNameList.Add(tableName);
+                        tablePrivsList.Add(privilege);
+                        typeList.Add(type);
+                        grantableList.Add(grantable);
                     }
                 }
                 catch (OracleException)
@@ -148,11 +142,15 @@ namespace QLTruongDH
             sysPrivsList.Clear();
             rolePrivsList.Clear();
             selectedTablePrivileges.Clear();
+            tableNameList.Clear();
+            tablePrivsList.Clear();
+            typeList.Clear();
+            grantableList.Clear();
         }
 
         private void add_button_Click(object sender, EventArgs e)
         {
-            mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Add", selectedRole, sysPrivsList, rolePrivsList, selectedTablePrivileges));
+            mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Add", selectedRole, sysPrivsList, rolePrivsList, tableNameList, tablePrivsList, typeList, grantableList));
         }
 
         private void edit_button_Click(object sender, EventArgs e)
@@ -162,7 +160,7 @@ namespace QLTruongDH
                 MessageBox.Show("Vui lòng chọn một role để sửa");
                 return;
             }
-            mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Edit", selectedRole, sysPrivsList, rolePrivsList, selectedTablePrivileges));
+            mainForm.LoadControl(new Admin_ThemSuaRole(mainForm, "Edit", selectedRole, sysPrivsList, rolePrivsList, tableNameList, tablePrivsList, typeList, grantableList));
         }
 
         private void Admin_QLRoles_Click(object sender, EventArgs e)

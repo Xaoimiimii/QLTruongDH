@@ -23,6 +23,7 @@ namespace QLTruongDH
     public class TablePrivilege
     {
         public string TableName { get; set; }
+
         public List<PrivilegeInfo> Privileges { get; set; }
 
         public TablePrivilege(string tableName)
