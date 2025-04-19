@@ -18,7 +18,7 @@ namespace QLTruongDH
         private string selectedRole = string.Empty;
         private List<string> sysPrivsList = new List<string>();
         private List<string> rolePrivsList = new List<string>();
-        private List<TablePrivilege> selectedTablePrivileges = new List<TablePrivilege>();
+
         private List<string> tableNameList = new List<string>();
         private List<string> tablePrivsList = new List<string>();
         private List<string> typeList = new List<string>();
@@ -129,7 +129,7 @@ namespace QLTruongDH
                 }
                 catch (OracleException)
                 {
-                    MessageBox.Show("Lỗi khi load sys privileges", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Lỗi khi load privileges", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -141,7 +141,6 @@ namespace QLTruongDH
             selectedRole = string.Empty;
             sysPrivsList.Clear();
             rolePrivsList.Clear();
-            selectedTablePrivileges.Clear();
             tableNameList.Clear();
             tablePrivsList.Clear();
             typeList.Clear();

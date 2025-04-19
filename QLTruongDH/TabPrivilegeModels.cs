@@ -6,44 +6,30 @@ using System.Threading.Tasks;
 
 namespace QLTruongDH
 {
-    public class PrivilegeInfo
+    public class PrivilegeState
     {
-        public string PrivilegeName { get; set; }
         public bool WithGrantOption { get; set; }
         public List<string> Columns { get; set; }
 
-        public PrivilegeInfo(string privilegeName, bool withGrantOption, List<string> columns)
+        public PrivilegeState(bool withGrantOption, List<string> columns)
         {
-            PrivilegeName = privilegeName;
             WithGrantOption = withGrantOption;
-            Columns = columns;
+            Columns = columns ?? new List<string>();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is not PrivilegeState other) return false;
+
+            return WithGrantOption == other.WithGrantOption &&
+                   Columns.OrderBy(c => c).SequenceEqual(other.Columns.OrderBy(c => c));
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(WithGrantOption, string.Join(",", Columns.OrderBy(c => c)));
         }
     }
 
-    public class TablePrivilege
-    {
-        public string TableName { get; set; }
 
-        public List<PrivilegeInfo> Privileges { get; set; }
-
-        public TablePrivilege(string tableName)
-        {
-            TableName = tableName;
-            Privileges = new List<PrivilegeInfo>();
-        }
-
-        public bool equals(TablePrivilege other)
-        {
-            if (other == null || TableName != other.TableName)
-                return false;
-            if (Privileges.Count != other.Privileges.Count)
-                return false;
-            for (int i = 0; i < Privileges.Count; i++)
-            {
-                if (!Privileges[i].Equals(other.Privileges[i]))
-                    return false;
-            }
-            return true;
-        }
-    }
 }
