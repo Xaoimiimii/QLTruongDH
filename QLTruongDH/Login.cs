@@ -18,10 +18,12 @@ namespace QLTruongDH
             InitializeComponent();
         }
 
+
         private void login_button_Click(object sender, EventArgs e)
         {
             string username = username_textBox.Text.Trim().ToUpper();
             string password = password_textBox.Text.Trim();
+
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
@@ -80,7 +82,7 @@ namespace QLTruongDH
                     {
                         this.Hide();
                         //MainForm userForm = new MainForm(roles); // Truyền danh sách role vào MainForm
-                        MainForm userForm = new MainForm();
+                        MainForm userForm = new MainForm(username, password);
                         userForm.ShowDialog();
                         this.Close();
                     }

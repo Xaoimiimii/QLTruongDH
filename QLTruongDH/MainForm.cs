@@ -9,10 +9,16 @@ namespace QLTruongDH
         public bool isInPhanCong = false;
         public bool isInDKHocPhan = false;
         public bool isInBangDiem = false;
+        public  string connectionString;
+        string username;
+        string password;
 
-        public MainForm()
+        public MainForm(string username, string password)
         {
             InitializeComponent();
+            this.username = username;
+            this.password = password;
+            connectionString = $"User Id={username};Password={password};Data Source=localhost:1521/PDB4;";
             LoadControl(new Dashboard(this));
             UpdateStatus("Dashboard");
         }
