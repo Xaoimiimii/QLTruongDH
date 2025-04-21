@@ -48,6 +48,8 @@ namespace QLTruongDH
             }
         }
 
+        
+        // === LOAD, INSERT, UPDATE DATA ===
         private void LoadMaDonViComboBox()
         {
             using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
@@ -65,18 +67,150 @@ namespace QLTruongDH
                         while (reader.Read())
                         {
                             string madv = reader.GetString(0);
-                            // Thêm vào comboBox
                             donvi_comboBox.Items.Add(madv);
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Lỗi khi load mã đơn vị ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
+        private void AddNewEmployee(string fullname, string gender, string dob, decimal luong, decimal phucap, string phone, string vaitro, string donvi)
+        {
+            if (fullname == "" || gender == "" || dob == "" || phone == "" || vaitro == "" || donvi == "")
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    OracleCommand cmd = new OracleCommand("SP_Them_NhanVien", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("p_hoten", OracleDbType.Varchar2).Value = fullname;
+                    cmd.Parameters.Add("p_phai", OracleDbType.Varchar2).Value = gender;
+                    cmd.Parameters.Add("p_ngsinh", OracleDbType.Date).Value = dob;
+                    cmd.Parameters.Add("p_luong", OracleDbType.Decimal).Value = luong;
+                    cmd.Parameters.Add("p_phucap", OracleDbType.Decimal).Value = phucap;
+                    cmd.Parameters.Add("p_dt", OracleDbType.Varchar2).Value = phone;
+                    cmd.Parameters.Add("p_vaitro", OracleDbType.Varchar2).Value = vaitro;
+                    cmd.Parameters.Add("p_madv", OracleDbType.Varchar2).Value = donvi;
+
+                    OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
+                    msgParam.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(msgParam);
+
+                    cmd.ExecuteNonQuery();
+
+                    string message = msgParam.Value.ToString();
+                    MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    Reset();
+
+                }
+                catch (Exception)
+                {
+                    //MessageBox.Show("Lỗi ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void UpdateAllEmployeeInfo(string fullname, string gender, string dob, decimal luong, decimal phucap, string phone, string vaitro, string donvi)
+        {
+            bool isEdited = false;
+
+            if (fullname != emp.HoTen || phone != emp.DienThoai || dob != emp.NgaySinh?.ToString("dd/MM/yyyy")
+                || gender != emp.Phai || vaitro != emp.VaiTro || donvi != emp.MaDV || luong != emp.Luong || phucap != emp.PhuCap)
+            {
+                isEdited = true;
+            }
+            if (isEdited)
+            {
+                using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+                {
+                    try
+                    {
+                        conn.Open();
+                        OracleCommand cmd = new OracleCommand("SP_CapNhat_TTNhanVien", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("p_manv", OracleDbType.Char).Value = emp.MaNV;
+                        cmd.Parameters.Add("p_hoten", OracleDbType.Varchar2).Value = fullname;
+                        cmd.Parameters.Add("p_phai", OracleDbType.Varchar2).Value = gender;
+                        cmd.Parameters.Add("p_ngsinh", OracleDbType.Date).Value = dob;
+                        cmd.Parameters.Add("p_luong", OracleDbType.Decimal).Value = luong;
+                        cmd.Parameters.Add("p_phucap", OracleDbType.Decimal).Value = phucap;
+                        cmd.Parameters.Add("p_dt", OracleDbType.Varchar2).Value = phone;
+                        cmd.Parameters.Add("p_vaitro", OracleDbType.Varchar2).Value = vaitro;
+                        cmd.Parameters.Add("p_madv", OracleDbType.Varchar2).Value = donvi;
+
+                        OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
+                        msgParam.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(msgParam);
+
+                        cmd.ExecuteNonQuery();
+
+                        string message = msgParam.Value.ToString();
+                        MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (OracleException)
+                    {
+                        //MessageBox.Show("Lỗi kết nối Oracle: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Không có thay đổi nào!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void UpdateEmployeePhone(string phone)
+        {
+            bool isEdited = false;
+            if (phone != emp.DienThoai) isEdited = true;
+            if (isEdited)
+            {
+                using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+                {
+                    try
+                    {
+                        conn.Open();
+                        OracleCommand cmd = new OracleCommand("SP_CapNhat_DTChoNVCB", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("p_manv", OracleDbType.Varchar2).Value = emp.MaNV;
+                        cmd.Parameters.Add("p_new_dt", OracleDbType.Varchar2).Value = phone;
+
+                        OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
+                        msgParam.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(msgParam);
+
+                        cmd.ExecuteNonQuery();
+
+                        string message = msgParam.Value.ToString();
+                        MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (OracleException)
+                    {
+                        //MessageBox.Show("Lỗi kết nối Oracle: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Không có thay đổi nào!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        // === HELPER FUNCTION ===
         private void Reset()
         {
             fullname_textBox.Text = "";
@@ -89,6 +223,8 @@ namespace QLTruongDH
             role_comboBox.SelectedIndex = -1;
         }
 
+
+        // === UI INTERACTION ===
         private void add_button_Click(object sender, EventArgs e)
         {
             string fullname = fullname_textBox.Text?.Trim() ?? "";
@@ -107,134 +243,17 @@ namespace QLTruongDH
 
             if (mode == "Add")
             {
-                if (fullname == "" || gender == "" || dob == "" || phone == "" || vaitro == "" || donvi == "")
-                {
-                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
-                {
-                    try
-                    {
-                        conn.Open();
-
-                        OracleCommand cmd = new OracleCommand("SP_Them_NhanVien", conn);
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        cmd.Parameters.Add("p_hoten", OracleDbType.Varchar2).Value = fullname;
-                        cmd.Parameters.Add("p_phai", OracleDbType.Varchar2).Value = gender;
-                        cmd.Parameters.Add("p_ngsinh", OracleDbType.Date).Value = dob;
-                        cmd.Parameters.Add("p_luong", OracleDbType.Decimal).Value = luong;
-                        cmd.Parameters.Add("p_phucap", OracleDbType.Decimal).Value = phucap;
-                        cmd.Parameters.Add("p_dt", OracleDbType.Varchar2).Value = phone;
-                        cmd.Parameters.Add("p_vaitro", OracleDbType.Varchar2).Value = vaitro;
-                        cmd.Parameters.Add("p_madv", OracleDbType.Varchar2).Value = donvi;
-
-                        OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
-                        msgParam.Direction = ParameterDirection.Output;
-                        cmd.Parameters.Add(msgParam);
-
-                        cmd.ExecuteNonQuery();
-
-                        string message = msgParam.Value.ToString();
-                        MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        Reset();
-
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
+                AddNewEmployee(fullname, gender, dob, luong, phucap, phone, vaitro, donvi);
             }
             else if (mode == "Edit")
             {
                 if (mainForm.roles.Contains("TCHC"))
                 {
-                    bool isEdited = false;
-
-                    if (fullname != emp.HoTen || phone != emp.DienThoai || dob != emp.NgaySinh?.ToString("dd/MM/yyyy")
-                        || gender != emp.Phai || vaitro != emp.VaiTro || donvi != emp.MaDV || luong != emp.Luong || phucap != emp.PhuCap)
-                    {
-                        isEdited = true;
-                    }
-                    if (isEdited)
-                    {
-                        using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
-                        {
-                            try
-                            {
-                                conn.Open();
-                                OracleCommand cmd = new OracleCommand("SP_CapNhat_TTNhanVien", conn);
-                                cmd.CommandType = CommandType.StoredProcedure;
-
-                                cmd.Parameters.Add("p_manv", OracleDbType.Char).Value = emp.MaNV;
-                                cmd.Parameters.Add("p_hoten", OracleDbType.Varchar2).Value = fullname;
-                                cmd.Parameters.Add("p_phai", OracleDbType.Varchar2).Value = gender;
-                                cmd.Parameters.Add("p_ngsinh", OracleDbType.Date).Value = dob;
-                                cmd.Parameters.Add("p_luong", OracleDbType.Decimal).Value = luong;
-                                cmd.Parameters.Add("p_phucap", OracleDbType.Decimal).Value = phucap;
-                                cmd.Parameters.Add("p_dt", OracleDbType.Varchar2).Value = phone;
-                                cmd.Parameters.Add("p_vaitro", OracleDbType.Varchar2).Value = vaitro;
-                                cmd.Parameters.Add("p_madv", OracleDbType.Varchar2).Value = donvi;
-
-                                OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
-                                msgParam.Direction = ParameterDirection.Output;
-                                cmd.Parameters.Add(msgParam);
-
-                                cmd.ExecuteNonQuery();
-
-                                string message = msgParam.Value.ToString();
-                                MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            catch (OracleException ex)
-                            {
-                                MessageBox.Show("Lỗi kết nối Oracle: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không có thay đổi nào!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    UpdateAllEmployeeInfo(fullname, gender, dob, luong, phucap, phone, vaitro, donvi);
                 }
                 else if (mainForm.roles.Contains("NVCB"))
                 {
-                    bool isEdited = false;
-                    if (phone != emp.DienThoai) isEdited = true;
-                    if (isEdited)
-                    {
-                        using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
-                        {
-                            try
-                            {
-                                conn.Open();
-                                OracleCommand cmd = new OracleCommand("SP_CapNhat_DTChoNVCB", conn);
-                                cmd.CommandType = CommandType.StoredProcedure;
-                                cmd.Parameters.Add("p_manv", OracleDbType.Varchar2).Value = emp.MaNV;
-                                cmd.Parameters.Add("p_new_dt", OracleDbType.Varchar2).Value = phone;
-
-                                OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
-                                msgParam.Direction = ParameterDirection.Output;
-                                cmd.Parameters.Add(msgParam);
-
-                                cmd.ExecuteNonQuery();
-
-                                string message = msgParam.Value.ToString();
-                                MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            catch (OracleException ex)
-                            {
-                                MessageBox.Show("Lỗi kết nối Oracle: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không có thay đổi nào!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    UpdateEmployeePhone(phone);
                 }
             }
         }
@@ -270,15 +289,9 @@ namespace QLTruongDH
             if (shouldWarn)
             {
                 DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn quay lại? Dữ liệu đã nhập sẽ không lưu", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    mainForm.LoadControl(new QLNhanVien(mainForm));
-                }
+                if (result == DialogResult.Yes) mainForm.LoadControl(new QLNhanVien(mainForm));
             }
-            else
-            {
-                mainForm.LoadControl(new QLNhanVien(mainForm));
-            }
+            else mainForm.LoadControl(new QLNhanVien(mainForm));
         }
 
         private void back_label_Click(object sender, EventArgs e)
@@ -295,15 +308,9 @@ namespace QLTruongDH
             if (shouldWarn)
             {
                 DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn quay lại? Dữ liệu đã nhập sẽ không lưu", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    mainForm.LoadControl(new QLNhanVien(mainForm));
-                }
+                if (result == DialogResult.Yes) mainForm.LoadControl(new QLNhanVien(mainForm));
             }
-            else
-            {
-                mainForm.LoadControl(new QLNhanVien(mainForm));
-            }
+            else mainForm.LoadControl(new QLNhanVien(mainForm));
         }
 
         private void back_pictureBox_Click(object sender, EventArgs e)
@@ -320,15 +327,9 @@ namespace QLTruongDH
             if (shouldWarn)
             {
                 DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn quay lại? Dữ liệu đã nhập sẽ không lưu", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    mainForm.LoadControl(new QLNhanVien(mainForm));
-                }
+                if (result == DialogResult.Yes) mainForm.LoadControl(new QLNhanVien(mainForm));
             }
-            else
-            {
-                mainForm.LoadControl(new QLNhanVien(mainForm));
-            }
+            else mainForm.LoadControl(new QLNhanVien(mainForm));
         }
 
         private void back_flowLayoutPanel_MouseEnter(object sender, EventArgs e)

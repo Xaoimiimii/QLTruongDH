@@ -15,7 +15,7 @@ namespace QLTruongDH
     {
         private MainForm mainForm;
         private string selectedEmployeeID = string.Empty;
-        private NhanVien selectedEmployee;
+        private NhanVien selectedEmployee = null;
 
         public QLNhanVien(MainForm form)
         {
@@ -24,9 +24,6 @@ namespace QLTruongDH
             delete_button.Visible = false;
             edit_button.Visible = false;
 
-            //HienThiDsRoles();
-
-            // Nếu mainForm roles có chứa "TRGDV"
             if (mainForm.roles.Contains("TRGDV"))
             {
                 LoadDsNhanVien("SP_Xem_DSNhanVienChoTRGDV");
@@ -41,8 +38,6 @@ namespace QLTruongDH
             }
 
         }
-
-
 
 
         // === HELPER FUNCTION ===
@@ -70,7 +65,6 @@ namespace QLTruongDH
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
 
-                    //employee_dataGridView.DataSource = dt;
                     employee_dataGridView.AutoGenerateColumns = false;
 
                     employee_dataGridView.Columns["MaNhanVien"].DataPropertyName = "MANV";
@@ -86,71 +80,25 @@ namespace QLTruongDH
                     employee_dataGridView.DataSource = dt;
 
                 }
-                catch (OracleException ex)
+                catch (OracleException)
                 {
-                    MessageBox.Show($"Lỗi khi load danh sách nhân viên: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Lỗi khi load danh sách nhân viên", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
         // === UI INTERACTION ===
-        private void add_button_Click(object sender, EventArgs e)
-        {
-            mainForm.LoadControl(new ThemNhanVien(mainForm, "Add", selectedEmployee));
-        }
-
-        private void edit_button_Click(object sender, EventArgs e)
-        {
-            mainForm.LoadControl(new ThemNhanVien(mainForm, "Edit", selectedEmployee));
-        }
-
-        private void search_employee_guna2TextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string searchText = search_employee_guna2TextBox.Text.Trim();
-                if (employee_dataGridView.DataSource is DataTable dt)
-                {
-                    DataView dv = dt.DefaultView;
-                    dv.RowFilter = $"MANV LIKE '%{searchText}%'";
-                }
-            }
-        }
-
-        private void search_employee_button_Click(object sender, EventArgs e)
-        {
-            string searchText = search_employee_guna2TextBox.Text.Trim();
-            if (employee_dataGridView.DataSource is DataTable dt)
-            {
-                DataView dv = dt.DefaultView;
-                dv.RowFilter = $"MANV LIKE '%{searchText}%'";
-            }
-        }
-
-        private void search_employee_guna2TextBox_IconRightClick(object sender, EventArgs e)
-        {
-            search_employee_guna2TextBox.Text = string.Empty;
-        }
-
         private void employee_dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                //var cellValue = employee_dataGridView.Rows[e.RowIndex].Cells[0].Value;
-                //if (cellValue != null)
-                //{
-                //    selectedEmployeeID = string.Empty;
-                //    selectedEmployeeID = cellValue.ToString();
-                //    delete_button.Visible = true;
-                //    edit_button.Visible = true;
-                //}
                 DataGridViewRow row = employee_dataGridView.Rows[e.RowIndex];
                 selectedEmployee = new NhanVien
                 {
                     MaNV = row.Cells[0].Value?.ToString(),
                     HoTen = row.Cells[1].Value?.ToString(),
                     Phai = row.Cells[2].Value?.ToString(),
-                    NgaySinh = row.Cells[3].Value == DBNull.Value? null: (DateTime?)Convert.ToDateTime(row.Cells[3].Value).Date,
+                    NgaySinh = row.Cells[3].Value == DBNull.Value ? null : (DateTime?)Convert.ToDateTime(row.Cells[3].Value).Date,
                     Luong = row.Cells[4].Value == DBNull.Value ? null : (decimal?)Convert.ToDecimal(row.Cells[4].Value),
                     PhuCap = row.Cells[5].Value == DBNull.Value ? null : (decimal?)Convert.ToDecimal(row.Cells[5].Value),
                     DienThoai = row.Cells[6].Value?.ToString(),
@@ -197,11 +145,49 @@ namespace QLTruongDH
 
                     LoadDsNhanVien("SP_Xem_DSNhanVien");
                 }
-                catch (OracleException ex)
+                catch (OracleException)
                 {
-                    MessageBox.Show($"Lỗi khi xóa nhân viên: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Lỗi khi xóa nhân viên: {selectedEmployeeID}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void add_button_Click(object sender, EventArgs e)
+        {
+            mainForm.LoadControl(new ThemNhanVien(mainForm, "Add", selectedEmployee));
+        }
+
+        private void edit_button_Click(object sender, EventArgs e)
+        {
+            mainForm.LoadControl(new ThemNhanVien(mainForm, "Edit", selectedEmployee));
+        }
+
+        private void search_employee_guna2TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string searchText = search_employee_guna2TextBox.Text.Trim();
+                if (employee_dataGridView.DataSource is DataTable dt)
+                {
+                    DataView dv = dt.DefaultView;
+                    dv.RowFilter = $"MANV LIKE '%{searchText}%'";
+                }
+            }
+        }
+
+        private void search_employee_button_Click(object sender, EventArgs e)
+        {
+            string searchText = search_employee_guna2TextBox.Text.Trim();
+            if (employee_dataGridView.DataSource is DataTable dt)
+            {
+                DataView dv = dt.DefaultView;
+                dv.RowFilter = $"MANV LIKE '%{searchText}%'";
+            }
+        }
+
+        private void search_employee_guna2TextBox_IconRightClick(object sender, EventArgs e)
+        {
+            search_employee_guna2TextBox.Text = string.Empty;
         }
 
         private void QLNhanVien_Click(object sender, EventArgs e)
