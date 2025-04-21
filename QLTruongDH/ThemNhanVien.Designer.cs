@@ -51,6 +51,7 @@
             back_pictureBox = new PictureBox();
             back_label = new Label();
             donvi_comboBox = new ComboBox();
+            employee_id_label = new Label();
             back_flowLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)back_pictureBox).BeginInit();
             SuspendLayout();
@@ -125,7 +126,7 @@
             dob_textBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dob_textBox.Location = new Point(883, 270);
             dob_textBox.Name = "dob_textBox";
-            dob_textBox.Size = new Size(267, 50);
+            dob_textBox.Size = new Size(323, 50);
             dob_textBox.TabIndex = 48;
             // 
             // dob_label
@@ -157,7 +158,7 @@
             gender_comboBox.Items.AddRange(new object[] { "Nam", "Nữ" });
             gender_comboBox.Location = new Point(977, 154);
             gender_comboBox.Name = "gender_comboBox";
-            gender_comboBox.Size = new Size(173, 53);
+            gender_comboBox.Size = new Size(229, 53);
             gender_comboBox.TabIndex = 50;
             // 
             // phone_textBox
@@ -197,7 +198,7 @@
             role_comboBox.Items.AddRange(new object[] { "NVCB", "GV", "NV PDT", "NV PKT", "NV TCHC", "NV CTSV", "TRGDV" });
             role_comboBox.Location = new Point(841, 384);
             role_comboBox.Name = "role_comboBox";
-            role_comboBox.Size = new Size(278, 53);
+            role_comboBox.Size = new Size(365, 53);
             role_comboBox.TabIndex = 56;
             // 
             // role_label
@@ -298,11 +299,23 @@
             donvi_comboBox.Size = new Size(355, 53);
             donvi_comboBox.TabIndex = 62;
             // 
+            // employee_id_label
+            // 
+            employee_id_label.AutoSize = true;
+            employee_id_label.Font = new Font("Segoe UI", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            employee_id_label.ForeColor = Color.BurlyWood;
+            employee_id_label.Location = new Point(660, 32);
+            employee_id_label.Name = "employee_id_label";
+            employee_id_label.Size = new Size(125, 50);
+            employee_id_label.TabIndex = 63;
+            employee_id_label.Text = "MaNV";
+            // 
             // ThemNhanVien
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
+            Controls.Add(employee_id_label);
             Controls.Add(donvi_comboBox);
             Controls.Add(back_flowLayoutPanel);
             Controls.Add(phucap_textBox);
@@ -359,5 +372,6 @@
         private PictureBox back_pictureBox;
         private Label back_label;
         private ComboBox donvi_comboBox;
+        private Label employee_id_label;
     }
 }

@@ -37,8 +37,6 @@
             edit_button = new Button();
             search_employee_label = new Label();
             employee_dataGridView = new DataGridView();
-            add_button = new Button();
-            search_employee_button = new Button();
             MaNhanVien = new DataGridViewTextBoxColumn();
             HoTen = new DataGridViewTextBoxColumn();
             Phai = new DataGridViewTextBoxColumn();
@@ -48,6 +46,8 @@
             Dt = new DataGridViewTextBoxColumn();
             VaiTro = new DataGridViewTextBoxColumn();
             MaDonVi = new DataGridViewTextBoxColumn();
+            add_button = new Button();
+            search_employee_button = new Button();
             ((System.ComponentModel.ISupportInitialize)employee_dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -158,32 +158,6 @@
             employee_dataGridView.TabIndex = 34;
             employee_dataGridView.CellClick += employee_dataGridView_CellClick;
             // 
-            // add_button
-            // 
-            add_button.BackColor = Color.BurlyWood;
-            add_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            add_button.ForeColor = Color.Transparent;
-            add_button.Location = new Point(1274, 132);
-            add_button.Name = "add_button";
-            add_button.Size = new Size(322, 78);
-            add_button.TabIndex = 40;
-            add_button.Text = "Thêm nhân viên";
-            add_button.UseVisualStyleBackColor = false;
-            add_button.Click += add_button_Click;
-            // 
-            // search_employee_button
-            // 
-            search_employee_button.BackColor = Color.BurlyWood;
-            search_employee_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            search_employee_button.ForeColor = Color.Transparent;
-            search_employee_button.Location = new Point(592, 140);
-            search_employee_button.Name = "search_employee_button";
-            search_employee_button.Size = new Size(149, 63);
-            search_employee_button.TabIndex = 41;
-            search_employee_button.Text = "Tra cứu";
-            search_employee_button.UseVisualStyleBackColor = false;
-            search_employee_button.Click += search_employee_button_Click;
-            // 
             // MaNhanVien
             // 
             MaNhanVien.HeaderText = "Mã NV";
@@ -254,6 +228,32 @@
             MaDonVi.Name = "MaDonVi";
             MaDonVi.ReadOnly = true;
             // 
+            // add_button
+            // 
+            add_button.BackColor = Color.BurlyWood;
+            add_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            add_button.ForeColor = Color.Transparent;
+            add_button.Location = new Point(1274, 132);
+            add_button.Name = "add_button";
+            add_button.Size = new Size(322, 78);
+            add_button.TabIndex = 40;
+            add_button.Text = "Thêm nhân viên";
+            add_button.UseVisualStyleBackColor = false;
+            add_button.Click += add_button_Click;
+            // 
+            // search_employee_button
+            // 
+            search_employee_button.BackColor = Color.BurlyWood;
+            search_employee_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            search_employee_button.ForeColor = Color.Transparent;
+            search_employee_button.Location = new Point(592, 140);
+            search_employee_button.Name = "search_employee_button";
+            search_employee_button.Size = new Size(149, 63);
+            search_employee_button.TabIndex = 41;
+            search_employee_button.Text = "Tra cứu";
+            search_employee_button.UseVisualStyleBackColor = false;
+            search_employee_button.Click += search_employee_button_Click;
+            // 
             // QLNhanVien
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
@@ -271,6 +271,7 @@
             Margin = new Padding(0);
             Name = "QLNhanVien";
             Size = new Size(1625, 1169);
+            Click += QLNhanVien_Click;
             ((System.ComponentModel.ISupportInitialize)employee_dataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();

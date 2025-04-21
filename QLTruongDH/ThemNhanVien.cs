@@ -15,20 +15,34 @@ namespace QLTruongDH
     {
         private MainForm mainForm;
         private string mode;
+        private NhanVien emp;
 
-        public ThemNhanVien(MainForm form, string mode)
+        public ThemNhanVien(MainForm form, string mode, NhanVien selectedEmployee)
         {
             InitializeComponent();
             this.mainForm = form;
             this.mode = mode;
+            this.emp = selectedEmployee;
+
             LoadMaDonViComboBox();
             if (mode == "Add")
             {
+                employee_id_label.Visible = false;
                 title_label.Text = "Thêm nhân viên mới";
                 add_button.Text = "Thêm nhân viên";
             }
             else if (mode == "Edit")
             {
+                employee_id_label.Visible = true;
+                employee_id_label.Text = emp.MaNV;
+                fullname_textBox.Text = emp.HoTen;
+                phone_textBox.Text = emp.DienThoai;
+                dob_textBox.Text = emp.NgaySinh?.ToString("dd/MM/yyyy");
+                luong_textBox.Text = emp.Luong.ToString();
+                phucap_textBox.Text = emp.PhuCap.ToString();
+                gender_comboBox.SelectedItem = emp.Phai;
+                donvi_comboBox.SelectedItem = emp.MaDV;
+                role_comboBox.SelectedItem = emp.VaiTro;
                 title_label.Text = "Chỉnh sửa thông tin nhân niên";
                 add_button.Text = "Cập nhật thông tin";
             }
@@ -77,12 +91,13 @@ namespace QLTruongDH
 
         private void add_button_Click(object sender, EventArgs e)
         {
-            string fullname = fullname_textBox.Text.Trim();
-            string dob = dob_textBox.Text.Trim();
-            string phone = phone_textBox.Text.Trim();
-            string gender = gender_comboBox.SelectedItem.ToString();
-            string vaitro = role_comboBox.SelectedItem.ToString();
-            string donvi = donvi_comboBox.SelectedItem.ToString();
+            string fullname = fullname_textBox.Text?.Trim() ?? "";
+            string dob = dob_textBox.Text?.Trim() ?? "";
+            string phone = phone_textBox.Text?.Trim() ?? "";
+
+            string gender = gender_comboBox.SelectedItem?.ToString().Trim() ?? "";
+            string vaitro = role_comboBox.SelectedItem?.ToString().Trim() ?? "";
+            string donvi = donvi_comboBox.SelectedItem?.ToString().Trim() ?? "";
 
             decimal luong = 0;
             decimal phucap = 0;
@@ -90,53 +105,154 @@ namespace QLTruongDH
             decimal.TryParse(luong_textBox.Text, out luong);
             decimal.TryParse(phucap_textBox.Text, out phucap);
 
-
-            if (fullname == "" || gender == "" || dob == "" || phone == "" || vaitro == "" || donvi == "")
+            if (mode == "Add")
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
-            {
-                try
+                if (fullname == "" || gender == "" || dob == "" || phone == "" || vaitro == "" || donvi == "")
                 {
-                    conn.Open();
-
-                    OracleCommand cmd = new OracleCommand("SP_Them_NhanVien", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.Add("p_hoten", OracleDbType.Varchar2).Value = fullname;
-                    cmd.Parameters.Add("p_phai", OracleDbType.Varchar2).Value = gender;
-                    cmd.Parameters.Add("p_ngsinh", OracleDbType.Date).Value = dob;
-                    cmd.Parameters.Add("p_luong", OracleDbType.Decimal).Value = luong;
-                    cmd.Parameters.Add("p_phucap", OracleDbType.Decimal).Value = phucap;
-                    cmd.Parameters.Add("p_dt", OracleDbType.Varchar2).Value = phone;
-                    cmd.Parameters.Add("p_vaitro", OracleDbType.Varchar2).Value = vaitro;
-                    cmd.Parameters.Add("p_madv", OracleDbType.Varchar2).Value = donvi;
-
-                    OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
-                    msgParam.Direction = ParameterDirection.Output;
-                    cmd.Parameters.Add(msgParam);
-
-                    cmd.ExecuteNonQuery();
-
-                    string message = msgParam.Value.ToString();
-                    MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    Reset();
-
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                catch (Exception ex)
+
+                using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
                 {
-                    MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    try
+                    {
+                        conn.Open();
+
+                        OracleCommand cmd = new OracleCommand("SP_Them_NhanVien", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("p_hoten", OracleDbType.Varchar2).Value = fullname;
+                        cmd.Parameters.Add("p_phai", OracleDbType.Varchar2).Value = gender;
+                        cmd.Parameters.Add("p_ngsinh", OracleDbType.Date).Value = dob;
+                        cmd.Parameters.Add("p_luong", OracleDbType.Decimal).Value = luong;
+                        cmd.Parameters.Add("p_phucap", OracleDbType.Decimal).Value = phucap;
+                        cmd.Parameters.Add("p_dt", OracleDbType.Varchar2).Value = phone;
+                        cmd.Parameters.Add("p_vaitro", OracleDbType.Varchar2).Value = vaitro;
+                        cmd.Parameters.Add("p_madv", OracleDbType.Varchar2).Value = donvi;
+
+                        OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
+                        msgParam.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(msgParam);
+
+                        cmd.ExecuteNonQuery();
+
+                        string message = msgParam.Value.ToString();
+                        MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        Reset();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else if (mode == "Edit")
+            {
+                if (mainForm.roles.Contains("TCHC"))
+                {
+                    bool isEdited = false;
+
+                    if (fullname != emp.HoTen || phone != emp.DienThoai || dob != emp.NgaySinh?.ToString("dd/MM/yyyy")
+                        || gender != emp.Phai || vaitro != emp.VaiTro || donvi != emp.MaDV || luong != emp.Luong || phucap != emp.PhuCap)
+                    {
+                        isEdited = true;
+                    }
+                    if (isEdited)
+                    {
+                        using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+                        {
+                            try
+                            {
+                                conn.Open();
+                                OracleCommand cmd = new OracleCommand("SP_CapNhat_TTNhanVien", conn);
+                                cmd.CommandType = CommandType.StoredProcedure;
+
+                                cmd.Parameters.Add("p_manv", OracleDbType.Char).Value = emp.MaNV;
+                                cmd.Parameters.Add("p_hoten", OracleDbType.Varchar2).Value = fullname;
+                                cmd.Parameters.Add("p_phai", OracleDbType.Varchar2).Value = gender;
+                                cmd.Parameters.Add("p_ngsinh", OracleDbType.Date).Value = dob;
+                                cmd.Parameters.Add("p_luong", OracleDbType.Decimal).Value = luong;
+                                cmd.Parameters.Add("p_phucap", OracleDbType.Decimal).Value = phucap;
+                                cmd.Parameters.Add("p_dt", OracleDbType.Varchar2).Value = phone;
+                                cmd.Parameters.Add("p_vaitro", OracleDbType.Varchar2).Value = vaitro;
+                                cmd.Parameters.Add("p_madv", OracleDbType.Varchar2).Value = donvi;
+
+                                OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
+                                msgParam.Direction = ParameterDirection.Output;
+                                cmd.Parameters.Add(msgParam);
+
+                                cmd.ExecuteNonQuery();
+
+                                string message = msgParam.Value.ToString();
+                                MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            catch (OracleException ex)
+                            {
+                                MessageBox.Show("Lỗi kết nối Oracle: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không có thay đổi nào!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else if (mainForm.roles.Contains("NVCB"))
+                {
+                    bool isEdited = false;
+                    if (phone != emp.DienThoai) isEdited = true;
+                    if (isEdited)
+                    {
+                        using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+                        {
+                            try
+                            {
+                                conn.Open();
+                                OracleCommand cmd = new OracleCommand("SP_CapNhat_DTChoNVCB", conn);
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.Add("p_manv", OracleDbType.Varchar2).Value = emp.MaNV;
+                                cmd.Parameters.Add("p_new_dt", OracleDbType.Varchar2).Value = phone;
+
+                                OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
+                                msgParam.Direction = ParameterDirection.Output;
+                                cmd.Parameters.Add(msgParam);
+
+                                cmd.ExecuteNonQuery();
+
+                                string message = msgParam.Value.ToString();
+                                MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            catch (OracleException ex)
+                            {
+                                MessageBox.Show("Lỗi kết nối Oracle: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không có thay đổi nào!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
         }
 
         private void reset__button_Click(object sender, EventArgs e)
         {
-            Reset();
+            if (mode == "Add") Reset();
+            else if (mode == "Edit")
+            {
+                fullname_textBox.Text = emp.HoTen;
+                phone_textBox.Text = emp.DienThoai;
+                dob_textBox.Text = emp.NgaySinh?.ToString("dd/MM/yyyy");
+                luong_textBox.Text = emp.Luong.ToString();
+                phucap_textBox.Text = emp.PhuCap.ToString();
+                role_comboBox.SelectedItem = emp.VaiTro;
+                gender_comboBox.SelectedItem = emp.Phai;
+                donvi_comboBox.SelectedItem = emp.MaDV;
+            }
         }
 
 
