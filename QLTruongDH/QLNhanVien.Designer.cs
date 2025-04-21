@@ -95,6 +95,7 @@
             search_employee_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
             search_employee_guna2TextBox.Size = new Size(360, 51);
             search_employee_guna2TextBox.TabIndex = 39;
+            search_employee_guna2TextBox.TextOffset = new Point(20, 0);
             // 
             // delete_button
             // 

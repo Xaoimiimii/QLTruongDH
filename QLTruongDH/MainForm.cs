@@ -9,7 +9,8 @@ namespace QLTruongDH
         public bool isInPhanCong = false;
         public bool isInDKHocPhan = false;
         public bool isInBangDiem = false;
-        public  string connectionString;
+        public bool isInThongBao = false;
+        public string connectionString;
         string username;
         string password;
 
@@ -38,11 +39,16 @@ namespace QLTruongDH
             isInPhanCong = false;
             isInDKHocPhan = false;
             isInBangDiem = false;
+            isInThongBao = false;
 
-            //dashboard_menu_pictureBox.Image = Properties.Resources.dashboard_white;
-            //employee_pictureBox.Image = Properties.Resources.register_white;
-            //assign_pictureBox.Image = Properties.Resources.grade_white;
-            //course_pictureBox.Image = Properties.Resources.cert_white;
+            dashboard_menu_pictureBox.Image = Properties.Resources.dashboard_white;
+            employee_pictureBox.Image = Properties.Resources.man;
+            student_pictureBox.Image = Properties.Resources.student;
+            assign_pictureBox.Image = Properties.Resources.use_case__1_;
+            course_pictureBox.Image = Properties.Resources.memo__1_;
+            grade_pictureBox.Image = Properties.Resources.grade_white;
+            notification_pictureBox.Image = Properties.Resources.notification__1_;
+
 
             if (currentActivity == "Dashboard")
             {
@@ -52,26 +58,32 @@ namespace QLTruongDH
             else if (currentActivity == "QLNhanVien")
             {
                 isInQLNhanVien = true;
-                //employee_pictureBox.Image = Properties.Resources.register_green;
+                employee_pictureBox.Image = Properties.Resources.man__1_;
             }
             else if (currentActivity == "QLSinhVien")
             {
                 isInQLSinhVien = true;
+                student_pictureBox.Image = Properties.Resources.student__1_;
             }
             else if (currentActivity == "PhanCong")
             {
                 isInPhanCong = true;
-                //assign_pictureBox.Image = Properties.Resources.grade_green;
+                assign_pictureBox.Image = Properties.Resources.use_case__2_;
             }
             else if (currentActivity == "DKHocPhan")
             {
                 isInDKHocPhan = true;
-                //course_pictureBox.Image = Properties.Resources.cert_green;
+                course_pictureBox.Image = Properties.Resources.memo;
             }
             else if (currentActivity == "BangDiem")
             {
                 isInBangDiem = true;
-                //grade_pictureBox.Image = Properties.Resources.cert_green;
+                grade_pictureBox.Image = Properties.Resources.grade;
+            }
+            else if (currentActivity == "ThongBao")
+            {
+                isInThongBao = true;
+                notification_pictureBox.Image = Properties.Resources.notification__2_;
             }
         }
 
@@ -302,6 +314,21 @@ namespace QLTruongDH
             }
             UpdateStatus("BangDiem");
             LoadControl(new BangDiem(this));
+        }
+
+        private void notification_flowLayoutPanel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void notification_label_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void notification_pictureBox_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
