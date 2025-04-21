@@ -1,7 +1,8 @@
 ﻿namespace QLTruongDH
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, ILogoutable
     {
+        public event Action LogoutRequested;
         bool menuExpand = false;
         public bool isInDashboard = false;
         public bool isInQLNhanVien = false;
@@ -159,11 +160,7 @@
 
             if (result == DialogResult.Yes)
             {
-                this.Hide();
-
-                Login login = new Login();
-                login.Show();
-
+                LogoutRequested?.Invoke();
                 this.Close();
             }
         }
@@ -174,11 +171,7 @@
 
             if (result == DialogResult.Yes)
             {
-                this.Hide();
-
-                Login login = new Login();
-                login.Show();
-
+                LogoutRequested?.Invoke();
                 this.Close();
             }
         }
@@ -186,14 +179,9 @@
         private void out_menu_label_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
             if (result == DialogResult.Yes)
             {
-                this.Hide();
-
-                Login login = new Login();
-                login.Show();
-
+                LogoutRequested?.Invoke();
                 this.Close();
             }
         }

@@ -31,5 +31,10 @@ namespace QLTruongDH
         }
     }
 
+    public interface ILogoutable
+    {
+        event Action LogoutRequested;
+    }
+
 
 }

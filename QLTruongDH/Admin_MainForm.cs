@@ -10,8 +10,9 @@ using System.Windows.Forms;
 
 namespace QLTruongDH
 {
-    public partial class Admin_MainForm : Form
+    public partial class Admin_MainForm : Form, ILogoutable
     {
+        public event Action LogoutRequested;
         string username;
         string password;
         bool menuExpand = false;
@@ -204,6 +205,37 @@ namespace QLTruongDH
             LoadControl(new Admin_QLRoles(this));
         }
 
+        private void out_menu_flowLayoutPanel_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+            if (result == DialogResult.Yes)
+            {
+                LogoutRequested?.Invoke();
+                this.Close();
+            }
+        }
+
+        private void out_menu_label_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                LogoutRequested?.Invoke();
+                this.Close();
+            }
+        }
+
+        private void out_menu_pictureBox_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                LogoutRequested?.Invoke();
+                this.Close();
+            }
+        }
     }
 }
