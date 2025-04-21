@@ -32,7 +32,7 @@
             add_button = new Button();
             employee_id_label = new Label();
             guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
-            label1 = new Label();
+            title_label = new Label();
             employee_id_textBox = new TextBox();
             fullname_textBox = new TextBox();
             fullnane_label = new Label();
@@ -96,16 +96,16 @@
             guna2Separator1.Size = new Size(1620, 21);
             guna2Separator1.TabIndex = 40;
             // 
-            // label1
+            // title_label
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 16.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(25, 25);
-            label1.Margin = new Padding(0);
-            label1.Name = "label1";
-            label1.Size = new Size(437, 59);
-            label1.TabIndex = 39;
-            label1.Text = "Thêm nhân viên mới";
+            title_label.AutoSize = true;
+            title_label.Font = new Font("Segoe UI", 16.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            title_label.Location = new Point(25, 25);
+            title_label.Margin = new Padding(0);
+            title_label.Name = "title_label";
+            title_label.Size = new Size(437, 59);
+            title_label.TabIndex = 39;
+            title_label.Text = "Thêm nhân viên mới";
             // 
             // employee_id_textBox
             // 
@@ -297,7 +297,7 @@
             Controls.Add(add_button);
             Controls.Add(employee_id_label);
             Controls.Add(guna2Separator1);
-            Controls.Add(label1);
+            Controls.Add(title_label);
             Margin = new Padding(0);
             Name = "ThemNhanVien";
             Size = new Size(1625, 1169);
@@ -311,7 +311,7 @@
         private Button add_button;
         private Label employee_id_label;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
-        private Label label1;
+        private Label title_label;
         private TextBox employee_id_textBox;
         private TextBox fullname_textBox;
         private Label fullnane_label;

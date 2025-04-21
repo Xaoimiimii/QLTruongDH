@@ -82,7 +82,7 @@ namespace QLTruongDH
                     {
                         this.Hide();
                         //MainForm userForm = new MainForm(roles); // Truyền danh sách role vào MainForm
-                        MainForm userForm = new MainForm(username, password);
+                        MainForm userForm = new MainForm(username, password, roles);
                         userForm.ShowDialog();
                         this.Close();
                     }

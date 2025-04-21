@@ -1,4 +1,4 @@
-namespace QLTruongDH
+﻿namespace QLTruongDH
 {
     public partial class MainForm : Form
     {
@@ -13,12 +13,14 @@ namespace QLTruongDH
         public string connectionString;
         string username;
         string password;
+        public List<string> roles = new List<string>();
 
-        public MainForm(string username, string password)
+        public MainForm(string username, string password, List<String> roles)
         {
             InitializeComponent();
             this.username = username;
             this.password = password;
+            this.roles = roles;
             connectionString = $"User Id={username};Password={password};Data Source=localhost:1521/PDB4;";
             LoadControl(new Dashboard(this));
             UpdateStatus("Dashboard");
@@ -153,17 +155,47 @@ namespace QLTruongDH
 
         private void out_menu_flowLayoutPanel_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+            if (result == DialogResult.Yes)
+            {
+                this.Hide();
+
+                Login login = new Login();
+                login.Show();
+
+                this.Close();
+            }
         }
 
         private void out_menu_pictureBox_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+            if (result == DialogResult.Yes)
+            {
+                this.Hide();
+
+                Login login = new Login();
+                login.Show();
+
+                this.Close();
+            }
         }
 
         private void out_menu_label_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+            if (result == DialogResult.Yes)
+            {
+                this.Hide();
+
+                Login login = new Login();
+                login.Show();
+
+                this.Close();
+            }
         }
 
         private void employee_flowLayoutPanel_Click(object sender, EventArgs e)

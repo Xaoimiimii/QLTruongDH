@@ -143,6 +143,7 @@
             employee_dataGridView.BorderStyle = BorderStyle.Fixed3D;
             employee_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             employee_dataGridView.Columns.AddRange(new DataGridViewColumn[] { MaNhanVien, HoTen, Phai, NgSinh, Luong, PhuCap, Dt, VaiTro, MaDonVi });
+            employee_dataGridView.GridColor = Color.BurlyWood;
             employee_dataGridView.Location = new Point(25, 231);
             employee_dataGridView.Margin = new Padding(0);
             employee_dataGridView.MultiSelect = false;
@@ -150,7 +151,7 @@
             employee_dataGridView.ReadOnly = true;
             employee_dataGridView.RowHeadersVisible = false;
             employee_dataGridView.RowHeadersWidth = 82;
-            employee_dataGridView.Size = new Size(1571, 779);
+            employee_dataGridView.Size = new Size(1571, 772);
             employee_dataGridView.TabIndex = 34;
             // 
             // MaNhanVien
@@ -163,6 +164,7 @@
             // 
             // HoTen
             // 
+            HoTen.FillWeight = 120F;
             HoTen.HeaderText = "Họ tên";
             HoTen.MinimumWidth = 10;
             HoTen.Name = "HoTen";
@@ -178,6 +180,7 @@
             // 
             // NgSinh
             // 
+            NgSinh.FillWeight = 90F;
             NgSinh.HeaderText = "Ngày sinh";
             NgSinh.MinimumWidth = 10;
             NgSinh.Name = "NgSinh";
@@ -185,6 +188,7 @@
             // 
             // Luong
             // 
+            Luong.FillWeight = 90F;
             Luong.HeaderText = "Lương";
             Luong.MinimumWidth = 10;
             Luong.Name = "Luong";
@@ -192,7 +196,7 @@
             // 
             // PhuCap
             // 
-            PhuCap.FillWeight = 120F;
+            PhuCap.FillWeight = 90F;
             PhuCap.HeaderText = "Phụ cấp";
             PhuCap.MinimumWidth = 10;
             PhuCap.Name = "PhuCap";
@@ -200,6 +204,7 @@
             // 
             // Dt
             // 
+            Dt.FillWeight = 90F;
             Dt.HeaderText = "Sđt";
             Dt.MinimumWidth = 10;
             Dt.Name = "Dt";
@@ -207,15 +212,16 @@
             // 
             // VaiTro
             // 
+            VaiTro.FillWeight = 90F;
             VaiTro.HeaderText = "Vai trò";
-            VaiTro.MinimumWidth = 10;
+            VaiTro.MinimumWidth = 2;
             VaiTro.Name = "VaiTro";
             VaiTro.ReadOnly = true;
             // 
             // MaDonVi
             // 
             MaDonVi.HeaderText = "Mã đơn vị";
-            MaDonVi.MinimumWidth = 10;
+            MaDonVi.MinimumWidth = 2;
             MaDonVi.Name = "MaDonVi";
             MaDonVi.ReadOnly = true;
             // 
