@@ -524,7 +524,7 @@ namespace QLTruongDH
                 }
                 catch (OracleException)
                 {
-                    MessageBox.Show("Lỗi khi cấp quyền hệ thống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Lỗi khi cấp quyền hệ thống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -696,6 +696,7 @@ namespace QLTruongDH
                 {
                     GrantPrivilege(username, role);
                 }
+                isChanged = true;
             }
 
             // Gỡ bỏ các quyền role không còn được chọn
@@ -705,6 +706,7 @@ namespace QLTruongDH
                 {
                     RevokeSysRolePrivilege(role);
                 }
+                isChanged = true;
             }
 
             return isChanged;

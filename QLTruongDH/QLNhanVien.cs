@@ -14,13 +14,14 @@ namespace QLTruongDH
     public partial class QLNhanVien : UserControl
     {
         private MainForm mainForm;
+        private string selectedEmployeeID = string.Empty;
 
         public QLNhanVien(MainForm form)
         {
             InitializeComponent();
             this.mainForm = form;
 
-            HienThiDsRoles();
+            //HienThiDsRoles();
 
             // Nếu mainForm roles có chứa "TRGDV"
             if (mainForm.roles.Contains("TRGDV"))
@@ -35,7 +36,7 @@ namespace QLTruongDH
             {
                 LoadDsNhanVien("SP_Xem_TTNhanVienChoNVCB");
             }
-            
+
         }
 
 
@@ -57,7 +58,7 @@ namespace QLTruongDH
                 {
                     conn.Open();
 
-                    OracleCommand cmd = new OracleCommand("C##ADMIN." + procName, conn);
+                    OracleCommand cmd = new OracleCommand(procName, conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
@@ -98,6 +99,80 @@ namespace QLTruongDH
         private void edit_button_Click(object sender, EventArgs e)
         {
             mainForm.LoadControl(new ThemNhanVien(mainForm, "Edit"));
+        }
+
+        private void search_employee_guna2TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string searchText = search_employee_guna2TextBox.Text.Trim();
+                if (employee_dataGridView.DataSource is DataTable dt)
+                {
+                    DataView dv = dt.DefaultView;
+                    dv.RowFilter = $"MANV LIKE '%{searchText}%'";
+                }
+            }
+        }
+
+        private void search_employee_button_Click(object sender, EventArgs e)
+        {
+            string searchText = search_employee_guna2TextBox.Text.Trim();
+            if (employee_dataGridView.DataSource is DataTable dt)
+            {
+                DataView dv = dt.DefaultView;
+                dv.RowFilter = $"MANV LIKE '%{searchText}%'";
+            }
+        }
+
+        private void search_employee_guna2TextBox_IconRightClick(object sender, EventArgs e)
+        {
+            search_employee_guna2TextBox.Text = string.Empty;
+        }
+
+        private void employee_dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                var cellValue = employee_dataGridView.Rows[e.RowIndex].Cells[0].Value;
+                if (cellValue != null)
+                {
+                    selectedEmployeeID = string.Empty;
+                    selectedEmployeeID = cellValue.ToString();
+                    delete_button.Visible = true;
+                    edit_button.Visible = true;
+                }
+            }
+        }
+
+        private void delete_button_Click(object sender, EventArgs e)
+        {
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    OracleCommand cmd = new OracleCommand("SP_Xoa_NhanVien", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+
+                    cmd.Parameters.Add("p_manv", OracleDbType.Varchar2, 10).Value = selectedEmployeeID;
+                    OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
+                    msgParam.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(msgParam);
+
+                    cmd.ExecuteNonQuery();
+
+                    string message = msgParam.Value.ToString();
+                    MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    LoadDsNhanVien("SP_Xem_DSNhanVien");
+                }
+                catch (OracleException ex)
+                {
+                    MessageBox.Show($"Lỗi khi xóa nhân viên: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

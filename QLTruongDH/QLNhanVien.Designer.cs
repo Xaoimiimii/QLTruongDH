@@ -96,6 +96,8 @@
             search_employee_guna2TextBox.Size = new Size(360, 51);
             search_employee_guna2TextBox.TabIndex = 39;
             search_employee_guna2TextBox.TextOffset = new Point(20, 0);
+            search_employee_guna2TextBox.IconRightClick += search_employee_guna2TextBox_IconRightClick;
+            search_employee_guna2TextBox.KeyDown += search_employee_guna2TextBox_KeyDown;
             // 
             // delete_button
             // 
@@ -108,6 +110,7 @@
             delete_button.TabIndex = 38;
             delete_button.Text = "Xóa nhân viên";
             delete_button.UseVisualStyleBackColor = false;
+            delete_button.Click += delete_button_Click;
             // 
             // edit_button
             // 
@@ -153,6 +156,7 @@
             employee_dataGridView.RowHeadersWidth = 82;
             employee_dataGridView.Size = new Size(1571, 772);
             employee_dataGridView.TabIndex = 34;
+            employee_dataGridView.CellClick += employee_dataGridView_CellClick;
             // 
             // MaNhanVien
             // 
@@ -249,6 +253,7 @@
             search_employee_button.TabIndex = 41;
             search_employee_button.Text = "Tra cứu";
             search_employee_button.UseVisualStyleBackColor = false;
+            search_employee_button.Click += search_employee_button_Click;
             // 
             // QLNhanVien
             // 
