@@ -40,17 +40,17 @@
             gender_comboBox = new ComboBox();
             phone_textBox = new TextBox();
             phone_label = new Label();
-            donvi_textBox = new TextBox();
             donvi_label = new Label();
             role_comboBox = new ComboBox();
             role_label = new Label();
-            textBox1 = new TextBox();
+            luong_textBox = new TextBox();
             luong_label = new Label();
             phucap_textBox = new TextBox();
             phucap_label = new Label();
             back_flowLayoutPanel = new FlowLayoutPanel();
             back_pictureBox = new PictureBox();
             back_label = new Label();
+            donvi_comboBox = new ComboBox();
             back_flowLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)back_pictureBox).BeginInit();
             SuspendLayout();
@@ -66,6 +66,7 @@
             reset__button.TabIndex = 43;
             reset__button.Text = "Nhập lại";
             reset__button.UseVisualStyleBackColor = false;
+            reset__button.Click += reset__button_Click;
             // 
             // add_button
             // 
@@ -78,6 +79,7 @@
             add_button.TabIndex = 42;
             add_button.Text = "Thêm nhân viên";
             add_button.UseVisualStyleBackColor = false;
+            add_button.Click += add_button_Click;
             // 
             // guna2Separator1
             // 
@@ -177,14 +179,6 @@
             phone_label.TabIndex = 51;
             phone_label.Text = "Số điện thoại:";
             // 
-            // donvi_textBox
-            // 
-            donvi_textBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            donvi_textBox.Location = new Point(202, 384);
-            donvi_textBox.Name = "donvi_textBox";
-            donvi_textBox.Size = new Size(356, 50);
-            donvi_textBox.TabIndex = 54;
-            // 
             // donvi_label
             // 
             donvi_label.AutoSize = true;
@@ -200,7 +194,7 @@
             // 
             role_comboBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             role_comboBox.FormattingEnabled = true;
-            role_comboBox.Items.AddRange(new object[] { "NVCB", "Giáo viên", "NV PĐT", "NV PKT", "NV TCHC", "NV CTSV", "Trưởng đơn vị" });
+            role_comboBox.Items.AddRange(new object[] { "NVCB", "GV", "NV PDT", "NV PKT", "NV TCHC", "NV CTSV", "TRGDV" });
             role_comboBox.Location = new Point(841, 384);
             role_comboBox.Name = "role_comboBox";
             role_comboBox.Size = new Size(278, 53);
@@ -217,13 +211,13 @@
             role_label.TabIndex = 55;
             role_label.Text = "Vai trò:";
             // 
-            // textBox1
+            // luong_textBox
             // 
-            textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(150, 502);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(408, 50);
-            textBox1.TabIndex = 58;
+            luong_textBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            luong_textBox.Location = new Point(150, 502);
+            luong_textBox.Name = "luong_textBox";
+            luong_textBox.Size = new Size(408, 50);
+            luong_textBox.TabIndex = 58;
             // 
             // luong_label
             // 
@@ -295,19 +289,28 @@
             back_label.MouseEnter += back_label_MouseEnter;
             back_label.MouseLeave += back_label_MouseLeave;
             // 
+            // donvi_comboBox
+            // 
+            donvi_comboBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            donvi_comboBox.FormattingEnabled = true;
+            donvi_comboBox.Location = new Point(203, 381);
+            donvi_comboBox.Name = "donvi_comboBox";
+            donvi_comboBox.Size = new Size(355, 53);
+            donvi_comboBox.TabIndex = 62;
+            // 
             // ThemNhanVien
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
+            Controls.Add(donvi_comboBox);
             Controls.Add(back_flowLayoutPanel);
             Controls.Add(phucap_textBox);
             Controls.Add(phucap_label);
-            Controls.Add(textBox1);
+            Controls.Add(luong_textBox);
             Controls.Add(luong_label);
             Controls.Add(role_comboBox);
             Controls.Add(role_label);
-            Controls.Add(donvi_textBox);
             Controls.Add(donvi_label);
             Controls.Add(phone_textBox);
             Controls.Add(phone_label);
@@ -345,16 +348,16 @@
         private ComboBox gender_comboBox;
         private TextBox phone_textBox;
         private Label phone_label;
-        private TextBox donvi_textBox;
         private Label donvi_label;
         private ComboBox role_comboBox;
         private Label role_label;
-        private TextBox textBox1;
+        private TextBox luong_textBox;
         private Label luong_label;
         private TextBox phucap_textBox;
         private Label phucap_label;
         private FlowLayoutPanel back_flowLayoutPanel;
         private PictureBox back_pictureBox;
         private Label back_label;
+        private ComboBox donvi_comboBox;
     }
 }

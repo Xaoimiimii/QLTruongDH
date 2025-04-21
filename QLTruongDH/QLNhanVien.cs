@@ -146,6 +146,15 @@ namespace QLTruongDH
 
         private void delete_button_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa nhân viên này không?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                DeleteEmployee();
+            }
+        }
+
+        private void DeleteEmployee()
+        {
             using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
             {
                 try
