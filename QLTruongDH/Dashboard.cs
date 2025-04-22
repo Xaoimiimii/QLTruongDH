@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace QLTruongDH
 {
@@ -22,10 +23,24 @@ namespace QLTruongDH
 
         private void DashboardControl_Load(object sender, EventArgs e)
         {
+            //hello_label.Location = bg_pictureBox.PointToClient(hello_label.PointToScreen(Point.Empty));
+            //date_label.Location = bg_pictureBox.PointToClient(date_label.PointToScreen(Point.Empty));
             //hello_label.Parent = bg_pictureBox;
             //date_label.Parent = bg_pictureBox;
             //hello_label.BackColor = Color.Transparent;
             //date_label.BackColor = Color.Transparent;
+
+            hello_label.Text = "Xin chào, " + mainForm.username;
+            string dayOfWeek = DateTime.Now.ToString("dddd");
+            if (dayOfWeek == "Monday") dayOfWeek = "Thứ 2";
+            else if (dayOfWeek == "Tuesday") dayOfWeek = "Thứ 3";
+            else if (dayOfWeek == "Wednesday") dayOfWeek = "Thứ 4";
+            else if (dayOfWeek == "Thursday") dayOfWeek = "Thứ 5";
+            else if (dayOfWeek == "Friday") dayOfWeek = "Thứ 6";
+            else if (dayOfWeek == "Saturday") dayOfWeek = "Thứ 7";
+            else if (dayOfWeek == "Sunday") dayOfWeek = "Chủ nhật";
+
+            date_label.Text = DateTime.Now.ToString(dayOfWeek + ", dd/MM/yyyy");
         }
 
         private void qlNhanVien_guna2ShadowPanel_Click(object sender, EventArgs e)

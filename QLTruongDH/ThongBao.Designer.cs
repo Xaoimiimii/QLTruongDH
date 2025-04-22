@@ -32,12 +32,12 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             label1 = new Label();
-            employee_dataGridView = new DataGridView();
+            noti_dataGridView = new DataGridView();
             search_employee_button = new Button();
             add_button = new Button();
             search_employee_guna2TextBox = new Guna.UI2.WinForms.Guna2TextBox();
             search_employee_label = new Label();
-            ((System.ComponentModel.ISupportInitialize)employee_dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)noti_dataGridView).BeginInit();
             SuspendLayout();
             // 
             // guna2Separator1
@@ -60,25 +60,25 @@
             label1.TabIndex = 9;
             label1.Text = "Thông báo";
             // 
-            // employee_dataGridView
+            // noti_dataGridView
             // 
-            employee_dataGridView.AllowUserToAddRows = false;
-            employee_dataGridView.AllowUserToDeleteRows = false;
-            employee_dataGridView.AllowUserToResizeRows = false;
-            employee_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            employee_dataGridView.BackgroundColor = Color.FloralWhite;
-            employee_dataGridView.BorderStyle = BorderStyle.Fixed3D;
-            employee_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            employee_dataGridView.GridColor = Color.BurlyWood;
-            employee_dataGridView.Location = new Point(27, 233);
-            employee_dataGridView.Margin = new Padding(0);
-            employee_dataGridView.MultiSelect = false;
-            employee_dataGridView.Name = "employee_dataGridView";
-            employee_dataGridView.ReadOnly = true;
-            employee_dataGridView.RowHeadersVisible = false;
-            employee_dataGridView.RowHeadersWidth = 82;
-            employee_dataGridView.Size = new Size(1571, 951);
-            employee_dataGridView.TabIndex = 35;
+            noti_dataGridView.AllowUserToAddRows = false;
+            noti_dataGridView.AllowUserToDeleteRows = false;
+            noti_dataGridView.AllowUserToResizeRows = false;
+            noti_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            noti_dataGridView.BackgroundColor = Color.FloralWhite;
+            noti_dataGridView.BorderStyle = BorderStyle.Fixed3D;
+            noti_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            noti_dataGridView.GridColor = Color.BurlyWood;
+            noti_dataGridView.Location = new Point(27, 233);
+            noti_dataGridView.Margin = new Padding(0);
+            noti_dataGridView.MultiSelect = false;
+            noti_dataGridView.Name = "noti_dataGridView";
+            noti_dataGridView.ReadOnly = true;
+            noti_dataGridView.RowHeadersVisible = false;
+            noti_dataGridView.RowHeadersWidth = 82;
+            noti_dataGridView.Size = new Size(1571, 951);
+            noti_dataGridView.TabIndex = 35;
             // 
             // search_employee_button
             // 
@@ -151,13 +151,14 @@
             Controls.Add(add_button);
             Controls.Add(search_employee_guna2TextBox);
             Controls.Add(search_employee_label);
-            Controls.Add(employee_dataGridView);
+            Controls.Add(noti_dataGridView);
             Controls.Add(guna2Separator1);
             Controls.Add(label1);
             Margin = new Padding(0);
             Name = "ThongBao";
             Size = new Size(1620, 1209);
-            ((System.ComponentModel.ISupportInitialize)employee_dataGridView).EndInit();
+            Load += ThongBao_Load;
+            ((System.ComponentModel.ISupportInitialize)noti_dataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -166,7 +167,7 @@
 
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         private Label label1;
-        private DataGridView employee_dataGridView;
+        private DataGridView noti_dataGridView;
         private Button search_employee_button;
         private Button add_button;
         private Guna.UI2.WinForms.Guna2TextBox search_employee_guna2TextBox;
