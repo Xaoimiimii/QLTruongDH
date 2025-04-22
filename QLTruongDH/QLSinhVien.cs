@@ -77,7 +77,8 @@ namespace QLTruongDH
             { "Tình trạng", row.Cells["Tình trạng"].Value },
             { "Phái", row.Cells["Phái"].Value },
             { "Khoa", row.Cells["Khoa"].Value },
-            { "Ngày sinh", row.Cells["Ngày sinh"].Value }
+            { "Ngày sinh", row.Cells["Ngày sinh"].Value },
+            { "Cơ sở", row.Cells["Cơ sở"].Value }
         };
             }
         }
@@ -268,6 +269,7 @@ namespace QLTruongDH
             string phai = row.Cells["Phái"].Value?.ToString();
             string maKhoa = row.Cells["Khoa"].Value?.ToString();
             DateTime? ngaySinh = row.Cells["Ngày sinh"].Value as DateTime?;
+            string coso = row.Cells["Cơ sở"].Value?.ToString();
 
             // Get original values
             var originalRow = originalValues[row.Index];
@@ -278,6 +280,7 @@ namespace QLTruongDH
             string originalPhai = originalRow["Phái"]?.ToString();
             string originalMaKhoa = originalRow["Khoa"]?.ToString();
             DateTime? originalNgaySinh = originalRow["Ngày sinh"] as DateTime?;
+            string originalCoSo = originalRow["Cơ sở"].ToString();
 
             using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
             {
@@ -304,11 +307,11 @@ namespace QLTruongDH
                         }
 
                     }
-                    else if (roles.Contains("NV_CTSV"))
+                    else if (roles.Contains("CTSV"))
                     {
                         // Cập nhật tất cả các thông tin nếu người dùng có quyền
                         if (hoTen != originalHoTen || phai != originalPhai || ngaySinh != originalNgaySinh ||
-                            dchi != originalDchi || dt != originalDt || maKhoa != originalMaKhoa)
+                            dchi != originalDchi || dt != originalDt || maKhoa != originalMaKhoa || coso != originalCoSo)
                         {
                             OracleCommand cmd = new OracleCommand("update_sv_by_pctsv", conn);
                             cmd.CommandType = CommandType.StoredProcedure;
@@ -319,6 +322,7 @@ namespace QLTruongDH
                             if (dchi != null) cmd.Parameters.Add("p_dchi", OracleDbType.Varchar2).Value = dchi;
                             if (dt != null) cmd.Parameters.Add("p_dt", OracleDbType.Varchar2).Value = dt;
                             if (maKhoa != null) cmd.Parameters.Add("p_khoa", OracleDbType.Varchar2).Value = maKhoa;
+                            if (coso != null) cmd.Parameters.Add("p_coso", OracleDbType.Varchar2).Value = coso;
                             cmd.ExecuteNonQuery();
                             //new OracleCommand("COMMIT", conn).ExecuteNonQuery();
                         }
@@ -327,7 +331,7 @@ namespace QLTruongDH
                             MessageBox.Show("Bạn không có quyền cập nhật thông tin này!");
                         }
                     }
-                    else if (roles.Contains("NV_PDT"))
+                    else if (roles.Contains("PDT"))
                     {
                         // Cập nhật tình trạng sinh viên nếu có thay đổi
                         if (tinhTrang != originalTinhTrang)
@@ -382,6 +386,7 @@ namespace QLTruongDH
                     string phai = row.Cells["Phái"].Value?.ToString();
                     string maKhoa = row.Cells["Khoa"].Value?.ToString();
                     DateTime? ngaySinh = row.Cells["Ngày Sinh"].Value as DateTime?;
+                    string coso = row.Cells["Cơ sở"].Value?.ToString();
 
                     string originalHoTen = originalRow["Họ và tên"]?.ToString();
                     string originalDchi = originalRow["Địa chỉ"]?.ToString();
@@ -390,11 +395,12 @@ namespace QLTruongDH
                     string originalPhai = originalRow["Phái"]?.ToString();
                     string originalMaKhoa = originalRow["Khoa"]?.ToString();
                     DateTime? originalNgaySinh = originalRow["Ngày sinh"] as DateTime?;
+                    string originalCoSo = originalRow["Cơ sở"].ToString();
 
                     // Check if any field has changed
                     if (hoTen != originalHoTen || dchi != originalDchi || dt != originalDt ||
                         tinhTrang != originalTinhTrang || phai != originalPhai ||
-                        maKhoa != originalMaKhoa || ngaySinh != originalNgaySinh)
+                        maKhoa != originalMaKhoa || ngaySinh != originalNgaySinh || coso != originalCoSo)
                     {
                         UpdateSinhVien(row); // Call UpdateSinhVien for this row
                         hasUpdates = true;
@@ -434,7 +440,7 @@ namespace QLTruongDH
 
         private void alter_button_Click(object sender, EventArgs e)
         {
-            if (currentRoles.Contains("NV_CTSV"))
+            if (currentRoles.Contains("CTSV"))
             {
                 if (student_dataGridView.CurrentRow == null)
                 {
@@ -472,7 +478,7 @@ namespace QLTruongDH
 
         private void add_button_Click(object sender, EventArgs e)
         {
-            if (currentRoles.Contains("NV_CTSV"))
+            if (currentRoles.Contains("CTSV"))
             {
                 string maSV = mssv_textBox.Text.Trim();
                 string hoTen = hoTen_textBox.Text.Trim();
@@ -481,9 +487,10 @@ namespace QLTruongDH
                 string phai = gioiTinh_comboBox.SelectedValue?.ToString();
                 string maKhoa = khoa_comboBox.SelectedValue?.ToString();
                 DateTime? ngaySinh = ngaySinh_dateTimePicker.Value;
+                string coso = textBox1.Text.Trim();
 
 
-                if (string.IsNullOrEmpty(maSV) || string.IsNullOrEmpty(hoTen) || string.IsNullOrEmpty(diaChi) || string.IsNullOrEmpty(dienThoai) || string.IsNullOrEmpty(maKhoa))
+                if (string.IsNullOrEmpty(maSV) || string.IsNullOrEmpty(hoTen) || string.IsNullOrEmpty(diaChi) || string.IsNullOrEmpty(dienThoai) || string.IsNullOrEmpty(maKhoa) || string.IsNullOrEmpty(coso))
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin sinh viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -491,7 +498,7 @@ namespace QLTruongDH
 
                 using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
                 {
-                    try
+                    //try
                     {
                         conn.Open();
 
@@ -505,6 +512,7 @@ namespace QLTruongDH
                             cmd.Parameters.Add("p_phai", OracleDbType.Varchar2).Value = phai;
                             cmd.Parameters.Add("p_maKhoa", OracleDbType.Varchar2).Value = maKhoa;
                             cmd.Parameters.Add("p_ngaySinh", OracleDbType.Date).Value = ngaySinh;
+                            cmd.Parameters.Add("p_coso", OracleDbType.Varchar2).Value = coso;
                             cmd.ExecuteNonQuery();
 
                             MessageBox.Show("Sinh viên đã được thêm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -513,12 +521,13 @@ namespace QLTruongDH
                             hoTen_textBox.Clear();
                             diaChi_textBox.Clear();
                             sdt_textBox.Clear();
+                            textBox1.Clear();
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Đã xảy ra lỗi khi thêm sinh viên: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    //catch (Exception ex)
+                    //{
+                    //    MessageBox.Show("Đã xảy ra lỗi khi thêm sinh viên: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //}
                 }
             }
             else
