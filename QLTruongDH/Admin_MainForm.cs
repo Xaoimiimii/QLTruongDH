@@ -13,7 +13,7 @@ namespace QLTruongDH
     public partial class Admin_MainForm : Form, ILogoutable
     {
         public event Action LogoutRequested;
-        string username;
+        public string username;
         string password;
         bool menuExpand = false;
         public bool isInDashboard = false;

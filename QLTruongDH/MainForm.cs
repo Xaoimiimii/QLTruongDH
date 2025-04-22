@@ -13,7 +13,7 @@
         public bool isInBangDiem = false;
         public bool isInThongBao = false;
         public string connectionString;
-        string username;
+        public string username;
         string password;
         public List<string> roles = new List<string>();
 

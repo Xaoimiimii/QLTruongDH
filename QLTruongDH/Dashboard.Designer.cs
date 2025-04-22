@@ -49,6 +49,8 @@ namespace QLTruongDH
             dkHocPhan_label = new Label();
             dkHocPhan_pictureBox = new PictureBox();
             bg_pictureBox = new PictureBox();
+            hello_label = new Label();
+            date_label = new Label();
             ((System.ComponentModel.ISupportInitialize)qlNhanVien_pictureBox).BeginInit();
             qlNhanVien_guna2ShadowPanel.SuspendLayout();
             qlSinhVien_guna2ShadowPanel.SuspendLayout();
@@ -99,7 +101,7 @@ namespace QLTruongDH
             qlNhanVien_guna2ShadowPanel.Controls.Add(qlNhanVien_label);
             qlNhanVien_guna2ShadowPanel.Controls.Add(qlNhanVien_pictureBox);
             qlNhanVien_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
-            qlNhanVien_guna2ShadowPanel.Location = new Point(50, 520);
+            qlNhanVien_guna2ShadowPanel.Location = new Point(50, 620);
             qlNhanVien_guna2ShadowPanel.Margin = new Padding(0);
             qlNhanVien_guna2ShadowPanel.Name = "qlNhanVien_guna2ShadowPanel";
             qlNhanVien_guna2ShadowPanel.Radius = 10;
@@ -118,7 +120,7 @@ namespace QLTruongDH
             qlSinhVien_guna2ShadowPanel.Controls.Add(qlSinhVien_label);
             qlSinhVien_guna2ShadowPanel.Controls.Add(qlSinhVien_pictureBox);
             qlSinhVien_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
-            qlSinhVien_guna2ShadowPanel.Location = new Point(570, 520);
+            qlSinhVien_guna2ShadowPanel.Location = new Point(570, 620);
             qlSinhVien_guna2ShadowPanel.Margin = new Padding(0);
             qlSinhVien_guna2ShadowPanel.Name = "qlSinhVien_guna2ShadowPanel";
             qlSinhVien_guna2ShadowPanel.Radius = 10;
@@ -166,7 +168,7 @@ namespace QLTruongDH
             phanCongDayHoc_guna2ShadowPanel.Controls.Add(phanCongDayHoc_label);
             phanCongDayHoc_guna2ShadowPanel.Controls.Add(phanCongDayHoc_pictureBox);
             phanCongDayHoc_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
-            phanCongDayHoc_guna2ShadowPanel.Location = new Point(50, 805);
+            phanCongDayHoc_guna2ShadowPanel.Location = new Point(50, 905);
             phanCongDayHoc_guna2ShadowPanel.Margin = new Padding(0);
             phanCongDayHoc_guna2ShadowPanel.Name = "phanCongDayHoc_guna2ShadowPanel";
             phanCongDayHoc_guna2ShadowPanel.Radius = 10;
@@ -214,7 +216,7 @@ namespace QLTruongDH
             thongBao_guna2ShadowPanel.Controls.Add(thongBao_label);
             thongBao_guna2ShadowPanel.Controls.Add(thongBao_pictureBox);
             thongBao_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
-            thongBao_guna2ShadowPanel.Location = new Point(1090, 520);
+            thongBao_guna2ShadowPanel.Location = new Point(1090, 620);
             thongBao_guna2ShadowPanel.Margin = new Padding(0);
             thongBao_guna2ShadowPanel.Name = "thongBao_guna2ShadowPanel";
             thongBao_guna2ShadowPanel.Radius = 10;
@@ -262,7 +264,7 @@ namespace QLTruongDH
             bangDiem_guna2ShadowPanel.Controls.Add(bangDiem_label);
             bangDiem_guna2ShadowPanel.Controls.Add(bangDiem_pictureBox);
             bangDiem_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
-            bangDiem_guna2ShadowPanel.Location = new Point(1090, 805);
+            bangDiem_guna2ShadowPanel.Location = new Point(1090, 905);
             bangDiem_guna2ShadowPanel.Margin = new Padding(0);
             bangDiem_guna2ShadowPanel.Name = "bangDiem_guna2ShadowPanel";
             bangDiem_guna2ShadowPanel.Radius = 10;
@@ -310,7 +312,7 @@ namespace QLTruongDH
             dkHocPhan_guna2ShadowPanel.Controls.Add(dkHocPhan_label);
             dkHocPhan_guna2ShadowPanel.Controls.Add(dkHocPhan_pictureBox);
             dkHocPhan_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
-            dkHocPhan_guna2ShadowPanel.Location = new Point(570, 805);
+            dkHocPhan_guna2ShadowPanel.Location = new Point(570, 905);
             dkHocPhan_guna2ShadowPanel.Margin = new Padding(0);
             dkHocPhan_guna2ShadowPanel.Name = "dkHocPhan_guna2ShadowPanel";
             dkHocPhan_guna2ShadowPanel.Radius = 10;
@@ -355,7 +357,7 @@ namespace QLTruongDH
             // bg_pictureBox
             // 
             bg_pictureBox.Image = Properties.Resources._46565226;
-            bg_pictureBox.Location = new Point(0, -450);
+            bg_pictureBox.Location = new Point(0, -340);
             bg_pictureBox.Margin = new Padding(0);
             bg_pictureBox.Name = "bg_pictureBox";
             bg_pictureBox.Size = new Size(1625, 897);
@@ -363,11 +365,39 @@ namespace QLTruongDH
             bg_pictureBox.TabIndex = 10;
             bg_pictureBox.TabStop = false;
             // 
+            // hello_label
+            // 
+            hello_label.AutoSize = true;
+            hello_label.BackColor = Color.White;
+            hello_label.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            hello_label.ForeColor = Color.Black;
+            hello_label.Location = new Point(50, 107);
+            hello_label.Margin = new Padding(0);
+            hello_label.Name = "hello_label";
+            hello_label.Size = new Size(459, 86);
+            hello_label.TabIndex = 11;
+            hello_label.Text = "Xin chào, user";
+            // 
+            // date_label
+            // 
+            date_label.AutoSize = true;
+            date_label.BackColor = Color.White;
+            date_label.Font = new Font("Segoe UI Semibold", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            date_label.ForeColor = Color.FromArgb(64, 64, 64);
+            date_label.Location = new Point(50, 206);
+            date_label.Margin = new Padding(0);
+            date_label.Name = "date_label";
+            date_label.Size = new Size(308, 50);
+            date_label.TabIndex = 12;
+            date_label.Text = "Thứ tư, 4/9/2025";
+            // 
             // Dashboard
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
+            Controls.Add(date_label);
+            Controls.Add(hello_label);
             Controls.Add(bg_pictureBox);
             Controls.Add(dkHocPhan_guna2ShadowPanel);
             Controls.Add(bangDiem_guna2ShadowPanel);
@@ -377,7 +407,7 @@ namespace QLTruongDH
             Controls.Add(qlNhanVien_guna2ShadowPanel);
             Margin = new Padding(0);
             Name = "Dashboard";
-            Size = new Size(1625, 1169);
+            Size = new Size(1625, 1209);
             Load += DashboardControl_Load;
             ((System.ComponentModel.ISupportInitialize)qlNhanVien_pictureBox).EndInit();
             qlNhanVien_guna2ShadowPanel.ResumeLayout(false);
@@ -393,6 +423,7 @@ namespace QLTruongDH
             ((System.ComponentModel.ISupportInitialize)dkHocPhan_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)bg_pictureBox).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -416,5 +447,7 @@ namespace QLTruongDH
         private Label dkHocPhan_label;
         private PictureBox dkHocPhan_pictureBox;
         private PictureBox bg_pictureBox;
+        private Label hello_label;
+        private Label date_label;
     }
 }

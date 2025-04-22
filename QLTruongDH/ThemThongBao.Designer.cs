@@ -86,31 +86,34 @@
             // 
             // group_checkedListBox
             // 
+            group_checkedListBox.BorderStyle = BorderStyle.None;
             group_checkedListBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
             group_checkedListBox.FormattingEnabled = true;
             group_checkedListBox.Items.AddRange(new object[] { "CS1", "CS2" });
             group_checkedListBox.Location = new Point(1044, 50);
             group_checkedListBox.Name = "group_checkedListBox";
-            group_checkedListBox.Size = new Size(309, 244);
+            group_checkedListBox.Size = new Size(309, 240);
             group_checkedListBox.TabIndex = 103;
             // 
             // compartment_checkedListBox
             // 
+            compartment_checkedListBox.BorderStyle = BorderStyle.None;
             compartment_checkedListBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
             compartment_checkedListBox.FormattingEnabled = true;
             compartment_checkedListBox.Items.AddRange(new object[] { "Khoa CNTT", "Khoa Toán - Toán tin", "Khoa Vật lý", "Khoa Hóa học", "Khoa Sinh học", "Khoa Môi trường", "Khoa Địa chất", "Khoa Điện tử viễn thông", "Khoa Công nghệ vật liệu", "Khoa Khoa học liên ngành", "Viện Tế bào gốc", "Phòng Đào tạo", "Phòng Khảo thí", "Phòng Công tác sinh viên", "Phòng tổ chức hành chính" });
             compartment_checkedListBox.Location = new Point(436, 50);
             compartment_checkedListBox.Name = "compartment_checkedListBox";
-            compartment_checkedListBox.Size = new Size(477, 244);
+            compartment_checkedListBox.Size = new Size(477, 240);
             compartment_checkedListBox.TabIndex = 102;
             // 
             // level_checkedListBox
             // 
+            level_checkedListBox.BorderStyle = BorderStyle.None;
             level_checkedListBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
             level_checkedListBox.FormattingEnabled = true;
             level_checkedListBox.Location = new Point(3, 50);
             level_checkedListBox.Name = "level_checkedListBox";
-            level_checkedListBox.Size = new Size(309, 244);
+            level_checkedListBox.Size = new Size(309, 240);
             level_checkedListBox.TabIndex = 101;
             // 
             // group_label
@@ -170,7 +173,7 @@
             content_guna2TextBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
             content_guna2TextBox.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             content_guna2TextBox.Location = new Point(25, 520);
-            content_guna2TextBox.Margin = new Padding(7, 7, 7, 7);
+            content_guna2TextBox.Margin = new Padding(7);
             content_guna2TextBox.Multiline = true;
             content_guna2TextBox.Name = "content_guna2TextBox";
             content_guna2TextBox.PlaceholderText = "";
