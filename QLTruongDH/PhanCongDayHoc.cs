@@ -14,14 +14,15 @@ namespace QLTruongDH
     public partial class PhanCongDayHoc : UserControl
     {
         private MainForm mainForm;
+        private string mode;
         private MoMon selectedMoMon = new MoMon();
 
         public PhanCongDayHoc(MainForm form)
         {
             InitializeComponent();
             this.mainForm = form;
-            delete_button.Visible = false;
-            edit_button.Visible = false;
+            edit_panel.Visible = false;
+            VisibleAddMode();
         }
 
         private void PhanCongDayHoc_Load(object sender, EventArgs e)
@@ -86,34 +87,101 @@ namespace QLTruongDH
             }
         }
 
-
-        // === UI INTERACTION ===
-        private void phanCong_dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void ThemPhanCong()
         {
-            if (e.RowIndex >= 0)
+            string mahp = mahocphan_textBox.Text?.Trim() ?? "";
+            string magv = magiaovien_textBox.Text?.Trim() ?? "";
+            string nam = nam_textBox.Text?.Trim() ?? "";
+            string hocky = hk_comboBox.SelectedItem?.ToString().Trim() ?? "";
+
+            if (mahp == "" || magv == "" || hocky == "" || nam == "")
             {
-                DataGridViewRow row = phanCong_dataGridView.Rows[e.RowIndex];
-                selectedMoMon = new MoMon
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
                 {
-                    MaMM = row.Cells[0].Value?.ToString(),
-                    MaHP = row.Cells[1].Value?.ToString(),
-                    MaGV = row.Cells[2].Value?.ToString(),
-                    HK = Convert.ToInt32(row.Cells[3].Value),
-                    Nam = Convert.ToInt32(row.Cells[4].Value)
-                };
-                delete_button.Visible = true;
-                edit_button.Visible = true;
+                    conn.Open();
+
+                    OracleCommand cmd = new OracleCommand("SP_Them_MoMon", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("p_mahp", OracleDbType.Varchar2).Value = mahp;
+                    cmd.Parameters.Add("p_magv", OracleDbType.Varchar2).Value = magv;
+                    cmd.Parameters.Add("p_hk", OracleDbType.Decimal).Value = hocky;
+                    cmd.Parameters.Add("p_nam", OracleDbType.Decimal).Value = nam;
+
+                    OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
+                    msgParam.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(msgParam);
+
+                    cmd.ExecuteNonQuery();
+
+                    MessageBox.Show($"{msgParam.Value.ToString()}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    ResetInputTextbox();
+                    LoadDsPhanCongTheoRole();
+
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Lỗi khi thêm phân công mới", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
-        private void PhanCongDayHoc_Click(object sender, EventArgs e)
+        private void SuaPhanCong()
         {
-            delete_button.Visible = false;
-            edit_button.Visible = false;
-            selectedMoMon = new MoMon();
+            string mahp = mahocphan_textBox.Text?.Trim() ?? "";
+            string magv = magiaovien_textBox.Text?.Trim() ?? "";
+            string nam = nam_textBox.Text?.Trim() ?? "";
+            string hocky = hk_comboBox.SelectedItem?.ToString().Trim() ?? "";
+
+            if (mahp == selectedMoMon.MaHP && magv == selectedMoMon.MaGV 
+                && hocky == selectedMoMon.HK.ToString() && nam == selectedMoMon.Nam.ToString())
+            {
+                MessageBox.Show("Không có thay đổi nào", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    OracleCommand cmd = new OracleCommand("SP_CapNhat_TTMoMon", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("p_mamon", OracleDbType.Varchar2).Value = selectedMoMon.MaMM;
+                    cmd.Parameters.Add("p_mahp", OracleDbType.Varchar2).Value = mahp;
+                    cmd.Parameters.Add("p_magv", OracleDbType.Varchar2).Value = magv;
+                    cmd.Parameters.Add("p_hk", OracleDbType.Decimal).Value = hocky;
+                    cmd.Parameters.Add("p_nam", OracleDbType.Decimal).Value = nam;
+
+                    OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
+                    msgParam.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(msgParam);
+
+                    cmd.ExecuteNonQuery();
+
+                    MessageBox.Show($"{msgParam.Value.ToString()}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    ResetInputTextbox();
+                    LoadDsPhanCongTheoRole();
+
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show($"Lỗi khi sửa phân công {selectedMoMon.MaMM}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
-        private void delete_button_Click(object sender, EventArgs e)
+        private void XoaPhanCong()
         {
             using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
             {
@@ -131,8 +199,7 @@ namespace QLTruongDH
 
                     cmd.ExecuteNonQuery();
 
-                    string message = msgParam.Value.ToString();
-                    MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(msgParam.Value.ToString(), "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     LoadDsPhanCongTheoRole();
                 }
@@ -143,14 +210,117 @@ namespace QLTruongDH
             }
         }
 
+
+        // === HELPER FUNCTION ===
+        private void ResetInputTextbox()
+        {
+            mamomon_textBox.Text = "";
+            nam_textBox.Text = "";
+            mahocphan_textBox.Text = "";
+            magiaovien_textBox.Text = "";
+            hk_comboBox.SelectedIndex = -1;
+        }
+
+        private void VisibleEditMode()
+        {
+            mode = "Edit";
+            edit_panel.Visible = true;
+            input_panel.Visible = true;
+            add_panel.Visible = false;
+            action_label.Text = "Chỉnh sửa phân công:";
+        }
+
+        private void VisibleAddMode()
+        {
+            mode = "Add";
+            add_panel.Visible = true;
+            input_panel.Visible = true;
+            edit_panel.Visible = false;
+            action_label.Text = "Thêm phân công mới:";
+        }
+
+        private void ApplyFilters()
+        {
+            if (phanCong_dataGridView.DataSource is DataTable dt)
+            {
+                string searchHP = search_hocphan_guna2TextBox.Text.Trim();
+                string searchGV = search_giaovien_guna2TextBox.Text.Trim();
+                string searchHK = hocky_comboBox.SelectedItem?.ToString();
+                string searchNam = search_nam_guna2TextBox.Text.Trim();
+
+                List<string> filters = new List<string>();
+
+                if (!string.IsNullOrEmpty(searchHP))
+                    filters.Add($"MAHP LIKE '%{searchHP}%'");
+
+                if (!string.IsNullOrEmpty(searchGV))
+                    filters.Add($"MAGV LIKE '%{searchGV}%'");
+
+                if (!string.IsNullOrEmpty(searchHK))
+                    filters.Add($"HK = {searchHK}");
+
+                if (!string.IsNullOrEmpty(searchNam))
+                    filters.Add($"NAM = {searchNam}");
+
+                string finalFilter = string.Join(" AND ", filters);
+                dt.DefaultView.RowFilter = finalFilter;
+            }
+        }
+
+
+        // === UI INTERACTION ===
+        private void phanCong_dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = phanCong_dataGridView.Rows[e.RowIndex];
+                selectedMoMon = new MoMon
+                {
+                    MaMM = row.Cells[0].Value?.ToString(),
+                    MaHP = row.Cells[1].Value?.ToString(),
+                    MaGV = row.Cells[2].Value?.ToString(),
+                    HK = Convert.ToInt32(row.Cells[3].Value),
+                    Nam = Convert.ToInt32(row.Cells[4].Value)
+                };
+
+                ResetInputTextbox();
+                VisibleEditMode();
+
+                mamomon_textBox.Text = selectedMoMon.MaMM;
+                mahocphan_textBox.Text = selectedMoMon.MaHP;
+                magiaovien_textBox.Text = selectedMoMon.MaGV;
+                nam_textBox.Text = selectedMoMon.Nam.ToString();
+                hk_comboBox.SelectedItem = selectedMoMon.HK.ToString();
+            }
+        }
+
+        private void PhanCongDayHoc_Click(object sender, EventArgs e)
+        {
+            if (mode != "Add")
+            {
+                VisibleAddMode();
+                selectedMoMon = new MoMon();
+                ResetInputTextbox();
+            }
+        }
+
+        private void delete_button_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show($"Bạn có chắc chắn muốn xóa mở môn {selectedMoMon.MaMM} không?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                XoaPhanCong();
+            }
+        }
+
         private void add_button_Click(object sender, EventArgs e)
         {
-            mainForm.LoadControl(new ThemSuaPhanCong(mainForm, "Add", selectedMoMon));
+            ThemPhanCong();
         }
 
         private void edit_button_Click(object sender, EventArgs e)
         {
-            mainForm.LoadControl(new ThemSuaPhanCong(mainForm, "Edit", selectedMoMon));
+            SuaPhanCong();
         }
 
         private void search_hocphan_guna2TextBox_KeyDown(object sender, KeyEventArgs e)
@@ -182,35 +352,6 @@ namespace QLTruongDH
             }
         }
 
-
-        private void ApplyFilters()
-        {
-            if (phanCong_dataGridView.DataSource is DataTable dt)
-            {
-                string searchHP = search_hocphan_guna2TextBox.Text.Trim();
-                string searchGV = search_giaovien_guna2TextBox.Text.Trim();
-                string searchHK = hocky_comboBox.SelectedItem?.ToString();
-                string searchNam = search_nam_guna2TextBox.Text.Trim();
-
-                List<string> filters = new List<string>();
-
-                if (!string.IsNullOrEmpty(searchHP))
-                    filters.Add($"MAHP LIKE '%{searchHP}%'");
-
-                if (!string.IsNullOrEmpty(searchGV))
-                    filters.Add($"MAGV LIKE '%{searchGV}%'");
-
-                if (!string.IsNullOrEmpty(searchHK))
-                    filters.Add($"HK = {searchHK}");
-
-                if (!string.IsNullOrEmpty(searchNam))
-                    filters.Add($"NAM = {searchNam}");
-
-                string finalFilter = string.Join(" AND ", filters);
-                dt.DefaultView.RowFilter = finalFilter;
-            }
-        }
-
         private void search_hocphan_guna2TextBox_IconRightClick(object sender, EventArgs e)
         {
             search_hocphan_guna2TextBox.Clear();
@@ -227,6 +368,16 @@ namespace QLTruongDH
         {
             search_nam_guna2TextBox.Clear();
             LoadDsPhanCongTheoRole();
+        }
+
+        private void visible_add_button_Click(object sender, EventArgs e)
+        {
+            VisibleAddMode();
+        }
+
+        private void reset__button_Click(object sender, EventArgs e)
+        {
+            ResetInputTextbox();
         }
     }
 }

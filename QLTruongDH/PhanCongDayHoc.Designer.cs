@@ -53,7 +53,25 @@
             hocky_comboBox = new ComboBox();
             nam_label = new Label();
             search_nam_guna2TextBox = new Guna.UI2.WinForms.Guna2TextBox();
+            input_panel = new Panel();
+            mamomon_textBox = new TextBox();
+            label3 = new Label();
+            label1 = new Label();
+            hk_comboBox = new ComboBox();
+            nam_textBox = new TextBox();
+            label2 = new Label();
+            magiaovien_textBox = new TextBox();
+            magiaovien_label = new Label();
+            mahocphan_textBox = new TextBox();
+            mahocphan_label = new Label();
+            add_panel = new Panel();
+            reset__button = new Button();
+            edit_panel = new Panel();
+            action_label = new Label();
             ((System.ComponentModel.ISupportInitialize)phanCong_dataGridView).BeginInit();
+            input_panel.SuspendLayout();
+            add_panel.SuspendLayout();
+            edit_panel.SuspendLayout();
             SuspendLayout();
             // 
             // title_label
@@ -72,9 +90,9 @@
             add_button.BackColor = Color.BurlyWood;
             add_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
             add_button.ForeColor = Color.Transparent;
-            add_button.Location = new Point(1327, 23);
+            add_button.Location = new Point(0, 0);
             add_button.Name = "add_button";
-            add_button.Size = new Size(269, 65);
+            add_button.Size = new Size(322, 78);
             add_button.TabIndex = 50;
             add_button.Text = "Thêm phân công";
             add_button.UseVisualStyleBackColor = false;
@@ -111,7 +129,7 @@
             delete_button.BackColor = SystemColors.ActiveBorder;
             delete_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
             delete_button.ForeColor = Color.Transparent;
-            delete_button.Location = new Point(477, 1055);
+            delete_button.Location = new Point(0, 0);
             delete_button.Name = "delete_button";
             delete_button.Size = new Size(322, 78);
             delete_button.TabIndex = 48;
@@ -124,7 +142,7 @@
             edit_button.BackColor = Color.BurlyWood;
             edit_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
             edit_button.ForeColor = Color.Transparent;
-            edit_button.Location = new Point(819, 1055);
+            edit_button.Location = new Point(0, 90);
             edit_button.Name = "edit_button";
             edit_button.Size = new Size(322, 78);
             edit_button.TabIndex = 47;
@@ -160,7 +178,7 @@
             phanCong_dataGridView.ReadOnly = true;
             phanCong_dataGridView.RowHeadersVisible = false;
             phanCong_dataGridView.RowHeadersWidth = 82;
-            phanCong_dataGridView.Size = new Size(1571, 803);
+            phanCong_dataGridView.Size = new Size(1571, 772);
             phanCong_dataGridView.TabIndex = 44;
             phanCong_dataGridView.CellClick += phanCong_dataGridView_CellClick;
             // 
@@ -306,31 +324,194 @@
             search_nam_guna2TextBox.IconRightClick += search_nam_guna2TextBox_IconRightClick;
             search_nam_guna2TextBox.KeyDown += search_nam_guna2TextBox_KeyDown;
             // 
+            // input_panel
+            // 
+            input_panel.Controls.Add(mamomon_textBox);
+            input_panel.Controls.Add(label3);
+            input_panel.Controls.Add(label1);
+            input_panel.Controls.Add(hk_comboBox);
+            input_panel.Controls.Add(nam_textBox);
+            input_panel.Controls.Add(label2);
+            input_panel.Controls.Add(magiaovien_textBox);
+            input_panel.Controls.Add(magiaovien_label);
+            input_panel.Controls.Add(mahocphan_textBox);
+            input_panel.Controls.Add(mahocphan_label);
+            input_panel.Location = new Point(25, 1071);
+            input_panel.Name = "input_panel";
+            input_panel.Size = new Size(1224, 109);
+            input_panel.TabIndex = 58;
+            // 
+            // mamomon_textBox
+            // 
+            mamomon_textBox.Enabled = false;
+            mamomon_textBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            mamomon_textBox.Location = new Point(0, 50);
+            mamomon_textBox.Name = "mamomon_textBox";
+            mamomon_textBox.Size = new Size(220, 43);
+            mamomon_textBox.TabIndex = 97;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(0, 6);
+            label3.Margin = new Padding(0);
+            label3.Name = "label3";
+            label3.Size = new Size(184, 37);
+            label3.TabIndex = 96;
+            label3.Text = "Mã học phần:";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(853, 6);
+            label1.Margin = new Padding(0);
+            label1.Name = "label1";
+            label1.Size = new Size(108, 37);
+            label1.TabIndex = 95;
+            label1.Text = "Học kỳ:";
+            // 
+            // hk_comboBox
+            // 
+            hk_comboBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            hk_comboBox.FormattingEnabled = true;
+            hk_comboBox.Items.AddRange(new object[] { "1", "2", "3" });
+            hk_comboBox.Location = new Point(853, 50);
+            hk_comboBox.Name = "hk_comboBox";
+            hk_comboBox.Size = new Size(118, 45);
+            hk_comboBox.TabIndex = 94;
+            // 
+            // nam_textBox
+            // 
+            nam_textBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            nam_textBox.Location = new Point(1040, 50);
+            nam_textBox.Name = "nam_textBox";
+            nam_textBox.Size = new Size(165, 43);
+            nam_textBox.TabIndex = 93;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(1040, 6);
+            label2.Margin = new Padding(0);
+            label2.Name = "label2";
+            label2.Size = new Size(135, 37);
+            label2.TabIndex = 92;
+            label2.Text = "Năm học:";
+            // 
+            // magiaovien_textBox
+            // 
+            magiaovien_textBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            magiaovien_textBox.Location = new Point(565, 50);
+            magiaovien_textBox.Name = "magiaovien_textBox";
+            magiaovien_textBox.Size = new Size(220, 43);
+            magiaovien_textBox.TabIndex = 91;
+            // 
+            // magiaovien_label
+            // 
+            magiaovien_label.AutoSize = true;
+            magiaovien_label.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            magiaovien_label.Location = new Point(565, 6);
+            magiaovien_label.Margin = new Padding(0);
+            magiaovien_label.Name = "magiaovien_label";
+            magiaovien_label.Size = new Size(181, 37);
+            magiaovien_label.TabIndex = 90;
+            magiaovien_label.Text = "Mã giáo viên:";
+            // 
+            // mahocphan_textBox
+            // 
+            mahocphan_textBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            mahocphan_textBox.Location = new Point(280, 50);
+            mahocphan_textBox.Name = "mahocphan_textBox";
+            mahocphan_textBox.Size = new Size(220, 43);
+            mahocphan_textBox.TabIndex = 89;
+            // 
+            // mahocphan_label
+            // 
+            mahocphan_label.AutoSize = true;
+            mahocphan_label.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            mahocphan_label.Location = new Point(280, 6);
+            mahocphan_label.Margin = new Padding(0);
+            mahocphan_label.Name = "mahocphan_label";
+            mahocphan_label.Size = new Size(184, 37);
+            mahocphan_label.TabIndex = 88;
+            mahocphan_label.Text = "Mã học phần:";
+            // 
+            // add_panel
+            // 
+            add_panel.Controls.Add(reset__button);
+            add_panel.Controls.Add(add_button);
+            add_panel.Location = new Point(1272, 1012);
+            add_panel.Margin = new Padding(0);
+            add_panel.Name = "add_panel";
+            add_panel.Size = new Size(324, 168);
+            add_panel.TabIndex = 97;
+            // 
+            // reset__button
+            // 
+            reset__button.BackColor = SystemColors.ActiveBorder;
+            reset__button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            reset__button.ForeColor = Color.Transparent;
+            reset__button.Location = new Point(0, 90);
+            reset__button.Name = "reset__button";
+            reset__button.Size = new Size(322, 78);
+            reset__button.TabIndex = 97;
+            reset__button.Text = "Nhập lại";
+            reset__button.UseVisualStyleBackColor = false;
+            reset__button.Click += reset__button_Click;
+            // 
+            // edit_panel
+            // 
+            edit_panel.Controls.Add(delete_button);
+            edit_panel.Controls.Add(edit_button);
+            edit_panel.Location = new Point(1272, 1012);
+            edit_panel.Margin = new Padding(0);
+            edit_panel.Name = "edit_panel";
+            edit_panel.Size = new Size(324, 176);
+            edit_panel.TabIndex = 98;
+            // 
+            // action_label
+            // 
+            action_label.AutoSize = true;
+            action_label.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            action_label.Location = new Point(25, 1012);
+            action_label.Name = "action_label";
+            action_label.Size = new Size(285, 37);
+            action_label.TabIndex = 99;
+            action_label.Text = "Thêm phân công mới:";
+            // 
             // PhanCongDayHoc
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
+            Controls.Add(add_panel);
+            Controls.Add(action_label);
+            Controls.Add(input_panel);
             Controls.Add(search_nam_guna2TextBox);
             Controls.Add(nam_label);
             Controls.Add(hocky_comboBox);
             Controls.Add(hocky_label);
             Controls.Add(search_giaovien_guna2TextBox);
             Controls.Add(giaovien_label);
-            Controls.Add(add_button);
             Controls.Add(search_hocphan_guna2TextBox);
-            Controls.Add(delete_button);
-            Controls.Add(edit_button);
             Controls.Add(hocphan_label);
             Controls.Add(phanCong_dataGridView);
             Controls.Add(guna2Separator2);
             Controls.Add(title_label);
+            Controls.Add(edit_panel);
             Margin = new Padding(0);
             Name = "PhanCongDayHoc";
-            Size = new Size(1620, 1169);
+            Size = new Size(1620, 1209);
             Load += PhanCongDayHoc_Load;
             Click += PhanCongDayHoc_Click;
             ((System.ComponentModel.ISupportInitialize)phanCong_dataGridView).EndInit();
+            input_panel.ResumeLayout(false);
+            input_panel.PerformLayout();
+            add_panel.ResumeLayout(false);
+            edit_panel.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -355,5 +536,20 @@
         private DataGridViewTextBoxColumn HocKi;
         private DataGridViewTextBoxColumn Nam;
         private Guna.UI2.WinForms.Guna2TextBox search_nam_guna2TextBox;
+        private Panel input_panel;
+        private TextBox magiaovien_textBox;
+        private Label magiaovien_label;
+        private TextBox mahocphan_textBox;
+        private Label mahocphan_label;
+        private Label label1;
+        private ComboBox hk_comboBox;
+        private TextBox nam_textBox;
+        private Label label2;
+        private Panel add_panel;
+        private Button reset__button;
+        private Panel edit_panel;
+        private TextBox mamomon_textBox;
+        private Label label3;
+        private Label action_label;
     }
 }
