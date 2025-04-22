@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             title_label = new Label();
             add_button = new Button();
             search_hocphan_guna2TextBox = new Guna.UI2.WinForms.Guna2TextBox();
@@ -49,7 +49,7 @@
             giaovien_label = new Label();
             hocky_label = new Label();
             hocky_comboBox = new ComboBox();
-            comboBox1 = new ComboBox();
+            nam_comboBox = new ComboBox();
             nam_label = new Label();
             ((System.ComponentModel.ISupportInitialize)phanCong_dataGridView).BeginInit();
             SuspendLayout();
@@ -76,11 +76,12 @@
             add_button.TabIndex = 50;
             add_button.Text = "Thêm phân công";
             add_button.UseVisualStyleBackColor = false;
+            add_button.Click += add_button_Click;
             // 
             // search_hocphan_guna2TextBox
             // 
             search_hocphan_guna2TextBox.BorderRadius = 20;
-            search_hocphan_guna2TextBox.CustomizableEdges = customizableEdges1;
+            search_hocphan_guna2TextBox.CustomizableEdges = customizableEdges9;
             search_hocphan_guna2TextBox.DefaultText = "";
             search_hocphan_guna2TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             search_hocphan_guna2TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -97,9 +98,10 @@
             search_hocphan_guna2TextBox.Name = "search_hocphan_guna2TextBox";
             search_hocphan_guna2TextBox.PlaceholderText = "";
             search_hocphan_guna2TextBox.SelectedText = "";
-            search_hocphan_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            search_hocphan_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges10;
             search_hocphan_guna2TextBox.Size = new Size(226, 51);
             search_hocphan_guna2TextBox.TabIndex = 49;
+            search_hocphan_guna2TextBox.KeyDown += search_hocphan_guna2TextBox_KeyDown;
             // 
             // delete_button
             // 
@@ -112,6 +114,7 @@
             delete_button.TabIndex = 48;
             delete_button.Text = "Xóa phân công";
             delete_button.UseVisualStyleBackColor = false;
+            delete_button.Click += delete_button_Click;
             // 
             // edit_button
             // 
@@ -124,6 +127,7 @@
             edit_button.TabIndex = 47;
             edit_button.Text = "Sửa phân công";
             edit_button.UseVisualStyleBackColor = false;
+            edit_button.Click += edit_button_Click;
             // 
             // hocphan_label
             // 
@@ -155,6 +159,7 @@
             phanCong_dataGridView.RowHeadersWidth = 82;
             phanCong_dataGridView.Size = new Size(1571, 803);
             phanCong_dataGridView.TabIndex = 44;
+            phanCong_dataGridView.CellClick += phanCong_dataGridView_CellClick;
             // 
             // MaMoMon
             // 
@@ -205,7 +210,7 @@
             // search_giaovien_guna2TextBox
             // 
             search_giaovien_guna2TextBox.BorderRadius = 20;
-            search_giaovien_guna2TextBox.CustomizableEdges = customizableEdges3;
+            search_giaovien_guna2TextBox.CustomizableEdges = customizableEdges11;
             search_giaovien_guna2TextBox.DefaultText = "";
             search_giaovien_guna2TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             search_giaovien_guna2TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -222,9 +227,10 @@
             search_giaovien_guna2TextBox.Name = "search_giaovien_guna2TextBox";
             search_giaovien_guna2TextBox.PlaceholderText = "";
             search_giaovien_guna2TextBox.SelectedText = "";
-            search_giaovien_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            search_giaovien_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges12;
             search_giaovien_guna2TextBox.Size = new Size(226, 51);
             search_giaovien_guna2TextBox.TabIndex = 52;
+            search_giaovien_guna2TextBox.KeyDown += search_giaovien_guna2TextBox_KeyDown;
             // 
             // giaovien_label
             // 
@@ -257,16 +263,18 @@
             hocky_comboBox.Name = "hocky_comboBox";
             hocky_comboBox.Size = new Size(92, 45);
             hocky_comboBox.TabIndex = 54;
+            hocky_comboBox.SelectedValueChanged += hocky_comboBox_SelectedValueChanged;
             // 
-            // comboBox1
+            // nam_comboBox
             // 
-            comboBox1.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "1", "2", "3" });
-            comboBox1.Location = new Point(1391, 140);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(205, 45);
-            comboBox1.TabIndex = 56;
+            nam_comboBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            nam_comboBox.FormattingEnabled = true;
+            nam_comboBox.Items.AddRange(new object[] { "1", "2", "3" });
+            nam_comboBox.Location = new Point(1391, 140);
+            nam_comboBox.Name = "nam_comboBox";
+            nam_comboBox.Size = new Size(205, 45);
+            nam_comboBox.TabIndex = 56;
+            nam_comboBox.SelectedValueChanged += nam_comboBox_SelectedValueChanged;
             // 
             // nam_label
             // 
@@ -284,7 +292,7 @@
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            Controls.Add(comboBox1);
+            Controls.Add(nam_comboBox);
             Controls.Add(nam_label);
             Controls.Add(hocky_comboBox);
             Controls.Add(hocky_label);
@@ -302,6 +310,7 @@
             Name = "PhanCongDayHoc";
             Size = new Size(1620, 1169);
             Load += PhanCongDayHoc_Load;
+            Click += PhanCongDayHoc_Click;
             ((System.ComponentModel.ISupportInitialize)phanCong_dataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -320,7 +329,7 @@
         private Label giaovien_label;
         private Label hocky_label;
         private ComboBox hocky_comboBox;
-        private ComboBox comboBox1;
+        private ComboBox nam_comboBox;
         private Label nam_label;
         private DataGridViewTextBoxColumn MaMoMon;
         private DataGridViewTextBoxColumn MaHocPhan;

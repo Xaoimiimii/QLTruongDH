@@ -15,7 +15,7 @@ namespace QLTruongDH
     {
         private MainForm mainForm;
         private string selectedEmployeeID = string.Empty;
-        private NhanVien selectedEmployee = null;
+        private NhanVien selectedEmployee = new NhanVien();
 
         public QLNhanVien(MainForm form)
         {
@@ -23,9 +23,6 @@ namespace QLTruongDH
             this.mainForm = form;
             delete_button.Visible = false;
             edit_button.Visible = false;
-
-
-
         }
 
         private void QLNhanVien_Load(object sender, EventArgs e)
@@ -201,7 +198,7 @@ namespace QLTruongDH
             delete_button.Visible = false;
             edit_button.Visible = false;
             selectedEmployeeID = string.Empty;
-            selectedEmployee = null;
+            selectedEmployee = new NhanVien();
         }
     }
 }

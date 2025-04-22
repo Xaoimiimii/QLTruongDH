@@ -340,7 +340,6 @@
             Margin = new Padding(0);
             Name = "ThemNhanVien";
             Size = new Size(1625, 1169);
-            Load += ThemNhanVien_Load;
             back_flowLayoutPanel.ResumeLayout(false);
             back_flowLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)back_pictureBox).EndInit();

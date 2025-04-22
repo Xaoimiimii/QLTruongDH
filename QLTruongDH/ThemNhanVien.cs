@@ -24,6 +24,8 @@ namespace QLTruongDH
             this.mode = mode;
             this.emp = selectedEmployee;
 
+            LoadMaDonViComboBox();
+
             if (mode == "Add")
             {
                 employee_id_label.Visible = false;
@@ -45,11 +47,6 @@ namespace QLTruongDH
                 title_label.Text = "Chỉnh sửa thông tin nhân niên";
                 add_button.Text = "Cập nhật thông tin";
             }
-        }
-
-        private void ThemNhanVien_Load(object sender, EventArgs e)
-        {
-            LoadMaDonViComboBox();
         }
 
 

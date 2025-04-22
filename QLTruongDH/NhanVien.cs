@@ -17,6 +17,28 @@ namespace QLTruongDH
         public string DienThoai { get; set; }
         public string VaiTro { get; set; }
         public string MaDV { get; set; }
+
+        public NhanVien() { }
+    }
+
+    public class MoMon
+    {
+        public string MaMM { get; set; }      // Mã môn mở (khóa chính)
+        public string MaHP { get; set; }      // Mã học phần
+        public string MaGV { get; set; }      // Mã giảng viên
+        public int HK { get; set; }           // Học kỳ (1, 2 hoặc 3)
+        public int Nam { get; set; }          // Năm
+
+        public MoMon() { }
+
+        public MoMon(string maMM, string maHP, string maGV, int hk, int nam)
+        {
+            MaMM = maMM;
+            MaHP = maHP;
+            MaGV = maGV;
+            HK = hk;
+            Nam = nam;
+        }
     }
 
 }
