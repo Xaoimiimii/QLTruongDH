@@ -30,6 +30,7 @@ namespace QLTruongDH
 
         private void qlNhanVien_guna2ShadowPanel_Click(object sender, EventArgs e)
         {
+
             mainForm.UpdateStatus("QLNhanVien");
             mainForm.LoadControl(new QLNhanVien(mainForm));
         }
@@ -118,5 +119,199 @@ namespace QLTruongDH
             mainForm.LoadControl(new BangDiem(mainForm));
         }
 
+        private void thongBao_guna2ShadowPanel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void thongBao_pictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void thongBao_label_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void qlNhanVien_guna2ShadowPanel_MouseEnter(object sender, EventArgs e)
+        {
+            qlNhanVien_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void qlNhanVien_guna2ShadowPanel_MouseLeave(object sender, EventArgs e)
+        {
+            qlNhanVien_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void qlNhanVien_pictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            qlNhanVien_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void qlNhanVien_pictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            qlNhanVien_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void qlNhanVien_label_MouseEnter(object sender, EventArgs e)
+        {
+            qlNhanVien_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void qlNhanVien_label_MouseLeave(object sender, EventArgs e)
+        {
+            qlNhanVien_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void qlSinhVien_guna2ShadowPanel_MouseEnter(object sender, EventArgs e)
+        {
+            qlSinhVien_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void qlSinhVien_guna2ShadowPanel_MouseLeave(object sender, EventArgs e)
+        {
+            qlSinhVien_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void qlSinhVien_pictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            qlSinhVien_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void qlSinhVien_pictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            qlSinhVien_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void qlSinhVien_label_MouseEnter(object sender, EventArgs e)
+        {
+            qlSinhVien_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void qlSinhVien_label_MouseLeave(object sender, EventArgs e)
+        {
+            qlSinhVien_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void thongBao_guna2ShadowPanel_MouseEnter(object sender, EventArgs e)
+        {
+            thongBao_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void thongBao_guna2ShadowPanel_MouseLeave(object sender, EventArgs e)
+        {
+            thongBao_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void thongBao_pictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            thongBao_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void thongBao_pictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            thongBao_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void thongBao_label_MouseEnter(object sender, EventArgs e)
+        {
+            thongBao_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void thongBao_label_MouseLeave(object sender, EventArgs e)
+        {
+            thongBao_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void phanCongDayHoc_guna2ShadowPanel_MouseEnter(object sender, EventArgs e)
+        {
+            phanCongDayHoc_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void phanCongDayHoc_guna2ShadowPanel_MouseLeave(object sender, EventArgs e)
+        {
+            phanCongDayHoc_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void phanCongDayHoc_pictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            phanCongDayHoc_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void phanCongDayHoc_pictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            phanCongDayHoc_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void phanCongDayHoc_label_MouseEnter(object sender, EventArgs e)
+        {
+            phanCongDayHoc_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void phanCongDayHoc_label_MouseLeave(object sender, EventArgs e)
+        {
+            phanCongDayHoc_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void dkHocPhan_guna2ShadowPanel_MouseEnter(object sender, EventArgs e)
+        {
+            dkHocPhan_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void dkHocPhan_guna2ShadowPanel_MouseLeave(object sender, EventArgs e)
+        {
+            dkHocPhan_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void dkHocPhan_pictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            dkHocPhan_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void dkHocPhan_pictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            dkHocPhan_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void dkHocPhan_label_MouseEnter(object sender, EventArgs e)
+        {
+            dkHocPhan_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void dkHocPhan_label_MouseLeave(object sender, EventArgs e)
+        {
+            dkHocPhan_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void bangDiem_guna2ShadowPanel_MouseEnter(object sender, EventArgs e)
+        {
+            bangDiem_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void bangDiem_guna2ShadowPanel_MouseLeave(object sender, EventArgs e)
+        {
+            bangDiem_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void bangDiem_pictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            bangDiem_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void bangDiem_pictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            bangDiem_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
+
+        private void bangDiem_label_MouseEnter(object sender, EventArgs e)
+        {
+            bangDiem_guna2ShadowPanel.FillColor = Color.NavajoWhite;
+        }
+
+        private void bangDiem_label_MouseLeave(object sender, EventArgs e)
+        {
+            bangDiem_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+        }
     }
 }
