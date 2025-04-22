@@ -13,15 +13,22 @@ namespace QLTruongDH
 {
     public partial class Login : Form
     {
+        public string username { get; private set; }
+        public string password { get; private set; }
+        public List<string> roles { get; private set; }
+
+
         public Login()
         {
             InitializeComponent();
         }
 
+
         private void login_button_Click(object sender, EventArgs e)
         {
-            string username = username_textBox.Text.Trim().ToUpper();
-            string password = password_textBox.Text.Trim();
+            username = username_textBox.Text.Trim().ToUpper();
+            password = password_textBox.Text.Trim();
+
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
@@ -29,7 +36,7 @@ namespace QLTruongDH
                 return;
             }
 
-            string connectionString = $"User Id={username};Password={password};Data Source=localhost:1521/PDB4;";
+            string connectionString = $"User Id={username};Password={password};Data Source=localhost:1521/Proj_DKHP;";
 
             try
             {
@@ -50,7 +57,7 @@ namespace QLTruongDH
 
                     cmd.Parameters.Add(outputCursor);
 
-                    List<string> roles = new List<string>();
+                    roles = new List<string>();
 
                     using (OracleDataReader reader = cmd.ExecuteReader())
                     {
@@ -68,20 +75,23 @@ namespace QLTruongDH
                     //    return;
                     //}
 
-                    // Kiểm tra có DBA không
                     if (roles.Contains("DBA"))
                     {
-                        this.Hide();
-                        Admin_MainForm adminForm = new Admin_MainForm(username, password);
-                        adminForm.ShowDialog();
+                        //this.Hide();
+                        //Admin_MainForm adminForm = new Admin_MainForm(username, password);
+                        //adminForm.ShowDialog();
+                        //this.Close();
+                        this.DialogResult = DialogResult.OK;
                         this.Close();
                     }
                     else
                     {
-                        this.Hide();
-                        //MainForm userForm = new MainForm(roles); // Truyền danh sách role vào MainForm
-                        MainForm userForm = new MainForm();
-                        userForm.ShowDialog();
+                        //this.Hide();
+                        ////MainForm userForm = new MainForm(roles); // Truyền danh sách role vào MainForm
+                        //MainForm userForm = new MainForm(username, password, roles);
+                        //userForm.ShowDialog();
+                        //this.Close();
+                        this.DialogResult = DialogResult.OK;
                         this.Close();
                     }
                 }

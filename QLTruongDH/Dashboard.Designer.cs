@@ -39,9 +39,9 @@ namespace QLTruongDH
             phanCongDayHoc_guna2ShadowPanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
             phanCongDayHoc_label = new Label();
             phanCongDayHoc_pictureBox = new PictureBox();
-            dsHocPhan_guna2ShadowPanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
-            dsHocPhan_label = new Label();
-            dsHocPhan_pictureBox = new PictureBox();
+            thongBao_guna2ShadowPanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
+            thongBao_label = new Label();
+            thongBao_pictureBox = new PictureBox();
             bangDiem_guna2ShadowPanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
             bangDiem_label = new Label();
             bangDiem_pictureBox = new PictureBox();
@@ -55,8 +55,8 @@ namespace QLTruongDH
             ((System.ComponentModel.ISupportInitialize)qlSinhVien_pictureBox).BeginInit();
             phanCongDayHoc_guna2ShadowPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)phanCongDayHoc_pictureBox).BeginInit();
-            dsHocPhan_guna2ShadowPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dsHocPhan_pictureBox).BeginInit();
+            thongBao_guna2ShadowPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)thongBao_pictureBox).BeginInit();
             bangDiem_guna2ShadowPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bangDiem_pictureBox).BeginInit();
             dkHocPhan_guna2ShadowPanel.SuspendLayout();
@@ -75,6 +75,8 @@ namespace QLTruongDH
             qlNhanVien_pictureBox.TabIndex = 0;
             qlNhanVien_pictureBox.TabStop = false;
             qlNhanVien_pictureBox.Click += qlNhanVien_pictureBox_Click;
+            qlNhanVien_pictureBox.MouseEnter += qlNhanVien_pictureBox_MouseEnter;
+            qlNhanVien_pictureBox.MouseLeave += qlNhanVien_pictureBox_MouseLeave;
             // 
             // qlNhanVien_label
             // 
@@ -88,6 +90,8 @@ namespace QLTruongDH
             qlNhanVien_label.Text = "Quản lý nhân viên";
             qlNhanVien_label.TextAlign = ContentAlignment.MiddleCenter;
             qlNhanVien_label.Click += qlNhanVien_label_Click;
+            qlNhanVien_label.MouseEnter += qlNhanVien_label_MouseEnter;
+            qlNhanVien_label.MouseLeave += qlNhanVien_label_MouseLeave;
             // 
             // qlNhanVien_guna2ShadowPanel
             // 
@@ -105,6 +109,8 @@ namespace QLTruongDH
             qlNhanVien_guna2ShadowPanel.Size = new Size(480, 245);
             qlNhanVien_guna2ShadowPanel.TabIndex = 4;
             qlNhanVien_guna2ShadowPanel.Click += qlNhanVien_guna2ShadowPanel_Click;
+            qlNhanVien_guna2ShadowPanel.MouseEnter += qlNhanVien_guna2ShadowPanel_MouseEnter;
+            qlNhanVien_guna2ShadowPanel.MouseLeave += qlNhanVien_guna2ShadowPanel_MouseLeave;
             // 
             // qlSinhVien_guna2ShadowPanel
             // 
@@ -122,6 +128,8 @@ namespace QLTruongDH
             qlSinhVien_guna2ShadowPanel.Size = new Size(480, 245);
             qlSinhVien_guna2ShadowPanel.TabIndex = 5;
             qlSinhVien_guna2ShadowPanel.Click += qlSinhVien_guna2ShadowPanel_Click;
+            qlSinhVien_guna2ShadowPanel.MouseEnter += qlSinhVien_guna2ShadowPanel_MouseEnter;
+            qlSinhVien_guna2ShadowPanel.MouseLeave += qlSinhVien_guna2ShadowPanel_MouseLeave;
             // 
             // qlSinhVien_label
             // 
@@ -135,6 +143,8 @@ namespace QLTruongDH
             qlSinhVien_label.Text = "Quản lý sinh viên";
             qlSinhVien_label.TextAlign = ContentAlignment.MiddleCenter;
             qlSinhVien_label.Click += qlSinhVien_label_Click;
+            qlSinhVien_label.MouseEnter += qlSinhVien_label_MouseEnter;
+            qlSinhVien_label.MouseLeave += qlSinhVien_label_MouseLeave;
             // 
             // qlSinhVien_pictureBox
             // 
@@ -147,6 +157,8 @@ namespace QLTruongDH
             qlSinhVien_pictureBox.TabIndex = 0;
             qlSinhVien_pictureBox.TabStop = false;
             qlSinhVien_pictureBox.Click += qlSinhVien_pictureBox_Click;
+            qlSinhVien_pictureBox.MouseEnter += qlSinhVien_pictureBox_MouseEnter;
+            qlSinhVien_pictureBox.MouseLeave += qlSinhVien_pictureBox_MouseLeave;
             // 
             // phanCongDayHoc_guna2ShadowPanel
             // 
@@ -164,6 +176,8 @@ namespace QLTruongDH
             phanCongDayHoc_guna2ShadowPanel.Size = new Size(480, 245);
             phanCongDayHoc_guna2ShadowPanel.TabIndex = 6;
             phanCongDayHoc_guna2ShadowPanel.Click += phanCongDayHoc_guna2ShadowPanel_Click;
+            phanCongDayHoc_guna2ShadowPanel.MouseEnter += phanCongDayHoc_guna2ShadowPanel_MouseEnter;
+            phanCongDayHoc_guna2ShadowPanel.MouseLeave += phanCongDayHoc_guna2ShadowPanel_MouseLeave;
             // 
             // phanCongDayHoc_label
             // 
@@ -177,10 +191,12 @@ namespace QLTruongDH
             phanCongDayHoc_label.Text = "Phân công dạy học";
             phanCongDayHoc_label.TextAlign = ContentAlignment.MiddleCenter;
             phanCongDayHoc_label.Click += phanCongDayHoc_label_Click;
+            phanCongDayHoc_label.MouseEnter += phanCongDayHoc_label_MouseEnter;
+            phanCongDayHoc_label.MouseLeave += phanCongDayHoc_label_MouseLeave;
             // 
             // phanCongDayHoc_pictureBox
             // 
-            phanCongDayHoc_pictureBox.Image = Properties.Resources.calendar_black_128;
+            phanCongDayHoc_pictureBox.Image = Properties.Resources.use_case;
             phanCongDayHoc_pictureBox.Location = new Point(190, 40);
             phanCongDayHoc_pictureBox.Margin = new Padding(0);
             phanCongDayHoc_pictureBox.Name = "phanCongDayHoc_pictureBox";
@@ -189,45 +205,56 @@ namespace QLTruongDH
             phanCongDayHoc_pictureBox.TabIndex = 0;
             phanCongDayHoc_pictureBox.TabStop = false;
             phanCongDayHoc_pictureBox.Click += phanCongDayHoc_pictureBox_Click;
+            phanCongDayHoc_pictureBox.MouseEnter += phanCongDayHoc_pictureBox_MouseEnter;
+            phanCongDayHoc_pictureBox.MouseLeave += phanCongDayHoc_pictureBox_MouseLeave;
             // 
-            // dsHocPhan_guna2ShadowPanel
+            // thongBao_guna2ShadowPanel
             // 
-            dsHocPhan_guna2ShadowPanel.BackColor = Color.Transparent;
-            dsHocPhan_guna2ShadowPanel.Controls.Add(dsHocPhan_label);
-            dsHocPhan_guna2ShadowPanel.Controls.Add(dsHocPhan_pictureBox);
-            dsHocPhan_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
-            dsHocPhan_guna2ShadowPanel.Location = new Point(1090, 520);
-            dsHocPhan_guna2ShadowPanel.Margin = new Padding(0);
-            dsHocPhan_guna2ShadowPanel.Name = "dsHocPhan_guna2ShadowPanel";
-            dsHocPhan_guna2ShadowPanel.Radius = 10;
-            dsHocPhan_guna2ShadowPanel.ShadowColor = Color.DimGray;
-            dsHocPhan_guna2ShadowPanel.ShadowShift = 10;
-            dsHocPhan_guna2ShadowPanel.ShadowStyle = Guna.UI2.WinForms.Guna2ShadowPanel.ShadowMode.ForwardDiagonal;
-            dsHocPhan_guna2ShadowPanel.Size = new Size(480, 245);
-            dsHocPhan_guna2ShadowPanel.TabIndex = 7;
+            thongBao_guna2ShadowPanel.BackColor = Color.Transparent;
+            thongBao_guna2ShadowPanel.Controls.Add(thongBao_label);
+            thongBao_guna2ShadowPanel.Controls.Add(thongBao_pictureBox);
+            thongBao_guna2ShadowPanel.FillColor = Color.BlanchedAlmond;
+            thongBao_guna2ShadowPanel.Location = new Point(1090, 520);
+            thongBao_guna2ShadowPanel.Margin = new Padding(0);
+            thongBao_guna2ShadowPanel.Name = "thongBao_guna2ShadowPanel";
+            thongBao_guna2ShadowPanel.Radius = 10;
+            thongBao_guna2ShadowPanel.ShadowColor = Color.DimGray;
+            thongBao_guna2ShadowPanel.ShadowShift = 10;
+            thongBao_guna2ShadowPanel.ShadowStyle = Guna.UI2.WinForms.Guna2ShadowPanel.ShadowMode.ForwardDiagonal;
+            thongBao_guna2ShadowPanel.Size = new Size(480, 245);
+            thongBao_guna2ShadowPanel.TabIndex = 7;
+            thongBao_guna2ShadowPanel.Click += thongBao_guna2ShadowPanel_Click;
+            thongBao_guna2ShadowPanel.MouseEnter += thongBao_guna2ShadowPanel_MouseEnter;
+            thongBao_guna2ShadowPanel.MouseLeave += thongBao_guna2ShadowPanel_MouseLeave;
             // 
-            // dsHocPhan_label
+            // thongBao_label
             // 
-            dsHocPhan_label.Font = new Font("Calibri", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dsHocPhan_label.ForeColor = Color.Black;
-            dsHocPhan_label.Location = new Point(8, 145);
-            dsHocPhan_label.Margin = new Padding(0);
-            dsHocPhan_label.Name = "dsHocPhan_label";
-            dsHocPhan_label.Size = new Size(455, 64);
-            dsHocPhan_label.TabIndex = 1;
-            dsHocPhan_label.Text = "Danh sách học phần";
-            dsHocPhan_label.TextAlign = ContentAlignment.MiddleCenter;
+            thongBao_label.Font = new Font("Calibri", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            thongBao_label.ForeColor = Color.Black;
+            thongBao_label.Location = new Point(8, 145);
+            thongBao_label.Margin = new Padding(0);
+            thongBao_label.Name = "thongBao_label";
+            thongBao_label.Size = new Size(455, 64);
+            thongBao_label.TabIndex = 1;
+            thongBao_label.Text = "Thông báo";
+            thongBao_label.TextAlign = ContentAlignment.MiddleCenter;
+            thongBao_label.Click += thongBao_label_Click;
+            thongBao_label.MouseEnter += thongBao_label_MouseEnter;
+            thongBao_label.MouseLeave += thongBao_label_MouseLeave;
             // 
-            // dsHocPhan_pictureBox
+            // thongBao_pictureBox
             // 
-            dsHocPhan_pictureBox.Image = Properties.Resources.book_black;
-            dsHocPhan_pictureBox.Location = new Point(190, 40);
-            dsHocPhan_pictureBox.Margin = new Padding(0);
-            dsHocPhan_pictureBox.Name = "dsHocPhan_pictureBox";
-            dsHocPhan_pictureBox.Size = new Size(100, 100);
-            dsHocPhan_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            dsHocPhan_pictureBox.TabIndex = 0;
-            dsHocPhan_pictureBox.TabStop = false;
+            thongBao_pictureBox.Image = Properties.Resources.notification;
+            thongBao_pictureBox.Location = new Point(190, 40);
+            thongBao_pictureBox.Margin = new Padding(0);
+            thongBao_pictureBox.Name = "thongBao_pictureBox";
+            thongBao_pictureBox.Size = new Size(100, 100);
+            thongBao_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            thongBao_pictureBox.TabIndex = 0;
+            thongBao_pictureBox.TabStop = false;
+            thongBao_pictureBox.Click += thongBao_pictureBox_Click;
+            thongBao_pictureBox.MouseEnter += thongBao_pictureBox_MouseEnter;
+            thongBao_pictureBox.MouseLeave += thongBao_pictureBox_MouseLeave;
             // 
             // bangDiem_guna2ShadowPanel
             // 
@@ -245,6 +272,8 @@ namespace QLTruongDH
             bangDiem_guna2ShadowPanel.Size = new Size(480, 245);
             bangDiem_guna2ShadowPanel.TabIndex = 8;
             bangDiem_guna2ShadowPanel.Click += bangDiem_guna2ShadowPanel_Click;
+            bangDiem_guna2ShadowPanel.MouseEnter += bangDiem_guna2ShadowPanel_MouseEnter;
+            bangDiem_guna2ShadowPanel.MouseLeave += bangDiem_guna2ShadowPanel_MouseLeave;
             // 
             // bangDiem_label
             // 
@@ -258,6 +287,8 @@ namespace QLTruongDH
             bangDiem_label.Text = "Bảng điểm";
             bangDiem_label.TextAlign = ContentAlignment.MiddleCenter;
             bangDiem_label.Click += bangDiem_label_Click;
+            bangDiem_label.MouseEnter += bangDiem_label_MouseEnter;
+            bangDiem_label.MouseLeave += bangDiem_label_MouseLeave;
             // 
             // bangDiem_pictureBox
             // 
@@ -270,6 +301,8 @@ namespace QLTruongDH
             bangDiem_pictureBox.TabIndex = 0;
             bangDiem_pictureBox.TabStop = false;
             bangDiem_pictureBox.Click += bangDiem_pictureBox_Click;
+            bangDiem_pictureBox.MouseEnter += bangDiem_pictureBox_MouseEnter;
+            bangDiem_pictureBox.MouseLeave += bangDiem_pictureBox_MouseLeave;
             // 
             // dkHocPhan_guna2ShadowPanel
             // 
@@ -287,6 +320,8 @@ namespace QLTruongDH
             dkHocPhan_guna2ShadowPanel.Size = new Size(480, 245);
             dkHocPhan_guna2ShadowPanel.TabIndex = 9;
             dkHocPhan_guna2ShadowPanel.Click += dkHocPhan_guna2ShadowPanel_Click;
+            dkHocPhan_guna2ShadowPanel.MouseEnter += dkHocPhan_guna2ShadowPanel_MouseEnter;
+            dkHocPhan_guna2ShadowPanel.MouseLeave += dkHocPhan_guna2ShadowPanel_MouseLeave;
             // 
             // dkHocPhan_label
             // 
@@ -300,6 +335,8 @@ namespace QLTruongDH
             dkHocPhan_label.Text = "Đăng ký học phần";
             dkHocPhan_label.TextAlign = ContentAlignment.MiddleCenter;
             dkHocPhan_label.Click += dkHocPhan_label_Click;
+            dkHocPhan_label.MouseEnter += dkHocPhan_label_MouseEnter;
+            dkHocPhan_label.MouseLeave += dkHocPhan_label_MouseLeave;
             // 
             // dkHocPhan_pictureBox
             // 
@@ -312,6 +349,8 @@ namespace QLTruongDH
             dkHocPhan_pictureBox.TabIndex = 0;
             dkHocPhan_pictureBox.TabStop = false;
             dkHocPhan_pictureBox.Click += dkHocPhan_pictureBox_Click;
+            dkHocPhan_pictureBox.MouseEnter += dkHocPhan_pictureBox_MouseEnter;
+            dkHocPhan_pictureBox.MouseLeave += dkHocPhan_pictureBox_MouseLeave;
             // 
             // bg_pictureBox
             // 
@@ -332,7 +371,7 @@ namespace QLTruongDH
             Controls.Add(bg_pictureBox);
             Controls.Add(dkHocPhan_guna2ShadowPanel);
             Controls.Add(bangDiem_guna2ShadowPanel);
-            Controls.Add(dsHocPhan_guna2ShadowPanel);
+            Controls.Add(thongBao_guna2ShadowPanel);
             Controls.Add(phanCongDayHoc_guna2ShadowPanel);
             Controls.Add(qlSinhVien_guna2ShadowPanel);
             Controls.Add(qlNhanVien_guna2ShadowPanel);
@@ -346,8 +385,8 @@ namespace QLTruongDH
             ((System.ComponentModel.ISupportInitialize)qlSinhVien_pictureBox).EndInit();
             phanCongDayHoc_guna2ShadowPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)phanCongDayHoc_pictureBox).EndInit();
-            dsHocPhan_guna2ShadowPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dsHocPhan_pictureBox).EndInit();
+            thongBao_guna2ShadowPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)thongBao_pictureBox).EndInit();
             bangDiem_guna2ShadowPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)bangDiem_pictureBox).EndInit();
             dkHocPhan_guna2ShadowPanel.ResumeLayout(false);
@@ -367,9 +406,9 @@ namespace QLTruongDH
         private Guna.UI2.WinForms.Guna2ShadowPanel phanCongDayHoc_guna2ShadowPanel;
         private Label phanCongDayHoc_label;
         private PictureBox phanCongDayHoc_pictureBox;
-        private Guna.UI2.WinForms.Guna2ShadowPanel dsHocPhan_guna2ShadowPanel;
-        private Label dsHocPhan_label;
-        private PictureBox dsHocPhan_pictureBox;
+        private Guna.UI2.WinForms.Guna2ShadowPanel thongBao_guna2ShadowPanel;
+        private Label thongBao_label;
+        private PictureBox thongBao_pictureBox;
         private Guna.UI2.WinForms.Guna2ShadowPanel bangDiem_guna2ShadowPanel;
         private Label bangDiem_label;
         private PictureBox bangDiem_pictureBox;

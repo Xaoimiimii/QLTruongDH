@@ -93,6 +93,7 @@
             out_menu_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             out_menu_pictureBox.TabIndex = 0;
             out_menu_pictureBox.TabStop = false;
+            out_menu_pictureBox.Click += out_menu_pictureBox_Click;
             // 
             // out_menu_label
             // 
@@ -105,6 +106,7 @@
             out_menu_label.Size = new Size(143, 37);
             out_menu_label.TabIndex = 1;
             out_menu_label.Text = "Đăng xuất";
+            out_menu_label.Click += out_menu_label_Click;
             // 
             // out_menu_flowLayoutPanel
             // 
@@ -116,6 +118,7 @@
             out_menu_flowLayoutPanel.Size = new Size(380, 80);
             out_menu_flowLayoutPanel.TabIndex = 3;
             out_menu_flowLayoutPanel.WrapContents = false;
+            out_menu_flowLayoutPanel.Click += out_menu_flowLayoutPanel_Click;
             // 
             // setting_menu_pictureBox
             // 

@@ -31,6 +31,9 @@
             components = new System.ComponentModel.Container();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             nav_drawer_flowLayoutPanel = new FlowLayoutPanel();
+            notification_flowLayoutPanel = new FlowLayoutPanel();
+            notification_pictureBox = new PictureBox();
+            notification_label = new Label();
             menu_group_panel = new Panel();
             close_menu_pictureBox = new PictureBox();
             show_menu_pictureBox = new PictureBox();
@@ -61,8 +64,9 @@
             out_menu_label = new Label();
             menuTransition = new System.Windows.Forms.Timer(components);
             main_panel = new Panel();
-            status_bar_panel = new Panel();
             nav_drawer_flowLayoutPanel.SuspendLayout();
+            notification_flowLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)notification_pictureBox).BeginInit();
             menu_group_panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)close_menu_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)show_menu_pictureBox).BeginInit();
@@ -97,6 +101,44 @@
             nav_drawer_flowLayoutPanel.Name = "nav_drawer_flowLayoutPanel";
             nav_drawer_flowLayoutPanel.Size = new Size(98, 1209);
             nav_drawer_flowLayoutPanel.TabIndex = 0;
+            // 
+            // notification_flowLayoutPanel
+            // 
+            notification_flowLayoutPanel.BackColor = Color.Transparent;
+            notification_flowLayoutPanel.Controls.Add(notification_pictureBox);
+            notification_flowLayoutPanel.Controls.Add(notification_label);
+            notification_flowLayoutPanel.Location = new Point(0, 480);
+            notification_flowLayoutPanel.Margin = new Padding(0);
+            notification_flowLayoutPanel.Name = "notification_flowLayoutPanel";
+            notification_flowLayoutPanel.Size = new Size(379, 80);
+            notification_flowLayoutPanel.TabIndex = 7;
+            notification_flowLayoutPanel.WrapContents = false;
+            notification_flowLayoutPanel.Click += notification_flowLayoutPanel_Click;
+            // 
+            // notification_pictureBox
+            // 
+            notification_pictureBox.Image = Properties.Resources.notification__1_;
+            notification_pictureBox.Location = new Point(32, 24);
+            notification_pictureBox.Margin = new Padding(32, 24, 3, 3);
+            notification_pictureBox.Name = "notification_pictureBox";
+            notification_pictureBox.Size = new Size(32, 32);
+            notification_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            notification_pictureBox.TabIndex = 0;
+            notification_pictureBox.TabStop = false;
+            notification_pictureBox.Click += notification_pictureBox_Click;
+            // 
+            // notification_label
+            // 
+            notification_label.AutoSize = true;
+            notification_label.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            notification_label.ForeColor = Color.White;
+            notification_label.Location = new Point(117, 24);
+            notification_label.Margin = new Padding(50, 24, 3, 0);
+            notification_label.Name = "notification_label";
+            notification_label.Size = new Size(149, 37);
+            notification_label.TabIndex = 1;
+            notification_label.Text = "Thông báo";
+            notification_label.Click += notification_label_Click;
             // 
             // menu_group_panel
             // 
@@ -140,10 +182,11 @@
             dashboard_menu_group_flowLayoutPanel.Controls.Add(assign_flowLayoutPanel);
             dashboard_menu_group_flowLayoutPanel.Controls.Add(course_flowLayoutPanel);
             dashboard_menu_group_flowLayoutPanel.Controls.Add(grade_flowLayoutPanel);
+            dashboard_menu_group_flowLayoutPanel.Controls.Add(notification_flowLayoutPanel);
             dashboard_menu_group_flowLayoutPanel.Location = new Point(0, 125);
-            dashboard_menu_group_flowLayoutPanel.Margin = new Padding(0, 0, 0, 40);
+            dashboard_menu_group_flowLayoutPanel.Margin = new Padding(0, 0, 0, 180);
             dashboard_menu_group_flowLayoutPanel.Name = "dashboard_menu_group_flowLayoutPanel";
-            dashboard_menu_group_flowLayoutPanel.Size = new Size(380, 800);
+            dashboard_menu_group_flowLayoutPanel.Size = new Size(380, 582);
             dashboard_menu_group_flowLayoutPanel.TabIndex = 4;
             // 
             // dashboard_menu_flowLayoutPanel
@@ -275,7 +318,7 @@
             // 
             // assign_pictureBox
             // 
-            assign_pictureBox.Image = Properties.Resources.task_list;
+            assign_pictureBox.Image = Properties.Resources.use_case__1_;
             assign_pictureBox.Location = new Point(32, 24);
             assign_pictureBox.Margin = new Padding(32, 24, 3, 3);
             assign_pictureBox.Name = "assign_pictureBox";
@@ -313,7 +356,7 @@
             // 
             // course_pictureBox
             // 
-            course_pictureBox.Image = Properties.Resources.register_white;
+            course_pictureBox.Image = Properties.Resources.memo__1_;
             course_pictureBox.Location = new Point(32, 24);
             course_pictureBox.Margin = new Padding(32, 24, 3, 3);
             course_pictureBox.Name = "course_pictureBox";
@@ -378,7 +421,7 @@
             // 
             setting_menu_flowLayoutPanel.Controls.Add(setting_menu_pictureBox);
             setting_menu_flowLayoutPanel.Controls.Add(setting_menu_label);
-            setting_menu_flowLayoutPanel.Location = new Point(0, 965);
+            setting_menu_flowLayoutPanel.Location = new Point(0, 887);
             setting_menu_flowLayoutPanel.Margin = new Padding(0);
             setting_menu_flowLayoutPanel.Name = "setting_menu_flowLayoutPanel";
             setting_menu_flowLayoutPanel.Size = new Size(380, 80);
@@ -412,7 +455,7 @@
             // 
             out_menu_flowLayoutPanel.Controls.Add(out_menu_pictureBox);
             out_menu_flowLayoutPanel.Controls.Add(out_menu_label);
-            out_menu_flowLayoutPanel.Location = new Point(0, 1045);
+            out_menu_flowLayoutPanel.Location = new Point(0, 967);
             out_menu_flowLayoutPanel.Margin = new Padding(0);
             out_menu_flowLayoutPanel.Name = "out_menu_flowLayoutPanel";
             out_menu_flowLayoutPanel.Size = new Size(380, 80);
@@ -455,16 +498,8 @@
             main_panel.Location = new Point(98, 0);
             main_panel.Margin = new Padding(0);
             main_panel.Name = "main_panel";
-            main_panel.Size = new Size(1625, 1169);
+            main_panel.Size = new Size(1625, 1209);
             main_panel.TabIndex = 1;
-            // 
-            // status_bar_panel
-            // 
-            status_bar_panel.Location = new Point(98, 1169);
-            status_bar_panel.Margin = new Padding(0);
-            status_bar_panel.Name = "status_bar_panel";
-            status_bar_panel.Size = new Size(1625, 40);
-            status_bar_panel.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -474,11 +509,13 @@
             ClientSize = new Size(1724, 1209);
             Controls.Add(nav_drawer_flowLayoutPanel);
             Controls.Add(main_panel);
-            Controls.Add(status_bar_panel);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Trang chủ";
             nav_drawer_flowLayoutPanel.ResumeLayout(false);
+            notification_flowLayoutPanel.ResumeLayout(false);
+            notification_flowLayoutPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)notification_pictureBox).EndInit();
             menu_group_panel.ResumeLayout(false);
             menu_group_panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)close_menu_pictureBox).EndInit();
@@ -545,6 +582,8 @@
         private Label course_label;
         private System.Windows.Forms.Timer menuTransition;
         private Panel main_panel;
-        private Panel status_bar_panel;
+        private FlowLayoutPanel notification_flowLayoutPanel;
+        private PictureBox notification_pictureBox;
+        private Label notification_label;
     }
 }

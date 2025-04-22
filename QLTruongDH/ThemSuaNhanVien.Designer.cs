@@ -1,6 +1,6 @@
 ﻿namespace QLTruongDH
 {
-    partial class ThemNhanVien
+    partial class ThemSuaNhanVien
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,10 +30,8 @@
         {
             reset__button = new Button();
             add_button = new Button();
-            employee_id_label = new Label();
             guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
-            label1 = new Label();
-            employee_id_textBox = new TextBox();
+            title_label = new Label();
             fullname_textBox = new TextBox();
             fullnane_label = new Label();
             dob_textBox = new TextBox();
@@ -42,14 +40,22 @@
             gender_comboBox = new ComboBox();
             phone_textBox = new TextBox();
             phone_label = new Label();
-            donvi_textBox = new TextBox();
             donvi_label = new Label();
             role_comboBox = new ComboBox();
             role_label = new Label();
-            textBox1 = new TextBox();
+            luong_textBox = new TextBox();
             luong_label = new Label();
             phucap_textBox = new TextBox();
             phucap_label = new Label();
+            back_flowLayoutPanel = new FlowLayoutPanel();
+            back_pictureBox = new PictureBox();
+            back_label = new Label();
+            donvi_comboBox = new ComboBox();
+            employee_id_label = new Label();
+            coso_comboBox = new ComboBox();
+            coso_label = new Label();
+            back_flowLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)back_pictureBox).BeginInit();
             SuspendLayout();
             // 
             // reset__button
@@ -63,6 +69,7 @@
             reset__button.TabIndex = 43;
             reset__button.Text = "Nhập lại";
             reset__button.UseVisualStyleBackColor = false;
+            reset__button.Click += reset__button_Click;
             // 
             // add_button
             // 
@@ -75,17 +82,7 @@
             add_button.TabIndex = 42;
             add_button.Text = "Thêm nhân viên";
             add_button.UseVisualStyleBackColor = false;
-            // 
-            // employee_id_label
-            // 
-            employee_id_label.AutoSize = true;
-            employee_id_label.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            employee_id_label.Location = new Point(25, 157);
-            employee_id_label.Margin = new Padding(0);
-            employee_id_label.Name = "employee_id_label";
-            employee_id_label.Size = new Size(227, 45);
-            employee_id_label.TabIndex = 41;
-            employee_id_label.Text = "Mã nhân viên:";
+            add_button.Click += add_button_Click;
             // 
             // guna2Separator1
             // 
@@ -96,29 +93,21 @@
             guna2Separator1.Size = new Size(1620, 21);
             guna2Separator1.TabIndex = 40;
             // 
-            // label1
+            // title_label
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 16.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(25, 25);
-            label1.Margin = new Padding(0);
-            label1.Name = "label1";
-            label1.Size = new Size(437, 59);
-            label1.TabIndex = 39;
-            label1.Text = "Thêm nhân viên mới";
-            // 
-            // employee_id_textBox
-            // 
-            employee_id_textBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            employee_id_textBox.Location = new Point(255, 157);
-            employee_id_textBox.Name = "employee_id_textBox";
-            employee_id_textBox.Size = new Size(303, 50);
-            employee_id_textBox.TabIndex = 44;
+            title_label.AutoSize = true;
+            title_label.Font = new Font("Segoe UI", 16.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            title_label.Location = new Point(25, 25);
+            title_label.Margin = new Padding(0);
+            title_label.Name = "title_label";
+            title_label.Size = new Size(437, 59);
+            title_label.TabIndex = 39;
+            title_label.Text = "Thêm nhân viên mới";
             // 
             // fullname_textBox
             // 
             fullname_textBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            fullname_textBox.Location = new Point(841, 157);
+            fullname_textBox.Location = new Point(160, 157);
             fullname_textBox.Name = "fullname_textBox";
             fullname_textBox.Size = new Size(627, 50);
             fullname_textBox.TabIndex = 46;
@@ -127,7 +116,7 @@
             // 
             fullnane_label.AutoSize = true;
             fullnane_label.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            fullnane_label.Location = new Point(706, 157);
+            fullnane_label.Location = new Point(25, 157);
             fullnane_label.Margin = new Padding(0);
             fullnane_label.Name = "fullnane_label";
             fullnane_label.Size = new Size(128, 45);
@@ -137,16 +126,16 @@
             // dob_textBox
             // 
             dob_textBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dob_textBox.Location = new Point(883, 270);
+            dob_textBox.Location = new Point(854, 270);
             dob_textBox.Name = "dob_textBox";
-            dob_textBox.Size = new Size(267, 50);
+            dob_textBox.Size = new Size(323, 50);
             dob_textBox.TabIndex = 48;
             // 
             // dob_label
             // 
             dob_label.AutoSize = true;
             dob_label.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dob_label.Location = new Point(706, 273);
+            dob_label.Location = new Point(677, 273);
             dob_label.Margin = new Padding(0);
             dob_label.Name = "dob_label";
             dob_label.Size = new Size(174, 45);
@@ -157,7 +146,7 @@
             // 
             gender_label.AutoSize = true;
             gender_label.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            gender_label.Location = new Point(1310, 273);
+            gender_label.Location = new Point(883, 157);
             gender_label.Margin = new Padding(0);
             gender_label.Name = "gender_label";
             gender_label.Size = new Size(91, 45);
@@ -169,9 +158,9 @@
             gender_comboBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gender_comboBox.FormattingEnabled = true;
             gender_comboBox.Items.AddRange(new object[] { "Nam", "Nữ" });
-            gender_comboBox.Location = new Point(1404, 270);
+            gender_comboBox.Location = new Point(977, 154);
             gender_comboBox.Name = "gender_comboBox";
-            gender_comboBox.Size = new Size(174, 53);
+            gender_comboBox.Size = new Size(200, 53);
             gender_comboBox.TabIndex = 50;
             // 
             // phone_textBox
@@ -193,14 +182,6 @@
             phone_label.TabIndex = 51;
             phone_label.Text = "Số điện thoại:";
             // 
-            // donvi_textBox
-            // 
-            donvi_textBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            donvi_textBox.Location = new Point(202, 384);
-            donvi_textBox.Name = "donvi_textBox";
-            donvi_textBox.Size = new Size(356, 50);
-            donvi_textBox.TabIndex = 54;
-            // 
             // donvi_label
             // 
             donvi_label.AutoSize = true;
@@ -216,30 +197,30 @@
             // 
             role_comboBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             role_comboBox.FormattingEnabled = true;
-            role_comboBox.Items.AddRange(new object[] { "NVCB", "Giáo viên", "NV PĐT", "NV PKT", "NV TCHC", "NV CTSV", "Trưởng đơn vị" });
-            role_comboBox.Location = new Point(841, 384);
+            role_comboBox.Items.AddRange(new object[] { "NVCB", "GV", "NV PDT", "NV PKT", "NV TCHC", "NV CTSV", "TRGDV" });
+            role_comboBox.Location = new Point(812, 384);
             role_comboBox.Name = "role_comboBox";
-            role_comboBox.Size = new Size(278, 53);
+            role_comboBox.Size = new Size(365, 53);
             role_comboBox.TabIndex = 56;
             // 
             // role_label
             // 
             role_label.AutoSize = true;
             role_label.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            role_label.Location = new Point(706, 389);
+            role_label.Location = new Point(677, 389);
             role_label.Margin = new Padding(0);
             role_label.Name = "role_label";
             role_label.Size = new Size(124, 45);
             role_label.TabIndex = 55;
             role_label.Text = "Vai trò:";
             // 
-            // textBox1
+            // luong_textBox
             // 
-            textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(150, 502);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(408, 50);
-            textBox1.TabIndex = 58;
+            luong_textBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            luong_textBox.Location = new Point(150, 502);
+            luong_textBox.Name = "luong_textBox";
+            luong_textBox.Size = new Size(408, 50);
+            luong_textBox.TabIndex = 58;
             // 
             // luong_label
             // 
@@ -255,7 +236,7 @@
             // phucap_textBox
             // 
             phucap_textBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            phucap_textBox.Location = new Point(854, 502);
+            phucap_textBox.Location = new Point(825, 502);
             phucap_textBox.Name = "phucap_textBox";
             phucap_textBox.Size = new Size(352, 50);
             phucap_textBox.TabIndex = 60;
@@ -264,25 +245,110 @@
             // 
             phucap_label.AutoSize = true;
             phucap_label.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            phucap_label.Location = new Point(706, 505);
+            phucap_label.Location = new Point(677, 505);
             phucap_label.Margin = new Padding(0);
             phucap_label.Name = "phucap_label";
             phucap_label.Size = new Size(145, 45);
             phucap_label.TabIndex = 59;
             phucap_label.Text = "Phụ cấp:";
             // 
-            // ThemNhanVien
+            // back_flowLayoutPanel
+            // 
+            back_flowLayoutPanel.Controls.Add(back_pictureBox);
+            back_flowLayoutPanel.Controls.Add(back_label);
+            back_flowLayoutPanel.Location = new Point(25, 1110);
+            back_flowLayoutPanel.Margin = new Padding(0);
+            back_flowLayoutPanel.Name = "back_flowLayoutPanel";
+            back_flowLayoutPanel.Size = new Size(180, 38);
+            back_flowLayoutPanel.TabIndex = 61;
+            back_flowLayoutPanel.Click += back_flowLayoutPanel_Click;
+            back_flowLayoutPanel.MouseEnter += back_flowLayoutPanel_MouseEnter;
+            back_flowLayoutPanel.MouseLeave += back_flowLayoutPanel_MouseLeave;
+            // 
+            // back_pictureBox
+            // 
+            back_pictureBox.Dock = DockStyle.Fill;
+            back_pictureBox.Image = Properties.Resources.back__1_;
+            back_pictureBox.Location = new Point(3, 3);
+            back_pictureBox.Name = "back_pictureBox";
+            back_pictureBox.Size = new Size(32, 32);
+            back_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            back_pictureBox.TabIndex = 0;
+            back_pictureBox.TabStop = false;
+            back_pictureBox.Click += back_pictureBox_Click;
+            back_pictureBox.MouseEnter += back_pictureBox_MouseEnter;
+            back_pictureBox.MouseLeave += back_pictureBox_MouseLeave;
+            // 
+            // back_label
+            // 
+            back_label.AutoSize = true;
+            back_label.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            back_label.Location = new Point(41, 0);
+            back_label.Name = "back_label";
+            back_label.Size = new Size(116, 37);
+            back_label.TabIndex = 1;
+            back_label.Text = "Quay về";
+            back_label.Click += back_label_Click;
+            back_label.MouseEnter += back_label_MouseEnter;
+            back_label.MouseLeave += back_label_MouseLeave;
+            // 
+            // donvi_comboBox
+            // 
+            donvi_comboBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            donvi_comboBox.FormattingEnabled = true;
+            donvi_comboBox.Location = new Point(203, 381);
+            donvi_comboBox.Name = "donvi_comboBox";
+            donvi_comboBox.Size = new Size(355, 53);
+            donvi_comboBox.TabIndex = 62;
+            // 
+            // employee_id_label
+            // 
+            employee_id_label.AutoSize = true;
+            employee_id_label.Font = new Font("Segoe UI", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            employee_id_label.ForeColor = Color.BurlyWood;
+            employee_id_label.Location = new Point(660, 32);
+            employee_id_label.Name = "employee_id_label";
+            employee_id_label.Size = new Size(125, 50);
+            employee_id_label.TabIndex = 63;
+            employee_id_label.Text = "MaNV";
+            // 
+            // coso_comboBox
+            // 
+            coso_comboBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            coso_comboBox.FormattingEnabled = true;
+            coso_comboBox.Items.AddRange(new object[] { "CS1", "CS2" });
+            coso_comboBox.Location = new Point(1363, 384);
+            coso_comboBox.Name = "coso_comboBox";
+            coso_comboBox.Size = new Size(213, 53);
+            coso_comboBox.TabIndex = 65;
+            // 
+            // coso_label
+            // 
+            coso_label.AutoSize = true;
+            coso_label.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            coso_label.Location = new Point(1249, 389);
+            coso_label.Margin = new Padding(0);
+            coso_label.Name = "coso_label";
+            coso_label.Size = new Size(111, 45);
+            coso_label.TabIndex = 64;
+            coso_label.Text = "Cơ sở:";
+            // 
+            // ThemSuaNhanVien
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
+            Controls.Add(coso_comboBox);
+            Controls.Add(coso_label);
+            Controls.Add(employee_id_label);
+            Controls.Add(donvi_comboBox);
+            Controls.Add(back_flowLayoutPanel);
             Controls.Add(phucap_textBox);
             Controls.Add(phucap_label);
-            Controls.Add(textBox1);
+            Controls.Add(luong_textBox);
             Controls.Add(luong_label);
             Controls.Add(role_comboBox);
             Controls.Add(role_label);
-            Controls.Add(donvi_textBox);
             Controls.Add(donvi_label);
             Controls.Add(phone_textBox);
             Controls.Add(phone_label);
@@ -292,15 +358,16 @@
             Controls.Add(dob_label);
             Controls.Add(fullname_textBox);
             Controls.Add(fullnane_label);
-            Controls.Add(employee_id_textBox);
             Controls.Add(reset__button);
             Controls.Add(add_button);
-            Controls.Add(employee_id_label);
             Controls.Add(guna2Separator1);
-            Controls.Add(label1);
+            Controls.Add(title_label);
             Margin = new Padding(0);
-            Name = "ThemNhanVien";
+            Name = "ThemSuaNhanVien";
             Size = new Size(1625, 1169);
+            back_flowLayoutPanel.ResumeLayout(false);
+            back_flowLayoutPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)back_pictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -309,10 +376,8 @@
 
         private Button reset__button;
         private Button add_button;
-        private Label employee_id_label;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
-        private Label label1;
-        private TextBox employee_id_textBox;
+        private Label title_label;
         private TextBox fullname_textBox;
         private Label fullnane_label;
         private TextBox dob_textBox;
@@ -321,13 +386,19 @@
         private ComboBox gender_comboBox;
         private TextBox phone_textBox;
         private Label phone_label;
-        private TextBox donvi_textBox;
         private Label donvi_label;
         private ComboBox role_comboBox;
         private Label role_label;
-        private TextBox textBox1;
+        private TextBox luong_textBox;
         private Label luong_label;
         private TextBox phucap_textBox;
         private Label phucap_label;
+        private FlowLayoutPanel back_flowLayoutPanel;
+        private PictureBox back_pictureBox;
+        private Label back_label;
+        private ComboBox donvi_comboBox;
+        private Label employee_id_label;
+        private ComboBox coso_comboBox;
+        private Label coso_label;
     }
 }

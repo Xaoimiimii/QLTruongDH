@@ -37,6 +37,8 @@
             edit_button = new Button();
             search_employee_label = new Label();
             employee_dataGridView = new DataGridView();
+            add_button = new Button();
+            search_employee_button = new Button();
             MaNhanVien = new DataGridViewTextBoxColumn();
             HoTen = new DataGridViewTextBoxColumn();
             Phai = new DataGridViewTextBoxColumn();
@@ -46,8 +48,7 @@
             Dt = new DataGridViewTextBoxColumn();
             VaiTro = new DataGridViewTextBoxColumn();
             MaDonVi = new DataGridViewTextBoxColumn();
-            add_button = new Button();
-            search_employee_button = new Button();
+            CoSo = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)employee_dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -95,6 +96,9 @@
             search_employee_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
             search_employee_guna2TextBox.Size = new Size(360, 51);
             search_employee_guna2TextBox.TabIndex = 39;
+            search_employee_guna2TextBox.TextOffset = new Point(20, 0);
+            search_employee_guna2TextBox.IconRightClick += search_employee_guna2TextBox_IconRightClick;
+            search_employee_guna2TextBox.KeyDown += search_employee_guna2TextBox_KeyDown;
             // 
             // delete_button
             // 
@@ -107,6 +111,7 @@
             delete_button.TabIndex = 38;
             delete_button.Text = "Xóa nhân viên";
             delete_button.UseVisualStyleBackColor = false;
+            delete_button.Click += delete_button_Click;
             // 
             // edit_button
             // 
@@ -141,7 +146,8 @@
             employee_dataGridView.BackgroundColor = Color.FloralWhite;
             employee_dataGridView.BorderStyle = BorderStyle.Fixed3D;
             employee_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            employee_dataGridView.Columns.AddRange(new DataGridViewColumn[] { MaNhanVien, HoTen, Phai, NgSinh, Luong, PhuCap, Dt, VaiTro, MaDonVi });
+            employee_dataGridView.Columns.AddRange(new DataGridViewColumn[] { MaNhanVien, HoTen, Phai, NgSinh, Luong, PhuCap, Dt, VaiTro, MaDonVi, CoSo });
+            employee_dataGridView.GridColor = Color.BurlyWood;
             employee_dataGridView.Location = new Point(25, 231);
             employee_dataGridView.Margin = new Padding(0);
             employee_dataGridView.MultiSelect = false;
@@ -149,74 +155,9 @@
             employee_dataGridView.ReadOnly = true;
             employee_dataGridView.RowHeadersVisible = false;
             employee_dataGridView.RowHeadersWidth = 82;
-            employee_dataGridView.Size = new Size(1571, 779);
+            employee_dataGridView.Size = new Size(1571, 772);
             employee_dataGridView.TabIndex = 34;
-            // 
-            // MaNhanVien
-            // 
-            MaNhanVien.FillWeight = 120F;
-            MaNhanVien.HeaderText = "Mã nhân viên";
-            MaNhanVien.MinimumWidth = 10;
-            MaNhanVien.Name = "MaNhanVien";
-            MaNhanVien.ReadOnly = true;
-            // 
-            // HoTen
-            // 
-            HoTen.HeaderText = "Họ tên";
-            HoTen.MinimumWidth = 10;
-            HoTen.Name = "HoTen";
-            HoTen.ReadOnly = true;
-            // 
-            // Phai
-            // 
-            Phai.FillWeight = 70F;
-            Phai.HeaderText = "Phái";
-            Phai.MinimumWidth = 10;
-            Phai.Name = "Phai";
-            Phai.ReadOnly = true;
-            // 
-            // NgSinh
-            // 
-            NgSinh.HeaderText = "Ngày sinh";
-            NgSinh.MinimumWidth = 10;
-            NgSinh.Name = "NgSinh";
-            NgSinh.ReadOnly = true;
-            // 
-            // Luong
-            // 
-            Luong.HeaderText = "Lương";
-            Luong.MinimumWidth = 10;
-            Luong.Name = "Luong";
-            Luong.ReadOnly = true;
-            // 
-            // PhuCap
-            // 
-            PhuCap.FillWeight = 120F;
-            PhuCap.HeaderText = "Phụ cấp";
-            PhuCap.MinimumWidth = 10;
-            PhuCap.Name = "PhuCap";
-            PhuCap.ReadOnly = true;
-            // 
-            // Dt
-            // 
-            Dt.HeaderText = "Sđt";
-            Dt.MinimumWidth = 10;
-            Dt.Name = "Dt";
-            Dt.ReadOnly = true;
-            // 
-            // VaiTro
-            // 
-            VaiTro.HeaderText = "Vai trò";
-            VaiTro.MinimumWidth = 10;
-            VaiTro.Name = "VaiTro";
-            VaiTro.ReadOnly = true;
-            // 
-            // MaDonVi
-            // 
-            MaDonVi.HeaderText = "Mã đơn vị";
-            MaDonVi.MinimumWidth = 10;
-            MaDonVi.Name = "MaDonVi";
-            MaDonVi.ReadOnly = true;
+            employee_dataGridView.CellClick += employee_dataGridView_CellClick;
             // 
             // add_button
             // 
@@ -242,6 +183,84 @@
             search_employee_button.TabIndex = 41;
             search_employee_button.Text = "Tra cứu";
             search_employee_button.UseVisualStyleBackColor = false;
+            search_employee_button.Click += search_employee_button_Click;
+            // 
+            // MaNhanVien
+            // 
+            MaNhanVien.HeaderText = "Mã NV";
+            MaNhanVien.MinimumWidth = 10;
+            MaNhanVien.Name = "MaNhanVien";
+            MaNhanVien.ReadOnly = true;
+            // 
+            // HoTen
+            // 
+            HoTen.FillWeight = 140F;
+            HoTen.HeaderText = "Họ tên";
+            HoTen.MinimumWidth = 10;
+            HoTen.Name = "HoTen";
+            HoTen.ReadOnly = true;
+            // 
+            // Phai
+            // 
+            Phai.FillWeight = 70F;
+            Phai.HeaderText = "Phái";
+            Phai.MinimumWidth = 10;
+            Phai.Name = "Phai";
+            Phai.ReadOnly = true;
+            // 
+            // NgSinh
+            // 
+            NgSinh.HeaderText = "Ngày sinh";
+            NgSinh.MinimumWidth = 10;
+            NgSinh.Name = "NgSinh";
+            NgSinh.ReadOnly = true;
+            // 
+            // Luong
+            // 
+            Luong.FillWeight = 90F;
+            Luong.HeaderText = "Lương";
+            Luong.MinimumWidth = 10;
+            Luong.Name = "Luong";
+            Luong.ReadOnly = true;
+            // 
+            // PhuCap
+            // 
+            PhuCap.FillWeight = 90F;
+            PhuCap.HeaderText = "Phụ cấp";
+            PhuCap.MinimumWidth = 10;
+            PhuCap.Name = "PhuCap";
+            PhuCap.ReadOnly = true;
+            // 
+            // Dt
+            // 
+            Dt.FillWeight = 90F;
+            Dt.HeaderText = "Sđt";
+            Dt.MinimumWidth = 10;
+            Dt.Name = "Dt";
+            Dt.ReadOnly = true;
+            // 
+            // VaiTro
+            // 
+            VaiTro.FillWeight = 90F;
+            VaiTro.HeaderText = "Vai trò";
+            VaiTro.MinimumWidth = 2;
+            VaiTro.Name = "VaiTro";
+            VaiTro.ReadOnly = true;
+            // 
+            // MaDonVi
+            // 
+            MaDonVi.HeaderText = "Mã đơn vị";
+            MaDonVi.MinimumWidth = 2;
+            MaDonVi.Name = "MaDonVi";
+            MaDonVi.ReadOnly = true;
+            // 
+            // CoSo
+            // 
+            CoSo.FillWeight = 80F;
+            CoSo.HeaderText = "Cơ sở";
+            CoSo.MinimumWidth = 10;
+            CoSo.Name = "CoSo";
+            CoSo.ReadOnly = true;
             // 
             // QLNhanVien
             // 
@@ -260,6 +279,8 @@
             Margin = new Padding(0);
             Name = "QLNhanVien";
             Size = new Size(1625, 1169);
+            Load += QLNhanVien_Load;
+            Click += QLNhanVien_Click;
             ((System.ComponentModel.ISupportInitialize)employee_dataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -285,5 +306,6 @@
         private DataGridViewTextBoxColumn Dt;
         private DataGridViewTextBoxColumn VaiTro;
         private DataGridViewTextBoxColumn MaDonVi;
+        private DataGridViewTextBoxColumn CoSo;
     }
 }
