@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             label1 = new Label();
             search_student_guna2TextBox = new Guna.UI2.WinForms.Guna2TextBox();
@@ -58,6 +58,8 @@
             label3 = new Label();
             search_student_button = new Button();
             info_panel = new Panel();
+            label4 = new Label();
+            textBox1 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)student_dataGridView).BeginInit();
             info_panel.SuspendLayout();
             SuspendLayout();
@@ -85,7 +87,7 @@
             // search_student_guna2TextBox
             // 
             search_student_guna2TextBox.BorderRadius = 20;
-            search_student_guna2TextBox.CustomizableEdges = customizableEdges1;
+            search_student_guna2TextBox.CustomizableEdges = customizableEdges3;
             search_student_guna2TextBox.DefaultText = "";
             search_student_guna2TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             search_student_guna2TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -102,7 +104,7 @@
             search_student_guna2TextBox.Name = "search_student_guna2TextBox";
             search_student_guna2TextBox.PlaceholderText = "";
             search_student_guna2TextBox.SelectedText = "";
-            search_student_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            search_student_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges4;
             search_student_guna2TextBox.Size = new Size(146, 24);
             search_student_guna2TextBox.TabIndex = 43;
             // 
@@ -239,7 +241,7 @@
             // diaChi_textBox
             // 
             diaChi_textBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            diaChi_textBox.Location = new Point(113, 157);
+            diaChi_textBox.Location = new Point(0, 152);
             diaChi_textBox.Margin = new Padding(2);
             diaChi_textBox.Name = "diaChi_textBox";
             diaChi_textBox.Size = new Size(413, 25);
@@ -249,7 +251,7 @@
             // 
             diaChi_label.AutoSize = true;
             diaChi_label.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            diaChi_label.Location = new Point(113, 133);
+            diaChi_label.Location = new Point(0, 128);
             diaChi_label.Margin = new Padding(0);
             diaChi_label.Name = "diaChi_label";
             diaChi_label.Size = new Size(53, 19);
@@ -286,7 +288,7 @@
             add_button.BackColor = Color.BurlyWood;
             add_button.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             add_button.ForeColor = Color.Transparent;
-            add_button.Location = new Point(715, 6);
+            add_button.Location = new Point(715, 87);
             add_button.Margin = new Padding(2);
             add_button.Name = "add_button";
             add_button.Size = new Size(129, 30);
@@ -314,12 +316,12 @@
             confirm_button.BackColor = Color.BurlyWood;
             confirm_button.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             confirm_button.ForeColor = Color.Transparent;
-            confirm_button.Location = new Point(715, 177);
+            confirm_button.Location = new Point(713, 6);
             confirm_button.Margin = new Padding(2);
             confirm_button.Name = "confirm_button";
             confirm_button.Size = new Size(129, 30);
             confirm_button.TabIndex = 95;
-            confirm_button.Text = "Xác nhận";
+            confirm_button.Text = "Cập nhật";
             confirm_button.UseVisualStyleBackColor = false;
             confirm_button.Click += confirm_button_Click;
             // 
@@ -381,6 +383,8 @@
             // 
             // info_panel
             // 
+            info_panel.Controls.Add(label4);
+            info_panel.Controls.Add(textBox1);
             info_panel.Controls.Add(mssv_label);
             info_panel.Controls.Add(mssv_textBox);
             info_panel.Controls.Add(khoa_label);
@@ -403,6 +407,26 @@
             info_panel.Name = "info_panel";
             info_panel.Size = new Size(844, 228);
             info_panel.TabIndex = 101;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(482, 128);
+            label4.Margin = new Padding(0);
+            label4.Name = "label4";
+            label4.Size = new Size(96, 19);
+            label4.TabIndex = 96;
+            label4.Text = "Cơ sở (CS+...)";
+            // 
+            // textBox1
+            // 
+            textBox1.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox1.Location = new Point(482, 152);
+            textBox1.Margin = new Padding(2);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(188, 25);
+            textBox1.TabIndex = 97;
             // 
             // QLSinhVien
             // 
@@ -463,5 +487,7 @@
         private Label label3;
         private Button search_student_button;
         private Panel info_panel;
+        private Label label4;
+        private TextBox textBox1;
     }
 }
