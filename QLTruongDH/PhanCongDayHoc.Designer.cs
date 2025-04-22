@@ -41,11 +41,6 @@
             edit_button = new Button();
             hocphan_label = new Label();
             phanCong_dataGridView = new DataGridView();
-            MaMoMon = new DataGridViewTextBoxColumn();
-            MaHocPhan = new DataGridViewTextBoxColumn();
-            MaGiaoVien = new DataGridViewTextBoxColumn();
-            HocKi = new DataGridViewTextBoxColumn();
-            Nam = new DataGridViewTextBoxColumn();
             guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             search_giaovien_guna2TextBox = new Guna.UI2.WinForms.Guna2TextBox();
             giaovien_label = new Label();
@@ -170,7 +165,6 @@
             phanCong_dataGridView.BackgroundColor = Color.FloralWhite;
             phanCong_dataGridView.BorderStyle = BorderStyle.Fixed3D;
             phanCong_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            phanCong_dataGridView.Columns.AddRange(new DataGridViewColumn[] { MaMoMon, MaHocPhan, MaGiaoVien, HocKi, Nam });
             phanCong_dataGridView.Location = new Point(25, 218);
             phanCong_dataGridView.Margin = new Padding(0);
             phanCong_dataGridView.MultiSelect = false;
@@ -181,43 +175,6 @@
             phanCong_dataGridView.Size = new Size(1571, 772);
             phanCong_dataGridView.TabIndex = 44;
             phanCong_dataGridView.CellClick += phanCong_dataGridView_CellClick;
-            // 
-            // MaMoMon
-            // 
-            MaMoMon.FillWeight = 120F;
-            MaMoMon.HeaderText = "Mã mở môn";
-            MaMoMon.MinimumWidth = 10;
-            MaMoMon.Name = "MaMoMon";
-            MaMoMon.ReadOnly = true;
-            // 
-            // MaHocPhan
-            // 
-            MaHocPhan.HeaderText = "Mã học phần";
-            MaHocPhan.MinimumWidth = 10;
-            MaHocPhan.Name = "MaHocPhan";
-            MaHocPhan.ReadOnly = true;
-            // 
-            // MaGiaoVien
-            // 
-            MaGiaoVien.HeaderText = "Mã giáo viên";
-            MaGiaoVien.MinimumWidth = 10;
-            MaGiaoVien.Name = "MaGiaoVien";
-            MaGiaoVien.ReadOnly = true;
-            // 
-            // HocKi
-            // 
-            HocKi.FillWeight = 50F;
-            HocKi.HeaderText = "Học kì";
-            HocKi.MinimumWidth = 10;
-            HocKi.Name = "HocKi";
-            HocKi.ReadOnly = true;
-            // 
-            // Nam
-            // 
-            Nam.HeaderText = "Năm";
-            Nam.MinimumWidth = 10;
-            Nam.Name = "Nam";
-            Nam.ReadOnly = true;
             // 
             // guna2Separator2
             // 
@@ -530,11 +487,6 @@
         private Label hocky_label;
         private ComboBox hocky_comboBox;
         private Label nam_label;
-        private DataGridViewTextBoxColumn MaMoMon;
-        private DataGridViewTextBoxColumn MaHocPhan;
-        private DataGridViewTextBoxColumn MaGiaoVien;
-        private DataGridViewTextBoxColumn HocKi;
-        private DataGridViewTextBoxColumn Nam;
         private Guna.UI2.WinForms.Guna2TextBox search_nam_guna2TextBox;
         private Panel input_panel;
         private TextBox magiaovien_textBox;

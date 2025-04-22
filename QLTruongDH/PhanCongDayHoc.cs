@@ -36,19 +36,46 @@ namespace QLTruongDH
             if (mainForm.roles.Contains("TRGDV"))
             {
                 LoadDsPhanCong("SP_Xem_DSMoMonChoTRGDV");
+                phanCong_dataGridView.Columns[0].HeaderText = "Mã MM";
+                phanCong_dataGridView.Columns[1].HeaderText = "Mã HP";
+                phanCong_dataGridView.Columns[2].HeaderText = "Tên HP";
+                phanCong_dataGridView.Columns[3].HeaderText = "Mã GV";
+                phanCong_dataGridView.Columns[4].HeaderText = "Tên GV";
+                phanCong_dataGridView.Columns[5].HeaderText = "Học kỳ";
+                phanCong_dataGridView.Columns[6].HeaderText = "Năm";
+
             }
             else if (mainForm.roles.Contains("PDT"))
             {
                 LoadDsPhanCong("SP_Xem_DSMoMonChoNVPDT");
+                phanCong_dataGridView.Columns[0].HeaderText = "Mã MM";
+                phanCong_dataGridView.Columns[1].HeaderText = "Mã HP";
+                phanCong_dataGridView.Columns[2].HeaderText = "Tên HP";
+                phanCong_dataGridView.Columns[3].HeaderText = "Mã GV";
+                phanCong_dataGridView.Columns[4].HeaderText = "Học kỳ";
+                phanCong_dataGridView.Columns[5].HeaderText = "Năm";
             }
             else if (mainForm.roles.Contains("GIAOVIEN"))
             {
                 LoadDsPhanCong("SP_Xem_DSMoMonChoGV");
+                phanCong_dataGridView.Columns[0].HeaderText = "Mã MM";
+                phanCong_dataGridView.Columns[1].HeaderText = "Mã HP";
+                phanCong_dataGridView.Columns[2].HeaderText = "Tên HP";
+                phanCong_dataGridView.Columns[3].HeaderText = "Mã GV";
+                phanCong_dataGridView.Columns[4].HeaderText = "Tên GV";
+                phanCong_dataGridView.Columns[5].HeaderText = "Học kỳ";
+                phanCong_dataGridView.Columns[6].HeaderText = "Năm";
             }
             else if (mainForm.roles.Contains("SINHVIEN"))
             {
                 title_label.Text = "Danh sách mở học phần";
                 LoadDsPhanCong("SP_Xem_DSMoMonChoSV");
+                phanCong_dataGridView.Columns[0].HeaderText = "Mã MM";
+                phanCong_dataGridView.Columns[1].HeaderText = "Mã HP";
+                phanCong_dataGridView.Columns[2].HeaderText = "Tên HP";
+                phanCong_dataGridView.Columns[3].HeaderText = "Mã GV";
+                phanCong_dataGridView.Columns[4].HeaderText = "Học kỳ";
+                phanCong_dataGridView.Columns[5].HeaderText = "Năm";
             }
         }
 
@@ -69,13 +96,13 @@ namespace QLTruongDH
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
 
-                    phanCong_dataGridView.AutoGenerateColumns = false;
+                    //phanCong_dataGridView.AutoGenerateColumns = false;
 
-                    phanCong_dataGridView.Columns["MaMoMon"].DataPropertyName = "MAMM";
-                    phanCong_dataGridView.Columns["MaHocPhan"].DataPropertyName = "MAHP";
-                    phanCong_dataGridView.Columns["MaGiaoVien"].DataPropertyName = "MAGV";
-                    phanCong_dataGridView.Columns["HocKi"].DataPropertyName = "HK";
-                    phanCong_dataGridView.Columns["Nam"].DataPropertyName = "NAM";
+                    //phanCong_dataGridView.Columns["MaMoMon"].DataPropertyName = "MAMM";
+                    //phanCong_dataGridView.Columns["MaHocPhan"].DataPropertyName = "MAHP";
+                    //phanCong_dataGridView.Columns["MaGiaoVien"].DataPropertyName = "MAGV";
+                    //phanCong_dataGridView.Columns["HocKi"].DataPropertyName = "HK";
+                    //phanCong_dataGridView.Columns["Nam"].DataPropertyName = "NAM";
 
                     phanCong_dataGridView.DataSource = dt;
 
