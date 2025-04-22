@@ -24,6 +24,12 @@ namespace QLTruongDH
             delete_button.Visible = false;
             edit_button.Visible = false;
 
+
+
+        }
+
+        private void QLNhanVien_Load(object sender, EventArgs e)
+        {
             if (mainForm.roles.Contains("TRGDV"))
             {
                 LoadDsNhanVien("SP_Xem_DSNhanVienChoTRGDV");
@@ -36,7 +42,6 @@ namespace QLTruongDH
             {
                 LoadDsNhanVien("SP_Xem_TTNhanVienChoNVCB");
             }
-
         }
 
 
@@ -46,6 +51,7 @@ namespace QLTruongDH
             string roles = string.Join(", ", mainForm.roles);
             MessageBox.Show($"Roles: {roles}", "Thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
         // === LOAD DATA ===
         private void LoadDsNhanVien(string procName)

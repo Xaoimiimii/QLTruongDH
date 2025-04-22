@@ -271,6 +271,7 @@
             Margin = new Padding(0);
             Name = "QLNhanVien";
             Size = new Size(1625, 1169);
+            Load += QLNhanVien_Load;
             Click += QLNhanVien_Click;
             ((System.ComponentModel.ISupportInitialize)employee_dataGridView).EndInit();
             ResumeLayout(false);

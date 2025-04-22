@@ -24,7 +24,6 @@ namespace QLTruongDH
             this.mode = mode;
             this.emp = selectedEmployee;
 
-            LoadMaDonViComboBox();
             if (mode == "Add")
             {
                 employee_id_label.Visible = false;
@@ -48,7 +47,12 @@ namespace QLTruongDH
             }
         }
 
-        
+        private void ThemNhanVien_Load(object sender, EventArgs e)
+        {
+            LoadMaDonViComboBox();
+        }
+
+
         // === LOAD, INSERT, UPDATE DATA ===
         private void LoadMaDonViComboBox()
         {
@@ -61,7 +65,7 @@ namespace QLTruongDH
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
-                    
+
                     using (OracleDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -282,7 +286,7 @@ namespace QLTruongDH
             {
                 if (fullname_textBox.Text != "" || phone_textBox.Text != ""
                     || dob_textBox.Text != "" || donvi_comboBox.SelectedIndex != -1
-                    || gender_comboBox.SelectedIndex != -1 || role_comboBox.SelectedIndex != -1) 
+                    || gender_comboBox.SelectedIndex != -1 || role_comboBox.SelectedIndex != -1)
                     shouldWarn = true;
             }
 
@@ -367,7 +371,5 @@ namespace QLTruongDH
             back_label.ForeColor = Color.Black;
             back_pictureBox.Image = Properties.Resources.back__1_;
         }
-
-        
     }
 }
