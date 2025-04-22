@@ -121,17 +121,20 @@ namespace QLTruongDH
 
         private void thongBao_guna2ShadowPanel_Click(object sender, EventArgs e)
         {
-
+            mainForm.UpdateStatus("ThongBao");
+            mainForm.LoadControl(new ThongBao(mainForm));
         }
 
         private void thongBao_pictureBox_Click(object sender, EventArgs e)
         {
-
+            mainForm.UpdateStatus("ThongBao");
+            mainForm.LoadControl(new ThongBao(mainForm));
         }
 
         private void thongBao_label_Click(object sender, EventArgs e)
         {
-
+            mainForm.UpdateStatus("ThongBao");
+            mainForm.LoadControl(new ThongBao(mainForm));
         }
 
         private void qlNhanVien_guna2ShadowPanel_MouseEnter(object sender, EventArgs e)

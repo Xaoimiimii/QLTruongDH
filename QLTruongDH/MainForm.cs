@@ -339,17 +339,32 @@
 
         private void notification_flowLayoutPanel_Click(object sender, EventArgs e)
         {
-
+            if (isInThongBao)
+            {
+                return;
+            }
+            UpdateStatus("ThongBao");
+            LoadControl(new ThongBao(this));
         }
 
         private void notification_label_Click(object sender, EventArgs e)
         {
-
+            if (isInThongBao)
+            {
+                return;
+            }
+            UpdateStatus("ThongBao");
+            LoadControl(new ThongBao(this));
         }
 
         private void notification_pictureBox_Click(object sender, EventArgs e)
         {
-
+            if (isInThongBao)
+            {
+                return;
+            }
+            UpdateStatus("ThongBao");
+            LoadControl(new ThongBao(this));
         }
 
     }
