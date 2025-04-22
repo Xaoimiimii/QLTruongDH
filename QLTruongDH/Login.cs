@@ -31,7 +31,7 @@ namespace QLTruongDH
                 return;
             }
 
-            string connectionString = $"User Id={username};Password={password};Data Source=localhost:1521/PDB4;";
+            string connectionString = $"User Id={username};Password={password};Data Source=localhost:1521/Proj_DKHP;";
 
             try
             {

@@ -304,7 +304,7 @@ namespace QLTruongDH
                         }
 
                     }
-                    else if (roles.Contains("NV_CTSV"))
+                    else if (roles.Contains("CTSV"))
                     {
                         // Cập nhật tất cả các thông tin nếu người dùng có quyền
                         if (hoTen != originalHoTen || phai != originalPhai || ngaySinh != originalNgaySinh ||
@@ -327,7 +327,7 @@ namespace QLTruongDH
                             MessageBox.Show("Bạn không có quyền cập nhật thông tin này!");
                         }
                     }
-                    else if (roles.Contains("NV_PDT"))
+                    else if (roles.Contains("PDT"))
                     {
                         // Cập nhật tình trạng sinh viên nếu có thay đổi
                         if (tinhTrang != originalTinhTrang)
@@ -434,7 +434,7 @@ namespace QLTruongDH
 
         private void alter_button_Click(object sender, EventArgs e)
         {
-            if (currentRoles.Contains("NV_CTSV"))
+            if (currentRoles.Contains("CTSV"))
             {
                 if (student_dataGridView.CurrentRow == null)
                 {
@@ -472,7 +472,7 @@ namespace QLTruongDH
 
         private void add_button_Click(object sender, EventArgs e)
         {
-            if (currentRoles.Contains("NV_CTSV"))
+            if (currentRoles.Contains("CTSV"))
             {
                 string maSV = mssv_textBox.Text.Trim();
                 string hoTen = hoTen_textBox.Text.Trim();
