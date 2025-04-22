@@ -145,12 +145,12 @@ namespace QLTruongDH
 
         private void add_button_Click(object sender, EventArgs e)
         {
-
+            mainForm.LoadControl(new ThemSuaPhanCong(mainForm, "Add", selectedMoMon));
         }
 
         private void edit_button_Click(object sender, EventArgs e)
         {
-
+            mainForm.LoadControl(new ThemSuaPhanCong(mainForm, "Edit", selectedMoMon));
         }
 
         private void search_hocphan_guna2TextBox_KeyDown(object sender, KeyEventArgs e)

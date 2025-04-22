@@ -157,12 +157,12 @@ namespace QLTruongDH
 
         private void add_button_Click(object sender, EventArgs e)
         {
-            mainForm.LoadControl(new ThemNhanVien(mainForm, "Add", selectedEmployee));
+            mainForm.LoadControl(new ThemSuaNhanVien(mainForm, "Add", selectedEmployee));
         }
 
         private void edit_button_Click(object sender, EventArgs e)
         {
-            mainForm.LoadControl(new ThemNhanVien(mainForm, "Edit", selectedEmployee));
+            mainForm.LoadControl(new ThemSuaNhanVien(mainForm, "Edit", selectedEmployee));
         }
 
         private void search_employee_guna2TextBox_KeyDown(object sender, KeyEventArgs e)

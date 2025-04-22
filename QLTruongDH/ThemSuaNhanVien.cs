@@ -11,13 +11,13 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace QLTruongDH
 {
-    public partial class ThemNhanVien : UserControl
+    public partial class ThemSuaNhanVien : UserControl
     {
         private MainForm mainForm;
         private string mode;
         private NhanVien emp;
 
-        public ThemNhanVien(MainForm form, string mode, NhanVien selectedEmployee)
+        public ThemSuaNhanVien(MainForm form, string mode, NhanVien selectedEmployee)
         {
             InitializeComponent();
             this.mainForm = form;
@@ -29,8 +29,6 @@ namespace QLTruongDH
             if (mode == "Add")
             {
                 employee_id_label.Visible = false;
-                title_label.Text = "Thêm nhân viên mới";
-                add_button.Text = "Thêm nhân viên";
             }
             else if (mode == "Edit")
             {

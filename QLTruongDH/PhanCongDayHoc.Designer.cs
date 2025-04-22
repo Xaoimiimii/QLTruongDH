@@ -72,7 +72,7 @@
             add_button.BackColor = Color.BurlyWood;
             add_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
             add_button.ForeColor = Color.Transparent;
-            add_button.Location = new Point(1327, 20);
+            add_button.Location = new Point(1327, 23);
             add_button.Name = "add_button";
             add_button.Size = new Size(269, 65);
             add_button.TabIndex = 50;
@@ -251,7 +251,7 @@
             // 
             hocky_label.AutoSize = true;
             hocky_label.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            hocky_label.Location = new Point(980, 143);
+            hocky_label.Location = new Point(1020, 143);
             hocky_label.Margin = new Padding(0);
             hocky_label.Name = "hocky_label";
             hocky_label.Size = new Size(108, 37);
@@ -263,9 +263,9 @@
             hocky_comboBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
             hocky_comboBox.FormattingEnabled = true;
             hocky_comboBox.Items.AddRange(new object[] { "1", "2", "3" });
-            hocky_comboBox.Location = new Point(1100, 140);
+            hocky_comboBox.Location = new Point(1131, 140);
             hocky_comboBox.Name = "hocky_comboBox";
-            hocky_comboBox.Size = new Size(92, 45);
+            hocky_comboBox.Size = new Size(100, 45);
             hocky_comboBox.TabIndex = 54;
             hocky_comboBox.SelectedValueChanged += hocky_comboBox_SelectedValueChanged;
             // 
@@ -273,7 +273,7 @@
             // 
             nam_label.AutoSize = true;
             nam_label.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            nam_label.Location = new Point(1297, 143);
+            nam_label.Location = new Point(1336, 143);
             nam_label.Margin = new Padding(0);
             nam_label.Name = "nam_label";
             nam_label.Size = new Size(83, 37);
@@ -295,13 +295,13 @@
             search_nam_guna2TextBox.IconLeftOffset = new Point(10, 0);
             search_nam_guna2TextBox.IconRight = Properties.Resources.close__1_;
             search_nam_guna2TextBox.IconRightOffset = new Point(10, 0);
-            search_nam_guna2TextBox.Location = new Point(1387, 136);
+            search_nam_guna2TextBox.Location = new Point(1426, 136);
             search_nam_guna2TextBox.Margin = new Padding(7);
             search_nam_guna2TextBox.Name = "search_nam_guna2TextBox";
             search_nam_guna2TextBox.PlaceholderText = "";
             search_nam_guna2TextBox.SelectedText = "";
             search_nam_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            search_nam_guna2TextBox.Size = new Size(209, 51);
+            search_nam_guna2TextBox.Size = new Size(170, 51);
             search_nam_guna2TextBox.TabIndex = 57;
             search_nam_guna2TextBox.IconRightClick += search_nam_guna2TextBox_IconRightClick;
             search_nam_guna2TextBox.KeyDown += search_nam_guna2TextBox_KeyDown;

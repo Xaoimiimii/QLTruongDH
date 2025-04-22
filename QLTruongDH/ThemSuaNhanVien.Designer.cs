@@ -1,6 +1,6 @@
 ﻿namespace QLTruongDH
 {
-    partial class ThemNhanVien
+    partial class ThemSuaNhanVien
     {
         /// <summary> 
         /// Required designer variable.
