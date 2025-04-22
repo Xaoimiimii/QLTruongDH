@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 using Oracle.ManagedDataAccess.Client;
 
 namespace QLTruongDH
@@ -42,6 +43,7 @@ namespace QLTruongDH
                 gender_comboBox.SelectedItem = emp.Phai;
                 donvi_comboBox.SelectedItem = emp.MaDV;
                 role_comboBox.SelectedItem = emp.VaiTro;
+                coso_comboBox.SelectedItem = emp.CoSo;
                 title_label.Text = "Chỉnh sửa thông tin nhân niên";
                 add_button.Text = "Cập nhật thông tin";
             }
@@ -77,9 +79,9 @@ namespace QLTruongDH
             }
         }
 
-        private void AddNewEmployee(string fullname, string gender, string dob, decimal luong, decimal phucap, string phone, string vaitro, string donvi)
+        private void AddNewEmployee(string fullname, string gender, string dob, decimal luong, decimal phucap, string phone, string vaitro, string donvi, string coso)
         {
-            if (fullname == "" || gender == "" || dob == "" || phone == "" || vaitro == "" || donvi == "")
+            if (fullname == "" || gender == "" || dob == "" || phone == "" || vaitro == "" || donvi == "" || coso == "")
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -102,6 +104,7 @@ namespace QLTruongDH
                     cmd.Parameters.Add("p_dt", OracleDbType.Varchar2).Value = phone;
                     cmd.Parameters.Add("p_vaitro", OracleDbType.Varchar2).Value = vaitro;
                     cmd.Parameters.Add("p_madv", OracleDbType.Varchar2).Value = donvi;
+                    cmd.Parameters.Add("p_coso", OracleDbType.Varchar2).Value = coso;
 
                     OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
                     msgParam.Direction = ParameterDirection.Output;
@@ -122,12 +125,12 @@ namespace QLTruongDH
             }
         }
 
-        private void UpdateAllEmployeeInfo(string fullname, string gender, string dob, decimal luong, decimal phucap, string phone, string vaitro, string donvi)
+        private void UpdateAllEmployeeInfo(string fullname, string gender, string dob, decimal luong, decimal phucap, string phone, string vaitro, string donvi, string coso)
         {
             bool isEdited = false;
 
             if (fullname != emp.HoTen || phone != emp.DienThoai || dob != emp.NgaySinh?.ToString("dd/MM/yyyy")
-                || gender != emp.Phai || vaitro != emp.VaiTro || donvi != emp.MaDV || luong != emp.Luong || phucap != emp.PhuCap)
+                || gender != emp.Phai || vaitro != emp.VaiTro || donvi != emp.MaDV || luong != emp.Luong || phucap != emp.PhuCap || coso != emp.CoSo)
             {
                 isEdited = true;
             }
@@ -144,12 +147,13 @@ namespace QLTruongDH
                         cmd.Parameters.Add("p_manv", OracleDbType.Char).Value = emp.MaNV;
                         cmd.Parameters.Add("p_hoten", OracleDbType.Varchar2).Value = fullname;
                         cmd.Parameters.Add("p_phai", OracleDbType.Varchar2).Value = gender;
-                        cmd.Parameters.Add("p_ngsinh", OracleDbType.Date).Value = dob;
+                        cmd.Parameters.Add("p_ngsinh", OracleDbType.Date).Value = DateTime.ParseExact(dob, "dd/MM/yyyy", CultureInfo.InvariantCulture); ;
                         cmd.Parameters.Add("p_luong", OracleDbType.Decimal).Value = luong;
                         cmd.Parameters.Add("p_phucap", OracleDbType.Decimal).Value = phucap;
                         cmd.Parameters.Add("p_dt", OracleDbType.Varchar2).Value = phone;
                         cmd.Parameters.Add("p_vaitro", OracleDbType.Varchar2).Value = vaitro;
                         cmd.Parameters.Add("p_madv", OracleDbType.Varchar2).Value = donvi;
+                        cmd.Parameters.Add("p_coso", OracleDbType.Varchar2).Value = coso;
 
                         OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
                         msgParam.Direction = ParameterDirection.Output;
@@ -220,6 +224,7 @@ namespace QLTruongDH
             donvi_comboBox.SelectedIndex = -1;
             gender_comboBox.SelectedIndex = -1;
             role_comboBox.SelectedIndex = -1;
+            coso_comboBox.SelectedIndex = -1;
         }
 
 
@@ -233,6 +238,7 @@ namespace QLTruongDH
             string gender = gender_comboBox.SelectedItem?.ToString().Trim() ?? "";
             string vaitro = role_comboBox.SelectedItem?.ToString().Trim() ?? "";
             string donvi = donvi_comboBox.SelectedItem?.ToString().Trim() ?? "";
+            string coso = coso_comboBox.SelectedItem?.ToString().Trim() ?? "";
 
             decimal luong = 0;
             decimal phucap = 0;
@@ -242,13 +248,13 @@ namespace QLTruongDH
 
             if (mode == "Add")
             {
-                AddNewEmployee(fullname, gender, dob, luong, phucap, phone, vaitro, donvi);
+                AddNewEmployee(fullname, gender, dob, luong, phucap, phone, vaitro, donvi, coso);
             }
             else if (mode == "Edit")
             {
                 if (mainForm.roles.Contains("TCHC"))
                 {
-                    UpdateAllEmployeeInfo(fullname, gender, dob, luong, phucap, phone, vaitro, donvi);
+                    UpdateAllEmployeeInfo(fullname, gender, dob, luong, phucap, phone, vaitro, donvi, coso);
                 }
                 else if (mainForm.roles.Contains("NVCB"))
                 {
@@ -270,6 +276,7 @@ namespace QLTruongDH
                 role_comboBox.SelectedItem = emp.VaiTro;
                 gender_comboBox.SelectedItem = emp.Phai;
                 donvi_comboBox.SelectedItem = emp.MaDV;
+                coso_comboBox.SelectedItem = emp.CoSo;
             }
         }
 
@@ -281,7 +288,7 @@ namespace QLTruongDH
             {
                 if (fullname_textBox.Text != "" || phone_textBox.Text != ""
                     || dob_textBox.Text != "" || donvi_comboBox.SelectedIndex != -1
-                    || gender_comboBox.SelectedIndex != -1 || role_comboBox.SelectedIndex != -1)
+                    || gender_comboBox.SelectedIndex != -1 || role_comboBox.SelectedIndex != -1 || coso_comboBox.SelectedIndex != -1)
                     shouldWarn = true;
             }
 
@@ -300,7 +307,7 @@ namespace QLTruongDH
             {
                 if (fullname_textBox.Text != "" || phone_textBox.Text != ""
                     || dob_textBox.Text != "" || donvi_comboBox.SelectedIndex != -1
-                    || gender_comboBox.SelectedIndex != -1 || role_comboBox.SelectedIndex != -1)
+                    || gender_comboBox.SelectedIndex != -1 || role_comboBox.SelectedIndex != -1 || coso_comboBox.SelectedIndex != -1)
                     shouldWarn = true;
             }
 
@@ -319,7 +326,7 @@ namespace QLTruongDH
             {
                 if (fullname_textBox.Text != "" || phone_textBox.Text != ""
                     || dob_textBox.Text != "" || donvi_comboBox.SelectedIndex != -1
-                    || gender_comboBox.SelectedIndex != -1 || role_comboBox.SelectedIndex != -1)
+                    || gender_comboBox.SelectedIndex != -1 || role_comboBox.SelectedIndex != -1 || coso_comboBox.SelectedIndex != -1)
                     shouldWarn = true;
             }
 

@@ -43,11 +43,6 @@ namespace QLTruongDH
 
 
         // === HELPER FUNCTION ===
-        private void HienThiDsRoles()
-        {
-            string roles = string.Join(", ", mainForm.roles);
-            MessageBox.Show($"Roles: {roles}", "Thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
 
 
         // === LOAD DATA ===
@@ -79,6 +74,7 @@ namespace QLTruongDH
                     employee_dataGridView.Columns["Dt"].DataPropertyName = "DT";
                     employee_dataGridView.Columns["VaiTro"].DataPropertyName = "VAITRO";
                     employee_dataGridView.Columns["MaDonVi"].DataPropertyName = "MADV";
+                    employee_dataGridView.Columns["CoSo"].DataPropertyName = "COSO";
 
                     employee_dataGridView.DataSource = dt;
 
@@ -106,7 +102,8 @@ namespace QLTruongDH
                     PhuCap = row.Cells[5].Value == DBNull.Value ? null : (decimal?)Convert.ToDecimal(row.Cells[5].Value),
                     DienThoai = row.Cells[6].Value?.ToString(),
                     VaiTro = row.Cells[7].Value?.ToString(),
-                    MaDV = row.Cells[8].Value?.ToString()
+                    MaDV = row.Cells[8].Value?.ToString(),
+                    CoSo = row.Cells[9].Value?.ToString()
                 };
                 selectedEmployeeID = selectedEmployee.MaNV;
                 delete_button.Visible = true;
@@ -191,6 +188,18 @@ namespace QLTruongDH
         private void search_employee_guna2TextBox_IconRightClick(object sender, EventArgs e)
         {
             search_employee_guna2TextBox.Text = string.Empty;
+            if (mainForm.roles.Contains("TRGDV"))
+            {
+                LoadDsNhanVien("SP_Xem_DSNhanVienChoTRGDV");
+            }
+            else if (mainForm.roles.Contains("TCHC"))
+            {
+                LoadDsNhanVien("SP_Xem_DSNhanVien");
+            }
+            else if (mainForm.roles.Contains("NVCB"))
+            {
+                LoadDsNhanVien("SP_Xem_TTNhanVienChoNVCB");
+            }
         }
 
         private void QLNhanVien_Click(object sender, EventArgs e)

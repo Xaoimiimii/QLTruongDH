@@ -37,6 +37,8 @@
             edit_button = new Button();
             search_employee_label = new Label();
             employee_dataGridView = new DataGridView();
+            add_button = new Button();
+            search_employee_button = new Button();
             MaNhanVien = new DataGridViewTextBoxColumn();
             HoTen = new DataGridViewTextBoxColumn();
             Phai = new DataGridViewTextBoxColumn();
@@ -46,8 +48,7 @@
             Dt = new DataGridViewTextBoxColumn();
             VaiTro = new DataGridViewTextBoxColumn();
             MaDonVi = new DataGridViewTextBoxColumn();
-            add_button = new Button();
-            search_employee_button = new Button();
+            CoSo = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)employee_dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -145,7 +146,7 @@
             employee_dataGridView.BackgroundColor = Color.FloralWhite;
             employee_dataGridView.BorderStyle = BorderStyle.Fixed3D;
             employee_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            employee_dataGridView.Columns.AddRange(new DataGridViewColumn[] { MaNhanVien, HoTen, Phai, NgSinh, Luong, PhuCap, Dt, VaiTro, MaDonVi });
+            employee_dataGridView.Columns.AddRange(new DataGridViewColumn[] { MaNhanVien, HoTen, Phai, NgSinh, Luong, PhuCap, Dt, VaiTro, MaDonVi, CoSo });
             employee_dataGridView.GridColor = Color.BurlyWood;
             employee_dataGridView.Location = new Point(25, 231);
             employee_dataGridView.Margin = new Padding(0);
@@ -157,6 +158,32 @@
             employee_dataGridView.Size = new Size(1571, 772);
             employee_dataGridView.TabIndex = 34;
             employee_dataGridView.CellClick += employee_dataGridView_CellClick;
+            // 
+            // add_button
+            // 
+            add_button.BackColor = Color.BurlyWood;
+            add_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            add_button.ForeColor = Color.Transparent;
+            add_button.Location = new Point(1274, 132);
+            add_button.Name = "add_button";
+            add_button.Size = new Size(322, 78);
+            add_button.TabIndex = 40;
+            add_button.Text = "Thêm nhân viên";
+            add_button.UseVisualStyleBackColor = false;
+            add_button.Click += add_button_Click;
+            // 
+            // search_employee_button
+            // 
+            search_employee_button.BackColor = Color.BurlyWood;
+            search_employee_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            search_employee_button.ForeColor = Color.Transparent;
+            search_employee_button.Location = new Point(592, 140);
+            search_employee_button.Name = "search_employee_button";
+            search_employee_button.Size = new Size(149, 63);
+            search_employee_button.TabIndex = 41;
+            search_employee_button.Text = "Tra cứu";
+            search_employee_button.UseVisualStyleBackColor = false;
+            search_employee_button.Click += search_employee_button_Click;
             // 
             // MaNhanVien
             // 
@@ -183,7 +210,6 @@
             // 
             // NgSinh
             // 
-            NgSinh.FillWeight = 90F;
             NgSinh.HeaderText = "Ngày sinh";
             NgSinh.MinimumWidth = 10;
             NgSinh.Name = "NgSinh";
@@ -228,31 +254,13 @@
             MaDonVi.Name = "MaDonVi";
             MaDonVi.ReadOnly = true;
             // 
-            // add_button
+            // CoSo
             // 
-            add_button.BackColor = Color.BurlyWood;
-            add_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            add_button.ForeColor = Color.Transparent;
-            add_button.Location = new Point(1274, 132);
-            add_button.Name = "add_button";
-            add_button.Size = new Size(322, 78);
-            add_button.TabIndex = 40;
-            add_button.Text = "Thêm nhân viên";
-            add_button.UseVisualStyleBackColor = false;
-            add_button.Click += add_button_Click;
-            // 
-            // search_employee_button
-            // 
-            search_employee_button.BackColor = Color.BurlyWood;
-            search_employee_button.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            search_employee_button.ForeColor = Color.Transparent;
-            search_employee_button.Location = new Point(592, 140);
-            search_employee_button.Name = "search_employee_button";
-            search_employee_button.Size = new Size(149, 63);
-            search_employee_button.TabIndex = 41;
-            search_employee_button.Text = "Tra cứu";
-            search_employee_button.UseVisualStyleBackColor = false;
-            search_employee_button.Click += search_employee_button_Click;
+            CoSo.FillWeight = 80F;
+            CoSo.HeaderText = "Cơ sở";
+            CoSo.MinimumWidth = 10;
+            CoSo.Name = "CoSo";
+            CoSo.ReadOnly = true;
             // 
             // QLNhanVien
             // 
@@ -298,5 +306,6 @@
         private DataGridViewTextBoxColumn Dt;
         private DataGridViewTextBoxColumn VaiTro;
         private DataGridViewTextBoxColumn MaDonVi;
+        private DataGridViewTextBoxColumn CoSo;
     }
 }

@@ -42,6 +42,7 @@ namespace QLTruongDH
         public string DienThoai { get; set; }
         public string VaiTro { get; set; }
         public string MaDV { get; set; }
+        public string CoSo { get; set; }
 
         public NhanVien() { }
     }

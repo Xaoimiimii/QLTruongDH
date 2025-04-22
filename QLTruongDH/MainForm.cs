@@ -4,6 +4,7 @@
     {
         public event Action LogoutRequested;
         bool menuExpand = false;
+        bool notiExpand = false;
         public bool isInDashboard = false;
         public bool isInQLNhanVien = false;
         public bool isInQLSinhVien = false;
@@ -350,5 +351,6 @@
         {
 
         }
+
     }
 }
