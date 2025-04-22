@@ -26,6 +26,12 @@ namespace QLTruongDH
 
         private void PhanCongDayHoc_Load(object sender, EventArgs e)
         {
+            LoadDsPhanCongTheoRole();
+        }
+
+        // === LOAD DATA ===
+        private void LoadDsPhanCongTheoRole()
+        {
             if (mainForm.roles.Contains("TRGDV"))
             {
                 LoadDsPhanCong("SP_Xem_DSMoMonChoTRGDV");
@@ -45,7 +51,6 @@ namespace QLTruongDH
             }
         }
 
-        // === LOAD DATA ===
         private void LoadDsPhanCong(string procName)
         {
             using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
@@ -98,7 +103,6 @@ namespace QLTruongDH
                 };
                 delete_button.Visible = true;
                 edit_button.Visible = true;
-                //MessageBox.Show($"Selected: {selectedMoMon.MaMM}, {selectedMoMon.MaHP}, {selectedMoMon.MaGV}, {selectedMoMon.HK}, {selectedMoMon.Nam}");
             }
         }
 
@@ -120,7 +124,6 @@ namespace QLTruongDH
                     OracleCommand cmd = new OracleCommand("SP_Xoa_MoMon", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-
                     cmd.Parameters.Add("p_mamon", OracleDbType.Varchar2, 10).Value = selectedMoMon.MaMM;
                     OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
                     msgParam.Direction = ParameterDirection.Output;
@@ -131,23 +134,7 @@ namespace QLTruongDH
                     string message = msgParam.Value.ToString();
                     MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    if (mainForm.roles.Contains("TRGDV"))
-                    {
-                        LoadDsPhanCong("SP_Xem_DSMoMonChoTRGDV");
-                    }
-                    else if (mainForm.roles.Contains("PDT"))
-                    {
-                        LoadDsPhanCong("SP_Xem_DSMoMonChoNVPDT");
-                    }
-                    else if (mainForm.roles.Contains("GIAOVIEN"))
-                    {
-                        LoadDsPhanCong("SP_Xem_DSMoMonChoGV");
-                    }
-                    else if (mainForm.roles.Contains("SINHVIEN"))
-                    {
-                        title_label.Text = "Danh sách mở học phần";
-                        LoadDsPhanCong("SP_Xem_DSMoMonChoSV");
-                    }
+                    LoadDsPhanCongTheoRole();
                 }
                 catch (OracleException)
                 {
@@ -168,22 +155,78 @@ namespace QLTruongDH
 
         private void search_hocphan_guna2TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.KeyCode == Keys.Enter)
+            {
+                ApplyFilters();
+            }
         }
 
         private void search_giaovien_guna2TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.KeyCode == Keys.Enter)
+            {
+                ApplyFilters();
+            }
         }
 
         private void hocky_comboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-
+            ApplyFilters();
         }
 
-        private void nam_comboBox_SelectedValueChanged(object sender, EventArgs e)
+        private void search_nam_guna2TextBox_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ApplyFilters();
+            }
+        }
 
+
+        private void ApplyFilters()
+        {
+            if (phanCong_dataGridView.DataSource is DataTable dt)
+            {
+                string searchHP = search_hocphan_guna2TextBox.Text.Trim();
+                string searchGV = search_giaovien_guna2TextBox.Text.Trim();
+                string searchHK = hocky_comboBox.SelectedItem?.ToString();
+                string searchNam = search_nam_guna2TextBox.Text.Trim();
+
+                List<string> filters = new List<string>();
+
+                if (!string.IsNullOrEmpty(searchHP))
+                    filters.Add($"MAHP LIKE '%{searchHP}%'");
+
+                if (!string.IsNullOrEmpty(searchGV))
+                    filters.Add($"MAGV LIKE '%{searchGV}%'");
+
+                if (!string.IsNullOrEmpty(searchHK))
+                    filters.Add($"HK = {searchHK}");
+
+                if (!string.IsNullOrEmpty(searchNam))
+                    filters.Add($"NAM = {searchNam}");
+
+                string finalFilter = string.Join(" AND ", filters);
+                dt.DefaultView.RowFilter = finalFilter;
+            }
+        }
+
+        private void search_hocphan_guna2TextBox_IconRightClick(object sender, EventArgs e)
+        {
+            search_hocphan_guna2TextBox.Clear();
+            LoadDsPhanCongTheoRole();
+        }
+
+        private void search_giaovien_guna2TextBox_IconRightClick(object sender, EventArgs e)
+        {
+            search_giaovien_guna2TextBox.Clear();
+            LoadDsPhanCongTheoRole();
+        }
+
+        private void search_nam_guna2TextBox_IconRightClick(object sender, EventArgs e)
+        {
+            search_nam_guna2TextBox.Clear();
+            LoadDsPhanCongTheoRole();
         }
     }
 }

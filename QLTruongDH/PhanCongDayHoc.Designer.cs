@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             title_label = new Label();
             add_button = new Button();
             search_hocphan_guna2TextBox = new Guna.UI2.WinForms.Guna2TextBox();
@@ -49,8 +51,8 @@
             giaovien_label = new Label();
             hocky_label = new Label();
             hocky_comboBox = new ComboBox();
-            nam_comboBox = new ComboBox();
             nam_label = new Label();
+            search_nam_guna2TextBox = new Guna.UI2.WinForms.Guna2TextBox();
             ((System.ComponentModel.ISupportInitialize)phanCong_dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -81,7 +83,7 @@
             // search_hocphan_guna2TextBox
             // 
             search_hocphan_guna2TextBox.BorderRadius = 20;
-            search_hocphan_guna2TextBox.CustomizableEdges = customizableEdges9;
+            search_hocphan_guna2TextBox.CustomizableEdges = customizableEdges1;
             search_hocphan_guna2TextBox.DefaultText = "";
             search_hocphan_guna2TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             search_hocphan_guna2TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -98,9 +100,10 @@
             search_hocphan_guna2TextBox.Name = "search_hocphan_guna2TextBox";
             search_hocphan_guna2TextBox.PlaceholderText = "";
             search_hocphan_guna2TextBox.SelectedText = "";
-            search_hocphan_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            search_hocphan_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
             search_hocphan_guna2TextBox.Size = new Size(226, 51);
             search_hocphan_guna2TextBox.TabIndex = 49;
+            search_hocphan_guna2TextBox.IconRightClick += search_hocphan_guna2TextBox_IconRightClick;
             search_hocphan_guna2TextBox.KeyDown += search_hocphan_guna2TextBox_KeyDown;
             // 
             // delete_button
@@ -210,7 +213,7 @@
             // search_giaovien_guna2TextBox
             // 
             search_giaovien_guna2TextBox.BorderRadius = 20;
-            search_giaovien_guna2TextBox.CustomizableEdges = customizableEdges11;
+            search_giaovien_guna2TextBox.CustomizableEdges = customizableEdges3;
             search_giaovien_guna2TextBox.DefaultText = "";
             search_giaovien_guna2TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             search_giaovien_guna2TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -227,9 +230,10 @@
             search_giaovien_guna2TextBox.Name = "search_giaovien_guna2TextBox";
             search_giaovien_guna2TextBox.PlaceholderText = "";
             search_giaovien_guna2TextBox.SelectedText = "";
-            search_giaovien_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            search_giaovien_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges4;
             search_giaovien_guna2TextBox.Size = new Size(226, 51);
             search_giaovien_guna2TextBox.TabIndex = 52;
+            search_giaovien_guna2TextBox.IconRightClick += search_giaovien_guna2TextBox_IconRightClick;
             search_giaovien_guna2TextBox.KeyDown += search_giaovien_guna2TextBox_KeyDown;
             // 
             // giaovien_label
@@ -265,17 +269,6 @@
             hocky_comboBox.TabIndex = 54;
             hocky_comboBox.SelectedValueChanged += hocky_comboBox_SelectedValueChanged;
             // 
-            // nam_comboBox
-            // 
-            nam_comboBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            nam_comboBox.FormattingEnabled = true;
-            nam_comboBox.Items.AddRange(new object[] { "1", "2", "3" });
-            nam_comboBox.Location = new Point(1391, 140);
-            nam_comboBox.Name = "nam_comboBox";
-            nam_comboBox.Size = new Size(205, 45);
-            nam_comboBox.TabIndex = 56;
-            nam_comboBox.SelectedValueChanged += nam_comboBox_SelectedValueChanged;
-            // 
             // nam_label
             // 
             nam_label.AutoSize = true;
@@ -287,12 +280,38 @@
             nam_label.TabIndex = 55;
             nam_label.Text = "Năm:";
             // 
+            // search_nam_guna2TextBox
+            // 
+            search_nam_guna2TextBox.BorderRadius = 20;
+            search_nam_guna2TextBox.CustomizableEdges = customizableEdges5;
+            search_nam_guna2TextBox.DefaultText = "";
+            search_nam_guna2TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            search_nam_guna2TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            search_nam_guna2TextBox.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            search_nam_guna2TextBox.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            search_nam_guna2TextBox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            search_nam_guna2TextBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            search_nam_guna2TextBox.HoverState.BorderColor = Color.Gray;
+            search_nam_guna2TextBox.IconLeftOffset = new Point(10, 0);
+            search_nam_guna2TextBox.IconRight = Properties.Resources.close__1_;
+            search_nam_guna2TextBox.IconRightOffset = new Point(10, 0);
+            search_nam_guna2TextBox.Location = new Point(1387, 136);
+            search_nam_guna2TextBox.Margin = new Padding(7);
+            search_nam_guna2TextBox.Name = "search_nam_guna2TextBox";
+            search_nam_guna2TextBox.PlaceholderText = "";
+            search_nam_guna2TextBox.SelectedText = "";
+            search_nam_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            search_nam_guna2TextBox.Size = new Size(209, 51);
+            search_nam_guna2TextBox.TabIndex = 57;
+            search_nam_guna2TextBox.IconRightClick += search_nam_guna2TextBox_IconRightClick;
+            search_nam_guna2TextBox.KeyDown += search_nam_guna2TextBox_KeyDown;
+            // 
             // PhanCongDayHoc
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            Controls.Add(nam_comboBox);
+            Controls.Add(search_nam_guna2TextBox);
             Controls.Add(nam_label);
             Controls.Add(hocky_comboBox);
             Controls.Add(hocky_label);
@@ -329,12 +348,12 @@
         private Label giaovien_label;
         private Label hocky_label;
         private ComboBox hocky_comboBox;
-        private ComboBox nam_comboBox;
         private Label nam_label;
         private DataGridViewTextBoxColumn MaMoMon;
         private DataGridViewTextBoxColumn MaHocPhan;
         private DataGridViewTextBoxColumn MaGiaoVien;
         private DataGridViewTextBoxColumn HocKi;
         private DataGridViewTextBoxColumn Nam;
+        private Guna.UI2.WinForms.Guna2TextBox search_nam_guna2TextBox;
     }
 }
