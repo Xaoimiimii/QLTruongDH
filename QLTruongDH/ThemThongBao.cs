@@ -23,7 +23,9 @@ namespace QLTruongDH
 
         private void ThemThongBao_Load(object sender, EventArgs e)
         {
-
+            LoadLevelLabels();
+            LoadCompartmentLabels();
+            LoadGroupLabels();
         }
 
         private void LoadLevelLabels()
@@ -33,7 +35,7 @@ namespace QLTruongDH
                 try
                 {
                     conn.Open();
-                    OracleCommand cmd = new OracleCommand("SP_LAY_DS_MA_DON_VI", conn);
+                    OracleCommand cmd = new OracleCommand("OLS_ADMIN.SP_Xem_DSLevel", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
@@ -42,14 +44,81 @@ namespace QLTruongDH
                     {
                         while (reader.Read())
                         {
-                            string madv = reader.GetString(0);
-                            //donvi_comboBox.Items.Add(madv);
+                            string levelLabel = reader.GetString(0);
+                            level_checkedListBox.Items.Add(levelLabel);
                         }
                     }
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Lỗi khi load mã đơn vị ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Lỗi khi load level label", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void LoadCompartmentLabels()
+        {
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    OracleCommand cmd = new OracleCommand("OLS_ADMIN.SP_Xem_DSCompartment", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string compartmentLabel = reader.GetString(0);
+                            if (compartmentLabel == "CNTT") compartment_checkedListBox.Items.Add("Khoa Công nghệ thông tin");
+                            else if (compartmentLabel == "TOAN") compartment_checkedListBox.Items.Add("Khoa Toán - Toán tin");
+                            else if (compartmentLabel == "LY") compartment_checkedListBox.Items.Add("Khoa Vật lý");
+                            else if (compartmentLabel == "HOA") compartment_checkedListBox.Items.Add("Khoa Hóa học");
+                            else if (compartmentLabel == "SH") compartment_checkedListBox.Items.Add("Khoa Sinh học");
+                            else if (compartmentLabel == "MT") compartment_checkedListBox.Items.Add("Khoa Môi trường");
+                            else if (compartmentLabel == "DC") compartment_checkedListBox.Items.Add("Khoa Địa chất");
+                            else if (compartmentLabel == "DTVT") compartment_checkedListBox.Items.Add("Khoa Điện tử viễn thông");
+                            else if (compartmentLabel == "CNVL") compartment_checkedListBox.Items.Add("Khoa Công nghệ vật liệu");
+                            else if (compartmentLabel == "KHLN") compartment_checkedListBox.Items.Add("Khoa Khoa học liên ngành");
+                            else if (compartmentLabel == "TBG") compartment_checkedListBox.Items.Add("Viện Tế bào gốc");
+                            else if (compartmentLabel == "PDT") compartment_checkedListBox.Items.Add("Phòng Đào tạo");
+                            else if (compartmentLabel == "PKT") compartment_checkedListBox.Items.Add("Phòng Khảo thí");
+                            else if (compartmentLabel == "CTSV") compartment_checkedListBox.Items.Add("Phòng Công tác sinh viên");
+                            else if (compartmentLabel == "TCHC") compartment_checkedListBox.Items.Add("Phòng tổ chức hành chính");
+
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Lỗi khi load compartment label ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void LoadGroupLabels()
+        {
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    OracleCommand cmd = new OracleCommand("OLS_ADMIN.SP_Xem_DSGroup", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string groupLabel = reader.GetString(0);
+                            group_checkedListBox.Items.Add(groupLabel);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Lỗi khi load group label", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -95,7 +164,7 @@ namespace QLTruongDH
 
             foreach (var item in compartment_checkedListBox.CheckedItems)
             {
-                if (item == "Khoa CNTT") selectedCompartment.Add("CNTT");
+                if (item == "Khoa Công nghệ thông tin") selectedCompartment.Add("CNTT");
                 else if (item == "Khoa Toán - Toán tin") selectedCompartment.Add("TOAN");
                 else if (item == "Khoa Vật lý") selectedCompartment.Add("LY");
                 else if (item == "Khoa Hóa học") selectedCompartment.Add("HOA");
@@ -117,12 +186,45 @@ namespace QLTruongDH
                 selectedGroups.Add(item.ToString());
             }
 
-            // Show the selected items in a message box
-            string message = "Nội dung: " + content + "\n";
-            message += "Mức độ: " + string.Join(", ", selectedLevels) + "\n";
-            message += "Đơn vị: " + string.Join(", ", selectedCompartment) + "\n";
-            message += "Nhóm: " + string.Join(", ", selectedGroups) + "\n";
-            MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (selectedLevels.Count == 0 && selectedCompartment.Count == 0 && selectedGroups.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn ít nhất một cấp độ, phân vùng và nhóm", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (content == "")
+            {
+                MessageBox.Show("Vui lòng nhập nội dung thông báo", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    OracleCommand cmd = new OracleCommand("OLS_ADMIN.SP_Them_ThongBao", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_noidung", OracleDbType.Varchar2).Value = content;
+                    cmd.Parameters.Add("p_user_level", OracleDbType.Varchar2).Value = string.Join(",", selectedLevels);
+                    cmd.Parameters.Add("p_compartment", OracleDbType.Varchar2).Value = string.Join(",", selectedCompartment);
+                    cmd.Parameters.Add("p_group_name", OracleDbType.Varchar2).Value = string.Join(",", selectedGroups);
+                    
+                    OracleParameter msgParam = new OracleParameter("p_msg", OracleDbType.Varchar2, 200);
+                    msgParam.Direction = ParameterDirection.Output;
+                    
+                    cmd.Parameters.Add(msgParam);
+                    cmd.ExecuteNonQuery();
+
+                    string message = msgParam.Value.ToString();
+                    MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Reset();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Lỗi khi thêm thông báo", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void reset__button_Click(object sender, EventArgs e)

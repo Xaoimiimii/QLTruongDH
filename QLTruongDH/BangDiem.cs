@@ -214,7 +214,7 @@ namespace QLTruongDH
             using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
             {
                 conn.Open();
-                //try
+                try
                 {
                     OracleCommand cmd = new OracleCommand("UpdateDiem", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -234,10 +234,10 @@ namespace QLTruongDH
 
                     cmd.ExecuteNonQuery();
                 }
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show("Lỗi cập nhật: " + ex.Message);
-                //}
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi cập nhật: " + ex.Message);
+                }
             }
         }
 
