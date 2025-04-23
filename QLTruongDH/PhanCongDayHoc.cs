@@ -301,14 +301,31 @@ namespace QLTruongDH
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = phanCong_dataGridView.Rows[e.RowIndex];
+
+                string maMM = row.Cells[0].Value?.ToString();
+                string maHP = row.Cells[1].Value?.ToString();
+                int hk = 1;
+                int nam = 2025;
+                if (mainForm.roles.Contains("TRGDV") || mainForm.roles.Contains("GIAOVIEN"))
+                {
+                    hk = Convert.ToInt32(row.Cells[5].Value);
+                    nam = Convert.ToInt32(row.Cells[6].Value);
+                }
+                else if (mainForm.roles.Contains("PDT") || mainForm.roles.Contains("SINHVIEN"))
+                {
+                    hk = Convert.ToInt32(row.Cells[4].Value);
+                    nam = Convert.ToInt32(row.Cells[5].Value);
+                }
+
                 selectedMoMon = new MoMon
                 {
                     MaMM = row.Cells[0].Value?.ToString(),
                     MaHP = row.Cells[1].Value?.ToString(),
                     MaGV = row.Cells[2].Value?.ToString(),
-                    HK = Convert.ToInt32(row.Cells[3].Value),
-                    Nam = Convert.ToInt32(row.Cells[4].Value)
-                };
+                    HK = hk,
+                    Nam = nam
+                }
+                ;
 
                 ResetInputTextbox();
                 VisibleEditMode();

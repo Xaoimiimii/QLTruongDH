@@ -202,7 +202,6 @@ namespace QLTruongDH
             {
                 diemth = tempDiemth;
             }
-
             
             string maSV = row.Cells["MASV"].Value?.ToString();
             string maHP = row.Cells["MAHP"].Value?.ToString();

@@ -419,7 +419,7 @@ namespace QLTruongDH
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi cập nhật: " +, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi cập nhật", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

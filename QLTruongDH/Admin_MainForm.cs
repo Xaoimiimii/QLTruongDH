@@ -27,7 +27,7 @@ namespace QLTruongDH
             InitializeComponent();
             this.username = username;
             this.password = password;
-            connectionString = $"User Id={username};Password={password};Data Source=localhost:1521/Proj_DKHP;";
+            connectionString = $"User Id={username};Password={password};Data Source=localhost:1521/PDB4;";
             LoadControl(new Admin_Dashboard(this));
             UpdateStatus("Dashboard");
         }
