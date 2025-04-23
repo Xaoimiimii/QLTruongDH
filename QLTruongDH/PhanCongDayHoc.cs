@@ -107,7 +107,7 @@ namespace QLTruongDH
                     phanCong_dataGridView.DataSource = dt;
 
                 }
-                catch (OracleException ex)
+                catch (OracleException)
                 {
                     MessageBox.Show($"Lỗi khi load danh sách phân công", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -304,6 +304,7 @@ namespace QLTruongDH
 
                 string maMM = row.Cells[0].Value?.ToString();
                 string maHP = row.Cells[1].Value?.ToString();
+                string maGV = row.Cells[3].Value?.ToString();
                 int hk = 1;
                 int nam = 2025;
                 if (mainForm.roles.Contains("TRGDV") || mainForm.roles.Contains("GIAOVIEN"))
@@ -319,9 +320,9 @@ namespace QLTruongDH
 
                 selectedMoMon = new MoMon
                 {
-                    MaMM = row.Cells[0].Value?.ToString(),
-                    MaHP = row.Cells[1].Value?.ToString(),
-                    MaGV = row.Cells[2].Value?.ToString(),
+                    MaMM = maMM,
+                    MaHP = maHP,
+                    MaGV = maGV,
                     HK = hk,
                     Nam = nam
                 }
