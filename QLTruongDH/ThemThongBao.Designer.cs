@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             label1 = new Label();
             input_panel = new Panel();
@@ -89,7 +89,6 @@
             group_checkedListBox.BorderStyle = BorderStyle.None;
             group_checkedListBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
             group_checkedListBox.FormattingEnabled = true;
-            group_checkedListBox.Items.AddRange(new object[] { "CS1", "CS2" });
             group_checkedListBox.Location = new Point(1044, 50);
             group_checkedListBox.Name = "group_checkedListBox";
             group_checkedListBox.Size = new Size(309, 240);
@@ -100,7 +99,6 @@
             compartment_checkedListBox.BorderStyle = BorderStyle.None;
             compartment_checkedListBox.Font = new Font("Segoe UI", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
             compartment_checkedListBox.FormattingEnabled = true;
-            compartment_checkedListBox.Items.AddRange(new object[] { "Khoa CNTT", "Khoa Toán - Toán tin", "Khoa Vật lý", "Khoa Hóa học", "Khoa Sinh học", "Khoa Môi trường", "Khoa Địa chất", "Khoa Điện tử viễn thông", "Khoa Công nghệ vật liệu", "Khoa Khoa học liên ngành", "Viện Tế bào gốc", "Phòng Đào tạo", "Phòng Khảo thí", "Phòng Công tác sinh viên", "Phòng tổ chức hành chính" });
             compartment_checkedListBox.Location = new Point(436, 50);
             compartment_checkedListBox.Name = "compartment_checkedListBox";
             compartment_checkedListBox.Size = new Size(477, 240);
@@ -163,7 +161,7 @@
             // content_guna2TextBox
             // 
             content_guna2TextBox.BorderRadius = 10;
-            content_guna2TextBox.CustomizableEdges = customizableEdges1;
+            content_guna2TextBox.CustomizableEdges = customizableEdges3;
             content_guna2TextBox.DefaultText = "";
             content_guna2TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             content_guna2TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -178,7 +176,7 @@
             content_guna2TextBox.Name = "content_guna2TextBox";
             content_guna2TextBox.PlaceholderText = "";
             content_guna2TextBox.SelectedText = "";
-            content_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            content_guna2TextBox.ShadowDecoration.CustomizableEdges = customizableEdges4;
             content_guna2TextBox.Size = new Size(1567, 556);
             content_guna2TextBox.TabIndex = 103;
             // 

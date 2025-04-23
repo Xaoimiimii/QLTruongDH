@@ -23,6 +23,13 @@ namespace QLTruongDH
         private void ThongBao_Load(object sender, EventArgs e)
         {
             LoadThongBao();
+            noti_dataGridView.Columns[0].DefaultCellStyle.Format = "dd/MM/yyyy";
+            noti_dataGridView.Columns[1].Width = 800;
+            noti_dataGridView.Columns[0].HeaderText = "Thời gian";
+            noti_dataGridView.Columns[1].HeaderText = "Nội dung thông báo";
+            noti_dataGridView.Columns[2].HeaderText = "Cấp độ";
+            noti_dataGridView.Columns[3].HeaderText = "Phân vùng";
+            noti_dataGridView.Columns[4].HeaderText = "Nhóm";
         }
 
         private void LoadThongBao()
@@ -33,7 +40,7 @@ namespace QLTruongDH
                 {
                     conn.Open();
 
-                    OracleCommand cmd = new OracleCommand("lay_ds_thongbao", conn);
+                    OracleCommand cmd = new OracleCommand("OLS_ADMIN.SP_Xem_DSThongBao", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("p_cursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
