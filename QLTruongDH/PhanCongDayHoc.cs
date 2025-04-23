@@ -109,7 +109,7 @@ namespace QLTruongDH
                 }
                 catch (OracleException ex)
                 {
-                    MessageBox.Show($"Lỗi khi load danh sách phân công {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Lỗi khi load danh sách phân công", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

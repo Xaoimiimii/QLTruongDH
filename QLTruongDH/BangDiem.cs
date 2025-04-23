@@ -57,7 +57,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi truy vấn: " + ex.Message);
+                    MessageBox.Show("Lỗi truy vấn: ");
                 }
             }
         }
@@ -96,7 +96,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi truy vấn: " + ex.Message);
+                    MessageBox.Show("Lỗi truy vấn: ");
                 }
             }
 
@@ -136,7 +136,8 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi truy vấn: " + ex.Message);
+                    MessageBox.Show("Lỗi truy vấn: ");
+
                 }
             }
         }
@@ -174,7 +175,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi truy vấn: " + ex.Message);
+                    MessageBox.Show("Lỗi truy vấn: ");
                 }
             }
 
@@ -236,7 +237,8 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi cập nhật: " + ex.Message);
+                    MessageBox.Show("Lỗi cập nhật: ");
+                    throw;
                 }
             }
         }
@@ -251,33 +253,42 @@ namespace QLTruongDH
         {
             foreach (DataGridViewRow row in hocPhan_dataGridView.Rows)
             {
-                double? diemqt = null;
-                double? diemck = null;
-                double? diemth = null;
-
-                if (row.Cells["DIEMQT"].Value != null && double.TryParse(row.Cells["DIEMQT"].Value.ToString(), out double tempDiemqt))
+                try
                 {
-                    diemqt = tempDiemqt;
+                    double? diemqt = null;
+                    double? diemck = null;
+                    double? diemth = null;
+
+                    if (row.Cells["DIEMQT"].Value != null && double.TryParse(row.Cells["DIEMQT"].Value.ToString(), out double tempDiemqt))
+                    {
+                        diemqt = tempDiemqt;
+                    }
+
+                    if (row.Cells["DIEMCK"].Value != null && double.TryParse(row.Cells["DIEMCK"].Value.ToString(), out double tempDiemck))
+                    {
+                        diemck = tempDiemck;
+                    }
+
+                    if (row.Cells["DIEMTH"].Value != null && double.TryParse(row.Cells["DIEMTH"].Value.ToString(), out double tempDiemth))
+                    {
+                        diemth = tempDiemth;
+                    }
+
+
+                    string maSV = row.Cells["MASV"].Value?.ToString();
+                    string maHP = row.Cells["MAHP"].Value?.ToString();
+                    int hk = Convert.ToInt32(row.Cells["HK"].Value);
+                    int nam = Convert.ToInt32(row.Cells["NAM"].Value);
+
+                    UpdateDiem(row);
+                    UpdateDiem(row);
                 }
 
-                if (row.Cells["DIEMCK"].Value != null && double.TryParse(row.Cells["DIEMCK"].Value.ToString(), out double tempDiemck))
-                {
-                    diemck = tempDiemck;
-                }
-
-                if (row.Cells["DIEMTH"].Value != null && double.TryParse(row.Cells["DIEMTH"].Value.ToString(), out double tempDiemth))
-                {
-                    diemth = tempDiemth;
-                }
-
-
-                string maSV = row.Cells["MASV"].Value?.ToString();
-                string maHP = row.Cells["MAHP"].Value?.ToString();
-                int hk = Convert.ToInt32(row.Cells["HK"].Value);
-                int nam = Convert.ToInt32(row.Cells["NAM"].Value);
-
-                UpdateDiem(row);
-                UpdateDiem(row);
+                catch(Exception ex)
+                    {
+                        MessageBox.Show("Lỗi cập nhật: ");
+                        break;
+                    }
             }
             LoadBangDiem();
 
