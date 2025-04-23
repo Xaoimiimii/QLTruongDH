@@ -51,7 +51,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi truy vấn: " + ex.Message);
+                    MessageBox.Show("Lỗi truy vấn: ");
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi truy vấn: " + ex.Message);
+                    MessageBox.Show("Lỗi truy vấn: ");
                 }
             }
 
@@ -130,7 +130,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi truy vấn: " + ex.Message);
+                    MessageBox.Show("Lỗi truy vấn: ");
                 }
             }
         }
@@ -208,7 +208,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Đã xảy ra lỗi khi xóa học phần đăng ký: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Đã xảy ra lỗi khi xóa học phần đăng ký: ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -248,7 +248,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Đã xảy ra lỗi khi thêm đăng ký học phần: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Đã xảy ra lỗi khi thêm đăng ký học phần: ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

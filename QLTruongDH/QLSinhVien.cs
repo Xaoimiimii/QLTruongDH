@@ -56,7 +56,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi truy vấn: " + ex.Message);
+                    MessageBox.Show("Lỗi truy vấn: ");
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi truy vấn Oracle: " + ex.Message);
+                    MessageBox.Show("Lỗi truy vấn Oracle: ");
                 }
             }
             return dt;
@@ -141,7 +141,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi truy vấn: " + ex.Message);
+                    MessageBox.Show("Lỗi truy vấn: ");
                 }
             }
         }
@@ -181,7 +181,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi truy vấn: " + ex.Message);
+                    MessageBox.Show("Lỗi truy vấn: ");
                 }
             }
         }
@@ -218,7 +218,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi truy vấn: " + ex.Message);
+                    MessageBox.Show("Lỗi truy vấn: ");
                 }
             }
         }
@@ -356,7 +356,7 @@ namespace QLTruongDH
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi cập nhật: " + ex.Message);
+                    MessageBox.Show("Lỗi cập nhật: ");
                 }
             }
         }
@@ -419,7 +419,7 @@ namespace QLTruongDH
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi cập nhật: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi cập nhật: " +, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -466,7 +466,7 @@ namespace QLTruongDH
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Đã xảy ra lỗi khi xóa sinh viên: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Đã xảy ra lỗi khi xóa sinh viên: ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -498,7 +498,7 @@ namespace QLTruongDH
 
                 using (OracleConnection conn = new OracleConnection(mainForm.connectionString))
                 {
-                    //try
+                    try
                     {
                         conn.Open();
 
@@ -524,10 +524,10 @@ namespace QLTruongDH
                             textBox1.Clear();
                         }
                     }
-                    //catch (Exception ex)
-                    //{
-                    //    MessageBox.Show("Đã xảy ra lỗi khi thêm sinh viên: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //}
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Đã xảy ra lỗi khi thêm sinh viên: ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             else
