@@ -23,7 +23,7 @@
             this.username = username;
             this.password = password;
             this.roles = roles;
-            connectionString = $"User Id={username};Password={password};Data Source=localhost:1521/PDB4;";
+            connectionString = $"User Id={username};Password={password};Data Source=localhost:1521/QLTRUONGHOC;";
             LoadControl(new Dashboard(this));
             UpdateStatus("Dashboard");
         }
